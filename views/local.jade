@@ -1,0 +1,25 @@
+doctype html
+html
+  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+  script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js")
+  link(rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+  head
+    title Karaoke - Local
+  body
+    div.container
+      h1 Karaoke - Local
+      h3 #{artist} - #{title}
+      div.row
+        div.span5.offset1
+          div#ytplayer
+        div.span3.offset6
+          p#lyricsbox
+
+      div.row
+        label Offset
+        input(type="text" id="offset" placeholder="Currently at 0...")
+        button(type="button" class="btn" onclick="updateOffset()") Update
+        span.help-block Adjust the offset (in milliseconds) if the lyrics seem 'off'. If the lyrics come too soon, add some. If the lyrics come too late, subtract some.
+      

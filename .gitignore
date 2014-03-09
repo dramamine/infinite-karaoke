@@ -1,0 +1,11 @@
+logs/*
+!.gitkeep
+node_modules/
+tmp
+.idea
+.DS_Store
+angular-phonecat-snapshots
+chromaoke.sublime-project
+chromaoke.sublime-workspace
+README.html
+

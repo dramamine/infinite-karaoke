@@ -1,0 +1,23 @@
+{
+  "name": "last-fm-stats-js",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/app.coffee",
+  "dependencies": {
+    "express": "3.4.8",
+    "ejs": "*",
+    "css": "*",
+    "coffee-script": "~1.7.1",
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-coffeelint": "0.0.8",
+    "load-grunt-tasks": "~0.3.0",
+    "grunt-mocha-test": "~0.8.2",
+    "grunt-express-server": "~0.4.11",
+    "grunt-coffeeify": "~0.1.3",
+    "grunt-contrib-coffee": "~0.9.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "jade": "~1.1.5"
+  }
+}

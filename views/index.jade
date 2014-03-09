@@ -1,0 +1,26 @@
+doctype html
+html
+  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+  script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js")
+  link(rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  head
+    title= title
+  body
+    div.container
+
+      h1= title
+      p Welcome to #{title} 
+      each item in results
+        li
+          | #{item.artist} - #{item.title} 
+          a(href='./local/#{item.id}' ) (run locally) 
+          a(href='./cast/#{item.id}' ) (run on 'cast)
+
+
+
+
+  script(type='text/javascript').
+
+    console.log("Hello from JS");
+
