@@ -22,4 +22,15 @@ html
         input(type="text" id="offset" placeholder="Currently at 0...")
         button(type="button" class="btn" onclick="updateOffset()") Update
         span.help-block Adjust the offset (in milliseconds) if the lyrics seem 'off'. If the lyrics come too soon, add some. If the lyrics come too late, subtract some.
-      
+
+  script(src="/javascripts/youtube-lyrics.js" type="text/javascript")
+  script.
+    var data = {};
+    data.youtubeid = 'pudIZbCRq_c';
+    data.timing = [ 20, 3660, 6000 ];
+    data.lyrics = [ "intro", "zone 4", "get money" ];
+
+    // for testing async
+    // setTimeout( function() { receiveData( data ); } , 5000);
+
+    receiveData( data );
