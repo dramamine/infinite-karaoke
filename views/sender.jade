@@ -76,6 +76,7 @@ html
        */
       function onInitSuccess() {
         appendMessage("onInitSuccess");
+       
       }
 
       /**
@@ -191,6 +192,16 @@ html
         sendMessage(words);
       }
 
+      function sendTrackData() {
+        // start 'tubing
+        var data = {};
+        data.youtubeid = 'WIKqgE4BwAY';
+        data.timing = [ 20, 3660, 6000 ];
+        data.lyrics = [ "intro", "zone 4", "get money" ];
+
+        sendMessage( data );
+      }
+
 
     body
       table#wrapper
@@ -198,6 +209,8 @@ html
           td
             form(method="get" action="JavaScript:update();")
               input(id="input" class="border" type="text" size="30")
+
+            button.btn(onclick="sendTrackData();") Send Track Data
 
       <!-- Debbugging output -->
       div(style="margin:10px; visibility:hidden;")

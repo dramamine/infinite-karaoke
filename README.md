@@ -51,7 +51,11 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
 30m - move to Express
 30m - move index, local to Jade
 
-4:20pm
+1h - incorporate sender/receiver
+30m - get a youtube vid to show up (!!)
+
+
+
 
 
 # TODO LIST
