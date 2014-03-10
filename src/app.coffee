@@ -45,7 +45,11 @@ app.get '/local/:trackId', (req, res) ->
     layout: false
 
 app.get '/cast/:trackId', (req, res) ->
-  res.render 'cast',
+  res.render 'sender',
+    layout: false
+
+app.get '/receiver', (req, res) ->
+  res.render 'receiver',
     layout: false
 
 
