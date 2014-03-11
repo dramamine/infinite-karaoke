@@ -41,8 +41,16 @@ app.get '/', (req, res) ->
     #     results: results
     
 app.get '/local/:trackId', (req, res) ->
-  res.render 'local',
-    layout: false
+
+  # look up track
+  tracks.lookup req.params.trackId, (lyric) ->
+    console.log('got lyrics back:')
+    console.log lyric
+    app.locals.lyric = lyric
+
+    res.render 'local',
+      layout: false
+      lyric: lyric
 
 app.get '/cast/:trackId', (req, res) ->
   res.render 'sender',

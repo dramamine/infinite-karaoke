@@ -54,6 +54,8 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
 1h - incorporate sender/receiver
 30m - get a youtube vid to show up (!!)
 
+1h - read lyrics from a file
+30m - start processing those lyrics
 
 
 
@@ -63,6 +65,7 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
 (2) this JS code sux, make sure it breaks less
 (3) switch to using ng-model and a text box or something for the lyrics
 
+(3) look into callbacks and error handling in tracks.coffee#lookup
 
 (4) switch to using MongoDB instead of using flat JSON files
     - update db reads only for now
