@@ -63,6 +63,7 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
 # TODO LIST
 
 (2) this JS code sux, make sure it breaks less
+    - related: switch to using [{time: lyric, time: lyric}] JSON format.
 (3) switch to using ng-model and a text box or something for the lyrics
 
 (3) look into callbacks and error handling in tracks.coffee#lookup

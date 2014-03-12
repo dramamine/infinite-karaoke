@@ -24,13 +24,20 @@ html
         span.help-block Adjust the offset (in milliseconds) if the lyrics seem 'off'. If the lyrics come too soon, add some. If the lyrics come too late, subtract some.
 
   script(src="/javascripts/youtube-lyrics.js" type="text/javascript")
+  
+  != "<script type='text/javascript'>"
+  != "var oLyric = " + oLyric + ";"
+  != "</script>"
+
   script.
-    var data = {};
-    data.youtubeid = 'WIKqgE4BwAY';
-    data.timing = [ 20, 3660, 6000 ];
-    data.lyrics = [ "intro", "zone 4", "get money" ];
+    //- var data = {} ;
+    //- data.youtubeid = #{youtubeid};
+    //- data.timing = [ 20, 3660, 6000 ];
+    //- data.lyrics = [ "intro", "zone 4", "get money" ];
 
     // for testing async
     // setTimeout( function() { receiveData( data ); } , 5000);
 
-    receiveData( data );
+    receiveData( oLyric );
+
+

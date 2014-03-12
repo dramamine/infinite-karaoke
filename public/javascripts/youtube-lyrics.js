@@ -16,8 +16,9 @@ function receiveData(data) {
   // this.videoId = data.youtubeid
   this.videoId = data.youtubeid;
   this.timing = data.timing;
+  console.log(this.timing);
   this.lyrics = data.lyrics;
-
+  console.log(this.lyrics);
   // start kicking off some things
   // Load the IFrame Player API code asynchronously.
   
@@ -71,17 +72,10 @@ var timer = null;
 var offset = 0;
 
 function onPlayerReady(event) {
-  console.log("player ready!");
-  
-  $('.lyricsdiv .times').each(function(item){
-    timing.push( parseInt( $(this).text() ) );
-    console.log("pushed " + $(this).text());
-  });
-  $('.lyricsdiv .lines').each(function(item){
-    lyrics.push( $(this).text() );
-  });
 
+  console.log("player ready!");
   event.target.playVideo();
+
       };
 
 function onPlayerStateChange(event) {
@@ -107,7 +101,7 @@ function flashCurrentLyric()
   for (var i = 0; i < timing.length; i++) {
     if ( (timing[i] + offset) > currentTime )
     {
-      console.log("found time " + timing[i] + " + offset " + offset +  " was greater than current time " + currentTime)
+      // console.log("found time " + timing[i] + " + offset " + offset +  " was greater than current time " + currentTime)
       // previous (or first) frame
       currentLyricFrame = (i > 0)? i-1 : 0;
       break;
@@ -124,6 +118,7 @@ function flashLyric(index, currentTime)
 {
   if (currentTime == null) currentTime = player.getCurrentTime() * 1000;
   // update page
+  console.log ("Sending " + lyrics[index] + " to box.");
   $('#lyricsbox').text( lyrics[index] );
 
   // queue next lyric, if it's not the final frame

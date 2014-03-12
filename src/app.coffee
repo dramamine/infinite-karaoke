@@ -1,4 +1,5 @@
 express = require 'express'
+expose = require 'express-expose'
 require 'coffee-script'
 require 'jade'
 tracks = require './tracks'
@@ -43,18 +44,68 @@ app.get '/', (req, res) ->
 app.get '/local/:trackId', (req, res) ->
 
   # look up track
-  tracks.lookup req.params.trackId, (lyric) ->
-    console.log('got lyrics back:')
-    console.log lyric
-    app.locals.lyric = lyric
+  tracks.lookup req.params.trackId, (track) ->
+    #console.log('got track back:')
+    #console.log track
+    #console.log lyric
+    # BAD CODE WARNING
+    # FOR NOW, JUST PUT times IN ONE ARRAY AND lines IN ANOTHER ARRAY
+    lyricData = {}
+
+    lyricData.timing = (parseInt time for time, line of track.lyrics)
+    lyricData.lyrics = (line for time, line of track.lyrics)
+
+    console.log typeof lyricData.timimg
+    console.log lyricData.timimg
+
+    lyricData.youtubeid = track.youtubeid
+
+    # lyricData.youtubeid = 'WIKqgE4BwAY'
+    
+    app.locals.oLyric = lyricData
+    app.locals.youtubeid = track.youtubeid
+    app.locals.artist = track.artist
+    app.locals.title = track.title
+
+
+
+    #app.expose lyricData, 'lyricData'
+    #app.expose('var lyricData = ' + lyricData + ';');
 
     res.render 'local',
       layout: false
-      lyric: lyric
+      oLyric: JSON.stringify lyricData
+      youtubeid: track.youtubeid
+      title: track.title
 
 app.get '/cast/:trackId', (req, res) ->
-  res.render 'sender',
-    layout: false
+
+# look up track
+  tracks.lookup req.params.trackId, (track) ->
+    
+    lyricData = {}
+
+    lyricData.timing = (parseInt time for time, line of track.lyrics)
+    lyricData.lyrics = (line for time, line of track.lyrics)
+
+    console.log typeof lyricData.timimg
+    console.log lyricData.timimg
+
+    lyricData.youtubeid = track.youtubeid
+
+    # lyricData.youtubeid = 'WIKqgE4BwAY'
+    
+    app.locals.oLyric = lyricData
+    app.locals.youtubeid = track.youtubeid
+    app.locals.artist = track.artist
+    app.locals.title = track.title
+
+
+    res.render 'sender',
+      layout: false
+      oLyric: JSON.stringify lyricData
+      youtubeid: track.youtubeid
+      title: track.title
 
 app.get '/receiver', (req, res) ->
   res.render 'receiver',

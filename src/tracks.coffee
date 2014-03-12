@@ -19,12 +19,22 @@ exports.alltracks = alltracks
 # Returns lyrics for a given track. The lyrics returned are in an array of lines.
 lookup = (trackId, callback) ->
   console.log 'lookup called'
+  track = {}
 
-  getLyricsFileLocation trackId, (lyricsFile) ->
-    #console.log 'using file ' + lyricsFile
-    retrieveLyrics lyricsFile, (lyrics) ->
+  getTrack trackId, (trackJSON) ->
+    #console.log 'got data back from getTrack'
+    #console.log trackJSON
+
+    track.artist = trackJSON.artist
+    track.title = trackJSON.title
+    track.youtubeid = trackJSON.youtubeid
+    track.offset = trackJSON.offset
+
+    retrieveLyrics trackJSON.lyrics, (lyrics) ->
       process lyrics, (lyricObject) ->
-        callback lyricObject 
+        
+        track.lyrics = lyricObject
+        callback track
 
 ## end lookup
 exports.lookup = lookup
@@ -75,8 +85,9 @@ process = (lyrics, callback) ->
 
 ## PRIVATE METHODS
 
-getLyricsFileLocation = (trackId, callback) ->
-  #console.log 'getLyricsFileLocation called with ' + trackId
+getTrack = (trackId, callback) ->
+  trackId = parseInt trackId
+  #console.log 'getTrack called with ' + trackId
   fs.exists DB_FILE, (exists) -> 
     #console.log 'db file exists.' if exists
 
@@ -85,11 +96,12 @@ getLyricsFileLocation = (trackId, callback) ->
 
     lyricFile = ''
     for track in JSON.parse data
-      if track.id = trackId
+      #console.log "checking " + typeof track.id + " against " + typeof trackId
+      if track.id == trackId
         #console.log 'found a matching track id (' + trackId + ') with file ' + track.lyrics
-        callback track.lyrics
+        callback track
         return
-    callback "Couldn't find a lyric with that track ID" 
+    callback "Couldn't find a track with that track ID" 
     return
 # end getLyricsFileLocation
 
@@ -106,7 +118,7 @@ retrieveLyrics = (file, callback) ->
   fs.readFile lyricFileLocation, 'utf8', (err, data) ->
     #console.log err
     return err if err
-    console.log 'found some lyrics!' + data
+    #console.log 'found some lyrics!' + data
     callback data
     return
   return

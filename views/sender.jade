@@ -44,6 +44,9 @@ html
     //-     box-shadow: 0 0 5px #8ecaed;
     //- }
     //-  </style>
+  != "<script type='text/javascript'>"
+  != "var oLyric = " + oLyric + ";"
+  != "</script>"
 
     script(type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js")
 
@@ -194,12 +197,12 @@ html
 
       function sendTrackData() {
         // start 'tubing
-        var data = {};
-        data.youtubeid = 'WIKqgE4BwAY';
-        data.timing = [ 20, 3660, 6000 ];
-        data.lyrics = [ "intro", "zone 4", "get money" ];
+        //- var data = {};
+        //- data.youtubeid = 'WIKqgE4BwAY';
+        //- data.timing = [ 20, 3660, 6000 ];
+        //- data.lyrics = [ "intro", "zone 4", "get money" ];
 
-        sendMessage( data );
+        sendMessage( oLyric );
       }
 
 
