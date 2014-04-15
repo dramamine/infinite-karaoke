@@ -3,6 +3,9 @@ module.exports = (grunt) ->
   #load tasks
   require('load-grunt-tasks') grunt
 
+  
+  grunt.loadNpmTasks 'grunt-contrib-jade'
+
   #config
   grunt.initConfig
 
@@ -14,6 +17,7 @@ module.exports = (grunt) ->
         script: '<%= pkg.main %>'
         delay: 1
       dev: {}
+
 
     # coffeelint:
     #   options:
@@ -27,13 +31,40 @@ module.exports = (grunt) ->
     #     clearRequireCache: true
     #     require: 'coffee-script'
 
-    # coffee:
-    #   options:
-    #     join: true
-    #   default:
-    #     src: ['src/admin/angular.coffee']
-    #     dest: 'public/js/main.js'
+    coffee:
+      compile: 
+          # './chromecast-receiver/youtube-lyrics.js' : './public/javascripts/youtube-lyrics.coffee'
+          # './public/javascripts/youtube-lyrics.js' : './public/javascripts/youtube-lyrics.coffee'
+        expand: true,
+        flatten: true,
+        options: {
+          bare: true
+        }
+        cwd: "src-angular/js",
+        src: ['*.coffee'],
+        dest: 'app/js/',
+        ext: '.js'
 
+    
+    jade: 
+      compile: 
+
+        files: grunt.file.expandMapping(['**/*.jade'], 'app/', {
+                cwd: 'src-angular', 'src-angular/partials'
+                rename: (destBase, destPath) -> 
+                    destBase + destPath.replace(/\.jade$/, '.html')
+                
+            })
+
+        # files:
+        #   "./chromecast-receiver/receiver.html": "./views/receiver.jade"
+          
+        # options: 
+        #   data: 
+        #     debug: false
+        #     
+        #  
+          
     #coffeeify:
     #  files:
     #    src: 'src/public/**/*.coffee'
@@ -54,10 +85,14 @@ module.exports = (grunt) ->
     #     filter: 'isFile'
 
     watch:
+      coffee:
+          files: 'src-angular/js/*.coffee'
+          tasks: ['coffee:compile']
+
       options:
         spawn: false
         livereload: true
-
+        
       # coffeelint:
       #   tasks: ['coffeelint']
       #   files: '<%= coffeelint.src %>'
@@ -85,6 +120,8 @@ module.exports = (grunt) ->
       express:
         tasks: ['express']
         files: ['src/**/*.coffee','src/**/*.jade']
+
+      
 
   #end config
 
@@ -115,6 +152,8 @@ module.exports = (grunt) ->
 
   #tasks
   grunt.registerTask 'default', [
+    'coffee'
+    'jade'
     'express'
     'watch'
     ]

@@ -8,5 +8,7 @@ angular-phonecat-snapshots
 chromaoke.sublime-project
 chromaoke.sublime-workspace
 README.html
+src-angular/lib/
+app/
 
 data/lyrics/

@@ -74,6 +74,34 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
 (4) make db functions to update database
     - CRUD
 
+# LET'S RE-ARCHITECT THIS THING
+- Switch to Angular for the front-end stuff, so we can borrow ideas from the thinflash demo (such as accordion menus). Use coffeescript and jade, though.
+- Switch to a RESTful API for supplying lyric & youtube data.
+- these would hit the database first, then on no results, would hit the youtube / lyric APIs we specify.
+-- ex. /verified_tracks
+{
+  id: 1
+  artist
+  title
+  status [VERIFIED]
+}
+-- ex. /search/artist/:artist_name/title/:song_title
+-- or /video_search/:artist_name/:song_title
+-- &  /lyric_search/:artist_name/:song_title
+{
+  youtube_results: [
+    {
+      youtube_id, title, thumbnail_url
+    }
+  ]
+
+  lyric_results: [
+    {
+      status [VERIFIED, SYNCED, UNSYNCED, NONE]
+      rating (upvotes, downvotes)
+    }
+  ]
+}
 
 
 
