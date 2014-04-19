@@ -12,3 +12,4 @@ src-angular/lib/
 app/
 
 data/lyrics/
+data/marten.db

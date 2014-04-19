@@ -5,6 +5,7 @@ module.exports = (grunt) ->
 
   
   grunt.loadNpmTasks 'grunt-contrib-jade'
+  grunt.loadNpmTasks 'grunt-shell'
 
   #config
   grunt.initConfig
@@ -55,6 +56,22 @@ module.exports = (grunt) ->
                     destBase + destPath.replace(/\.jade$/, '.html')
                 
             })
+
+    shell:
+      file: 'data/marten.db',
+      setupScript: 'data/sqlite_setup.sql',
+      testScript: 'test/sqliteSpec.sql'
+
+      options:
+        stdout: true
+        stderr: true
+
+      dbsetup:
+        command: 'rm <%= shell.file %> && sqlite3 <%= shell.file %> < <%= shell.setupScript %>'
+
+      dbtest:
+
+        command: 'sqlite3 <%= shell.file %> < <%= shell.testScript %>'
 
         # files:
         #   "./chromecast-receiver/receiver.html": "./views/receiver.jade"
@@ -156,4 +173,9 @@ module.exports = (grunt) ->
     'jade'
     'express'
     'watch'
+    ]
+
+  grunt.registerTask 'db-reset', [
+    'shell:dbsetup',
+    'shell:dbtest'
     ]

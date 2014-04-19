@@ -44,6 +44,9 @@ OH SHIT I FUCKING DID IT
 - had to factory reset and then check a box for "send device's serial #" to get it to work.
 - then had to restart the device after setup
 
+4/19
+2h30m - db setup & grunt tasks
+
 # DEV CONSOLE
 Allows you to inspect elements on the tv screen, check JS console & stuff.
 192.168.1.4:9222
@@ -102,8 +105,6 @@ Allows you to inspect elements on the tv screen, check JS console & stuff.
     }
   ]
 }
-
-
 
 
 
