@@ -142,6 +142,9 @@ INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (25, "TV On 
 INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (26, "Vampire Weekend", "Giving Up The Gun", "Hipster");
 INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (27, "Wavves", "King of the Beach", "Hipster");
 INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (28, "Yeasayer", "Ambling Alp", "Hipster");
+INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (29, "Miley Cyrus", "Party in the USA", "Hipster");
+INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (30, "The Joy Formidable", "Whirring", "Hipster");
+INSERT INTO track (track_id, artist_name, track_name, genre) VALUES (31, "Nicki Minaj", "Beez in the Trap", "Hipster");
 
 INSERT INTO lyric (lyric_id, track_id, file, source, headline) VALUES (1001, 1, "Arcade Fire -Ready to Start.lrc", "archive", "I personally tested this.");
 INSERT INTO lyric (lyric_id, track_id, file, source, headline) VALUES (1002, 2, "Black Kids - I'm Not Gonna Teach Your Boyfriend How To Dance With You.lrc", "archive", "I personally tested this.");

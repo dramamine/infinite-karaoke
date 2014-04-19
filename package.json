@@ -24,6 +24,7 @@
   "devDependencies": {
     "grunt-contrib-coffee": "~0.9.0",
     "grunt-contrib-jade": "~0.11.0",
-    "grunt-shell": "~0.6.4"
+    "grunt-shell": "~0.6.4",
+    "sqlite3": "~2.2.3"
   }
 }

@@ -2,7 +2,7 @@
 PRAGMA foreign_keys = ON;
 
 
-.print TEST: expecting '28'
+.print TEST: expecting '31'
 SELECT count(*) FROM track; 
 .print TEST: expecting 'Hipster'
 SELECT DISTINCT genre FROM track; 

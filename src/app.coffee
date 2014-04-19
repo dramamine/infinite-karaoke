@@ -3,6 +3,7 @@ expose = require 'express-expose'
 require 'coffee-script'
 require 'jade'
 tracks = require './tracks'
+db = require './db'
 path = require 'path'
 
 app = express()
@@ -77,6 +78,18 @@ app.get '/local/:trackId', (req, res) ->
       oLyric: JSON.stringify lyricData
       youtubeid: track.youtubeid
       title: track.title
+
+###
+This route pulls all the tracks!
+TODO add quality filter, in case we want to load good tracks first, and bad
+tracks later.
+###
+app.get '/data/tracklist/:quality?', (req, res) ->
+
+  db.get_all_tracks (rows) ->
+    res.json rows
+
+
 
 app.get '/cast/:trackId', (req, res) ->
 
