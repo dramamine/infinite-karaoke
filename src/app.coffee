@@ -89,6 +89,49 @@ app.get '/data/tracklist/:quality?', (req, res) ->
   db.get_all_tracks (rows) ->
     res.json rows
 
+###
+This pulls all the track info we need!
+Just copied this from /local/:trackId route
+TODO def. wanna split db and file ops up into two different calls
+###
+app.get '/data/track/:trackId', (req, res) ->
+
+  # look up track
+  tracks.lookup req.params.trackId, (track) ->
+    #console.log('got track back:')
+    #console.log track
+    #console.log lyric
+    # BAD CODE WARNING
+    # FOR NOW, JUST PUT times IN ONE ARRAY AND lines IN ANOTHER ARRAY
+    lyricData = {}
+
+    lyricData.timing = (parseInt time for time, line of track.lyrics)
+    lyricData.lyrics = (line for time, line of track.lyrics)
+
+    console.log typeof lyricData.timimg
+    console.log lyricData.timimg
+
+    lyricData.youtubeid = track.youtubeid
+
+    # lyricData.youtubeid = 'WIKqgE4BwAY'
+    
+    #app.expose lyricData, 'lyricData'
+    #app.expose('var lyricData = ' + lyricData + ';');
+
+    res.json
+      "oLyric": lyricData
+      "youtubeid": track.youtubeid
+      "artist": track.artist
+      "title": track.title
+
+
+     # 'local',
+     #  layout: false
+     #  oLyric: JSON.stringify lyricData
+     #  youtubeid: track.youtubeid
+     #  title: track.title
+
+
 
 
 app.get '/cast/:trackId', (req, res) ->

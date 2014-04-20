@@ -89,6 +89,19 @@ allServices.service('TrackService', ['$http',
 
       return promise
 
+    this.lookupTrack = (trackId) ->
+      url = 'http://localhost:3000/data/track/' + trackId
+      console.log 'checking this: ' + url
+      promise = $http.get(url)
+      .then (results) ->
+        # TODO check headers and stuff
+        console.log(results.data)
+        return results.data
+
+      return promise
+
+
+
     return null
 
 ])

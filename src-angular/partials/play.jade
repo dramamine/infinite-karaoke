@@ -1,0 +1,50 @@
+script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js")
+link(rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+link(rel='stylesheet' href='/stylesheets/style.css')
+
+.header
+  title Karaoke - Local
+
+
+.container
+  h3 {{data.artist}} - {{data.title}}
+
+
+
+  div.row
+    div.span12
+      span#ytplayer
+  div.row
+    div.span6
+      span#lyricsbox
+
+  div.row
+    label Offset
+    input(type="text" id="offset" placeholder="Currently at 0...")
+    button(type="button" class="btn" onclick="updateOffset()") Update
+    span.help-block Adjust the offset (in milliseconds) if the lyrics seem 'off'. If the lyrics come too soon, add some. If the lyrics come too late, subtract some.
+
+  div.row
+    button(type="button" class="btn" onclick="loadMe()")
+
+  script(src="/javascripts/youtube-lyrics.js" type="text/javascript")
+  
+  div#oLyric
+    p {{data.oLyric}}
+  //- != "<script type='text/javascript'>"
+  //- != "var oLyric = " + {{data.oLyric}} + ";"
+  //- != "</script>"
+
+  script.
+    var youtube_width = 640;
+    var youtube_height = 480;
+
+    var loadMe = function() {
+      var oLyric = $('#oLyric p').text();
+      console.log('here comes oLyric!');
+      console.log(oLyric);
+      receiveData( oLyric );
+    };
+
+
