@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/dramamine/infinite-karaoke",
   "authors": [
-    "Marten <martin@mylifeismetal.com>"
+    "marten <martin@mylifeismetal.com>"
   ],
   "license": "MIT",
   "private": true,
@@ -15,7 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-strap": "~2.0.1",
-    "angular-ui": "~0.4.0"
+
   }
 }

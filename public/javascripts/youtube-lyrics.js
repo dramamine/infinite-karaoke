@@ -1,4 +1,3 @@
-(function() {
   var firstScriptTag, flashCurrentLyric, flashLyric, lyrics, lyricsIndex, offset, onPlayerReady, onPlayerStateChange, onYouTubePlayerAPIReady, player, receiveData, tag, timer, timing, updateOffset, videoId, waitingForData;
 
   console.log('loading youtube-lyrics.js');
@@ -108,5 +107,3 @@
   $(document).ready(function() {
     return console.log("doc ready!");
   });
-
-}).call(this);

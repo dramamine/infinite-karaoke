@@ -1,6 +1,6 @@
 {
-  "name": "last-fm-stats-js",
-  "version": "0.0.1",
+  "name": "infinite-karaoke",
+  "version": "0.0.2",
   "private": true,
   "main": "./src/app.coffee",
   "dependencies": {
@@ -26,5 +26,17 @@
     "grunt-contrib-jade": "~0.11.0",
     "grunt-shell": "~0.6.4",
     "sqlite3": "~2.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dramamine/infinite-karaoke.git"
+  },
+  "keywords": [
+    "karaoke"
+  ],
+  "author": "marten <martin@mylifeismetal.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dramamine/infinite-karaoke/issues"
   }
 }

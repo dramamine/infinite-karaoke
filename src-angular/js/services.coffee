@@ -50,7 +50,7 @@ allServices.service('TrackService', ['$http',
 
     this.getData = ->
       
-      url = 'http://localhost:3000/data/tracklist'
+      url = '../data/tracklist'
       promise = $http.get(url)
       .then (results) ->
         # TODO check headers and stuff
@@ -90,7 +90,7 @@ allServices.service('TrackService', ['$http',
       return promise
 
     this.lookupTrack = (trackId) ->
-      url = 'http://localhost:3000/data/track/' + trackId
+      url = '../data/track/' + trackId
       console.log 'checking this: ' + url
       promise = $http.get(url)
       .then (results) ->
