@@ -48,6 +48,7 @@ OH SHIT I FUCKING DID IT
 2h30m - db setup & grunt tasks
 4h - add typeahead with icons
 2h - make front page prettier, contemplate writing directives.
+2h30m - deploy to digital ocean
 
 # DEV CONSOLE
 Allows you to inspect elements on the tv screen, check JS console & stuff.
@@ -146,3 +147,10 @@ scp -r ./app/img ocean:/var/www/metal-heart.org/app/
 scp -r ./public ocean:/var/www/metal-heart.org/
 # careful, you're even uploading the db
 scp -r ./data ocean:/var/www/metal-heart.org/
+
+# do this
+https://github.com/bustardcelly/grunt-forever
+npm install -g forever grunt-forever
+forever start --verbose -c coffee src/app.coffee
+or
+grunt forever-start

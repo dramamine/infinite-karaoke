@@ -5,7 +5,9 @@ module.exports = (grunt) ->
 
   
   grunt.loadNpmTasks 'grunt-contrib-jade'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-shell'
+  grunt.loadNpmTasks 'grunt-forever'
 
   #config
   grunt.initConfig
@@ -31,6 +33,13 @@ module.exports = (grunt) ->
     #     reporter: 'nyan'
     #     clearRequireCache: true
     #     require: 'coffee-script'
+    forever:
+      server:
+        options:
+          command: 'coffee'
+          index: '<%= pkg.main %>'
+
+
 
     coffee:
       compile: 
@@ -181,4 +190,14 @@ module.exports = (grunt) ->
   grunt.registerTask 'db-reset', [
     'shell:dbsetup',
     'shell:dbtest'
+    ]
+
+  grunt.registerTask 'forever-start', [
+    'forever:server:start'
+    ]
+  grunt.registerTask 'forever-stop', [
+    'forever:server:stop'
+    ]
+  grunt.registerTask 'forever-restart', [
+    'forever:server:restart'
     ]
