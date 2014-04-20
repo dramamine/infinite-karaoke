@@ -105,6 +105,9 @@ module.exports = (grunt) ->
       coffee:
           files: 'src-angular/js/*.coffee'
           tasks: ['coffee:compile']
+      jade:
+          files: 'src-angular/**/*.jade'
+          tasks: ['jade:compile']
 
       options:
         spawn: false

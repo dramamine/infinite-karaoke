@@ -1,3 +1,14 @@
-
-div(ng-repeat="track in data")
-  h3 {{track.artist_name}} - {{track.track_name}}
+.container
+  .jumbotron
+    h1 Infinite Karaoke
+    .lead
+      h6 And beckons me to look through to these infinite possibilities. <em>Tool - Lateralus</em>
+  .row
+    .col-md-6
+      p One Thing
+    .col-md-6
+      p Another Thing
+    .col-md-12
+      div(ng-repeat="track in tracks")
+        div(ng-class="{'bg-success' : track.total_quality == 2, 'bg-warning' : track.total_quality == 1, 'bg-danger' : track.total_quality == 0}")
+          h3 {{track.artist_name}} - {{track.track_name}}

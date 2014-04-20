@@ -39,3 +39,26 @@ allServices.service('SampleService', [
 
     return null
 ])
+
+allServices.service('TrackService', ['$http',
+  ($http) ->
+
+    this.data = [{
+      artist_name: "Placeholder",
+      track_name: "Be Patient"
+      }]
+
+    this.getData = ->
+      
+      url = 'http://localhost:3000/data/tracklist'
+      promise = $http.get(url)
+      .then (results) ->
+        # TODO check headers and stuff
+        console.log 'Got data back from express.'
+        return results.data
+
+      return promise
+
+    return null
+
+])

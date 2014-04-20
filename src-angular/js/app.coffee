@@ -4,8 +4,10 @@
 
 karaokeApp = angular.module 'karaokeApp', [
   'ngRoute',
+  'ngAnimate',
   'allControllers',
-  'allDirectives'
+  'allDirectives',
+  'mgcrea.ngStrap'
 ]
 
 karaokeApp.config(['$routeProvider',

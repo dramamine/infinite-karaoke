@@ -4,10 +4,13 @@
 
 allControllers = angular.module('allControllers', ['allServices'])
 
-allControllers.controller 'TrackSearchCtrl', ['$scope', 'SampleService', 
-  ($scope, SampleService) -> 
+allControllers.controller 'TrackSearchCtrl', ['$scope', 'TrackService', 
+  ($scope, TrackService) -> 
 
-    $scope.data = SampleService.data
+    $scope.tracks = TrackService.data
+
+    TrackService.getData().then (newData) ->
+      $scope.tracks = newData
 
     return null
 
