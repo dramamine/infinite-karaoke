@@ -47,6 +47,8 @@ OH SHIT I FUCKING DID IT
 4/19
 2h30m - db setup & grunt tasks
 
+4h - add typeahead with icons
+
 # DEV CONSOLE
 Allows you to inspect elements on the tv screen, check JS console & stuff.
 192.168.1.4:9222

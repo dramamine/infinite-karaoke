@@ -54,8 +54,38 @@ allServices.service('TrackService', ['$http',
       promise = $http.get(url)
       .then (results) ->
         # TODO check headers and stuff
-        console.log 'Got data back from express.'
-        return results.data
+        
+
+          
+        
+        menuItems = []
+        for track in results.data
+
+          # TODO ew, too much html in the label
+          # just use a custom template vi angular-strap
+          # and maybe a custom filter for these icons / classes
+          
+          switch track.total_quality
+            when 0
+              icon = 'fa-star-o'
+            when 1
+              icon = 'fa-star-half-o'
+            when 2
+              icon = 'fa-star'
+
+          menuItems.push {
+            "value": track.track_id,
+            "label": "<i class=\"fa #{icon}\"></i> #{track.artist_name} - #{track.track_name}",
+            "total_quality": track.total_quality
+          }
+
+        menuItems.push {
+          "value": 1,
+          "label": "",
+          "total_quality": 0
+        }
+
+        return menuItems
 
       return promise
 

@@ -9,6 +9,10 @@
     .col-md-6
       p Another Thing
     .col-md-12
-      div(ng-repeat="track in tracks")
-        div(ng-class="{'bg-success' : track.total_quality == 2, 'bg-warning' : track.total_quality == 1, 'bg-danger' : track.total_quality == 0}")
-          h3 {{track.artist_name}} - {{track.track_name}}
+      .input-group
+        input(type="text" class="form-control" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
+        span(class="input-group-btn")
+          a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
+    .col-md-12
+      p Debug output
+      p {{selectedTrack}}
