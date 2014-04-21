@@ -4,6 +4,7 @@ track_id INTEGER PRIMARY KEY,
 artist_name TEXT,
 track_name TEXT,
 genre TEXT,
+formatted_name TEXT,
 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -11,13 +12,42 @@ updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 CREATE TRIGGER track_audit 
 AFTER UPDATE ON track 
 BEGIN 
-  UPDATE track SET updated = datetime('now') WHERE track_id = new.track_id; 
+  UPDATE track SET updated = datetime('now'), 
+   formatted_name = genre 
+    || " " || artist_name 
+    || " " || track_name 
+    WHERE track_id = new.track_id;
+END;
+
+-- just use this for now
+CREATE TRIGGER track_formatted_name
+AFTER UPDATE ON track 
+BEGIN 
+  UPDATE track SET formatted_name = CONC WHERE track_id = new.track_id; 
+END;
+
+CREATE TABLE genre (
+track_id INTEGER,
+genre VARCHAR(12)
+)
+
+CREATE TRIGGER genre_update
+AFTER UPDATE ON genre 
+BEGIN 
+  UPDATE track 
+  SET genre = (SELECT '#' || group_concat(genre, " #" ) 
+               FROM genre
+               WHERE new.track_id = genre.track_id
+  WHERE track_id = new.track_id
+
+
 END;
 
 CREATE TABLE lyric (
 lyric_id INTEGER PRIMARY KEY,
 track_id INTEGER NOT NULL REFERENCES track(track_id),
 file TEXT,
+json TEXT,
 source TEXT,
 headline TEXT,
 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
