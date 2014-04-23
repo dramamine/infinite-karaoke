@@ -50,6 +50,7 @@ file TEXT,
 json TEXT,
 source TEXT,
 headline TEXT,
+quality INTEGER NOT NULL DEFAULT 0,
 created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -77,6 +78,7 @@ AFTER UPDATE ON lyric_comment
 BEGIN 
   UPDATE lyric_comment SET updated = datetime('now') WHERE lyric_comment_id = new.lyric_comment_id; 
 END;
+
 
 -- TODO this might be nice
 -- CREATE UNIQUE INDEX lyric_comment_by_author_idx ON lyric_comment(lyric_id, created_by);

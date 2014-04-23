@@ -1,4 +1,13 @@
 .container
+  .col-md-12
+    h3.text-center In Space, No-one Can Hear You Sing
+    .input-group
+      input(type="text" class="form-control input-lg" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
+      span(class="input-group-btn")
+        a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
+  .col-md-12
+    p Debug output
+    p {{selectedTrack}}
   .jumbotron.clearfix
     img(src="img/totally-not-a-stolen-stock-photo.jpg" style="height:230px;" class="pull-right")
     h1.text-center Infinite Karaoke
@@ -33,13 +42,3 @@
         | Tracks that have been verified by the community have         
         | <i class="fa fa-star"></i>s by them!
 
-
-    .col-md-12
-      h3.text-center In Space, No-one Can Hear You Sing
-      .input-group
-        input(type="text" class="form-control" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
-        span(class="input-group-btn")
-          a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
-    .col-md-12
-      p Debug output
-      p {{selectedTrack}}
