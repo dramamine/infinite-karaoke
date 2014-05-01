@@ -29,19 +29,17 @@ END;
 CREATE TABLE genre (
 track_id INTEGER,
 genre VARCHAR(12)
-)
+);
 
-CREATE TRIGGER genre_update
-AFTER UPDATE ON genre 
-BEGIN 
-  UPDATE track 
-  SET genre = (SELECT '#' || group_concat(genre, " #" ) 
-               FROM genre
-               WHERE new.track_id = genre.track_id
-  WHERE track_id = new.track_id
-
-
-END;
+-- CREATE TRIGGER genre_update
+-- AFTER INSERT ON genre 
+-- BEGIN 
+--   UPDATE track 
+--   SET genre = (SELECT '#' || group_concat(genre, " #" ) 
+--                FROM genre
+--                WHERE new.track_id = genre.track_id)
+--   WHERE track_id = new.track_id;
+-- END;
 
 CREATE TABLE lyric (
 lyric_id INTEGER PRIMARY KEY,
@@ -268,4 +266,10 @@ INSERT INTO video_comment (video_id, upvote, comment_type )  VALUES(2007, 0, 3);
 INSERT INTO video_comment (video_id, upvote, comment_type, comment_text )  VALUES(2010, 0, 3, "wtf is this");
 INSERT INTO video_comment (video_id, upvote, comment_type, comment_text )  VALUES(2010, 0, 3, "john mayer??");
 INSERT INTO video_comment (video_id, upvote, comment_type )  VALUES(2010, 0, 2);
+
+--
+INSERT INTO genre (track_id, genre) VALUES(1006, "metal");
+INSERT INTO genre (track_id, genre) VALUES(1006, "post-hardcore");
+INSERT INTO genre (track_id, genre) VALUES(1006, "1969");
+INSERT INTO genre (track_id, genre) VALUES(1015, "metal");
 

@@ -19,6 +19,13 @@ SELECT count(*) FROM lyric_comment;
 .print TEST: expecting '9'
 SELECT count(*) FROM video_comment; 
 
+.print TEST: expecting '#metal #post-hardcore #1969'
+SELECT genre FROM track WHERE track_id = 1006; 
+.print TEST: expecting '#metal'
+SELECT genre FROM track WHERE track_id = 1015;
+
+
+
 -- test foreign key stuff
 .print TEST: expecting 'foreign key constraint failed'
 INSERT INTO lyric(track_id) VALUES (9000); 
@@ -35,3 +42,4 @@ INSERT INTO video(track_id, youtube_id) VALUES (9000, "");
 INSERT INTO video_comment(video_id) VALUES (9000); 
 .print TEST: expecting 'foreign key constraint failed'
 INSERT INTO video_comment(video_id, comment_type) VALUES (2001, 999); 
+
