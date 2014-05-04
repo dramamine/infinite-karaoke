@@ -15,7 +15,7 @@ LyricSchema = mongoose.Schema
     reason: String
     ip: String
   content: [{ time: Number, line: String } ]
-  history: [{ id: String }]
+  patches: [{}]
 
 VideoSchema = mongoose.Schema
   youtube_id: String
@@ -24,7 +24,7 @@ VideoSchema = mongoose.Schema
     category: Number
     reason: String
     ip: String
-  history: [{id: String}]
+  patches: [{}]
   offset: Number
 
 TrackSchema = mongoose.Schema

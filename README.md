@@ -159,3 +159,13 @@ grunt forever-start
 
 2014/04/29
 ### using lrc-importer.coffee
+
+2014/05/02
+
+To connect using the shell:
+mongo dbh36.mongolab.com:27367/infinite -u <dbuser> -p <dbpassword>
+To connect using a driver via the standard URI (what's this?):
+  mongodb://<dbuser>:<dbpassword>@dbh36.mongolab.com:27367/infinite
+
+
+
