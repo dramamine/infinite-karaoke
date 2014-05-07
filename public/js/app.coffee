@@ -15,12 +15,8 @@ karaokeApp.config(['$routeProvider',
   ($routeProvider) -> 
     $routeProvider.
       when('/', {
-        templateUrl: 'partials/track-search.html',
+        templateUrl: 'index.jade',
         controller: 'TrackSearchCtrl'
-      }).
-      when('/track/:id', {
-        templateUrl: 'partials/play.html',
-        controller: 'PlayCtrl'
       }).
       otherwise({
         redirectTo: '/'

@@ -18,3 +18,4 @@ bower_components/
 public/javascripts/youtube-lyrics.js
 npm-debug.log
 data/dbconfig.coffee
+public/lib/

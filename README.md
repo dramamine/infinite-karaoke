@@ -167,5 +167,40 @@ mongo dbh36.mongolab.com:27367/infinite -u <dbuser> -p <dbpassword>
 To connect using a driver via the standard URI (what's this?):
   mongodb://<dbuser>:<dbpassword>@dbh36.mongolab.com:27367/infinite
 
+fix up project organization
+---------------------
+this folder is a mess anyway
+copy over flat files
+folders for src/ and app/ only 
+  app/chromecast
+  app/public
+  test
+kill dead files
+switch to HARP to serve up straight coffee / jade
+
+play songs from my personal collection
+--------------------------------------
+switch tracks.coffee to use mongodb
+add lyric editing
+add video feedback
+add lyric feedback
+create lyric-syncing directive
+  interact with the youtube javascript object
+    window listeners, eh?
+  create lyric display component
+  handle progress bar
+
+
+playing any song ever
+---------------------
+add lyric editor
+add youtube search feature
+
+queueing
+--------
+plan out the interface
+  how can a user add to the end of the queue? 
+  & the top of the queue?
+switch dropdown to send things to the queue
 
 

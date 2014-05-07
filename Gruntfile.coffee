@@ -14,57 +14,53 @@ module.exports = (grunt) ->
 
     pkg: grunt.file.readJSON 'package.json'
 
+    # express:
+    #   options:
+    #     cmd: 'coffee'
+    #     script: '<%= pkg.main %>'
+    #     delay: 1
+    #   dev: {}
+
+
+    # pkg: '<json:package.json>'
+    # bower: '<json:bower.json>'
+
+    targets:
+      src: ['src/**/*.coffee']
+      # unittest: [
+      #   'test/unit/**/*.coffee'
+      #   'test/helpers/**/*.coffee'
+      # ]
+      # integrationtest: ['test/integration/**/*.coffee']
+      gruntfile: ['Gruntfile.coffee']
+
+    coffeelint:
+      all: '<%= targets %>'
+
+
+    jade:
+      options:
+        pretty: true
+      src: ['src/**/*.jade']
+
     express:
       options:
         cmd: 'coffee'
         script: '<%= pkg.main %>'
         delay: 1
-      dev: {}
 
+      dev:
+        options:
+          background: false
 
-    # coffeelint:
-    #   options:
-    #     configFile: 'config/coffeelint.json'
-    #   src: ['*.coffee','src/**/*.coffee','test/**/*.coffee','generator/**/*.coffee']
+      watch:
+        delay: '<%= express.inspect.delay %>'
 
-    # mochaTest:
-    #   src: ['test/**/*.coffee']
-    #   options:
-    #     reporter: 'nyan'
-    #     clearRequireCache: true
-    #     require: 'coffee-script'
     forever:
       server:
         options:
           command: 'coffee'
           index: '<%= pkg.main %>'
-
-
-
-    coffee:
-      compile: 
-          # './chromecast-receiver/youtube-lyrics.js' : './public/javascripts/youtube-lyrics.coffee'
-          # './public/javascripts/youtube-lyrics.js' : './public/javascripts/youtube-lyrics.coffee'
-        expand: true,
-        flatten: true,
-        options: {
-          bare: true
-        }
-        cwd: "src-angular/js",
-        src: ['*.coffee'],
-        dest: 'app/js/',
-        ext: '.js'
-
-    
-    jade: 
-      compile: 
-
-        files: grunt.file.expandMapping(['**/*.jade'], 'app/', {
-                cwd: 'src-angular', 'src-angular/partials'
-                rename: (destBase, destPath) -> 
-                    destBase + destPath.replace(/\.jade$/, '.html')
-                
-            })
 
     shell:
       file: 'data/marten.db',
@@ -110,17 +106,17 @@ module.exports = (grunt) ->
     #     dest: 'public/views/'
     #     filter: 'isFile'
 
-    watch:
-      coffee:
-          files: 'src-angular/js/*.coffee'
-          tasks: ['coffee:compile']
-      jade:
-          files: 'src-angular/**/*.jade'
-          tasks: ['jade:compile']
+    # watch:
+    #   coffee:
+    #       files: 'src/js/*.coffee'
+    #       tasks: ['coffee:compile']
+    #   jade:
+    #       files: 'src/views/**/*.jade'
+    #       tasks: ['jade:compile']
 
-      options:
-        spawn: false
-        livereload: true
+    #   options:
+    #     spawn: false
+    #     livereload: true
         
       # coffeelint:
       #   tasks: ['coffeelint']
@@ -146,9 +142,9 @@ module.exports = (grunt) ->
       #   tasks: ['copy:main']
       #   files: '<%= copy.main.cwd %><%= copy.main.src %>'
 
-      express:
-        tasks: ['express']
-        files: ['src/**/*.coffee','src/**/*.jade']
+      # express:
+      #   tasks: ['express']
+      #   files: ['src/**/*.coffee','src/**/*.jade']
 
       
 
@@ -180,9 +176,11 @@ module.exports = (grunt) ->
   #end on watch
 
   #tasks
+  
+
   grunt.registerTask 'default', [
-    'coffee'
-    'jade'
+    # 'coffeelint'
+    # 'jade'
     'express'
     'watch'
     ]
