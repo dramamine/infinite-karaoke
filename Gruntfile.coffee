@@ -26,7 +26,11 @@ module.exports = (grunt) ->
     # bower: '<json:bower.json>'
 
     targets:
-      src: ['src/**/*.coffee']
+      src: [
+        'src/**/*.coffee'
+        'public/**/*.coffee'
+        'public/**/*.jade'
+      ]
       # unittest: [
       #   'test/unit/**/*.coffee'
       #   'test/helpers/**/*.coffee'
@@ -49,12 +53,20 @@ module.exports = (grunt) ->
         script: '<%= pkg.main %>'
         delay: 1
 
-      dev:
-        options:
-          background: false
+      # dev:
+      #   options:
+      #     background: false
 
+      # prob don't need this
       watch:
-        delay: '<%= express.inspect.delay %>'
+        background: true
+
+    watch:
+      express:
+        files: '<%= targets.src %>'
+        tasks: 'express'
+        options:
+          spawn: false
 
     forever:
       server:
@@ -181,7 +193,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'default', [
     # 'coffeelint'
     # 'jade'
-    'express'
+    'express:watch'
     'watch'
     ]
 

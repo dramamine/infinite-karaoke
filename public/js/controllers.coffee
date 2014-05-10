@@ -4,12 +4,14 @@
 
 allControllers = angular.module('allControllers', ['allServices'])
 
-allControllers.controller 'TrackSearchCtrl', ['$scope', 'TrackService', 
-  ($scope, TrackService) -> 
-
+allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackService', 
+  ($scope, $resource, TrackService) -> 
+    $scope.myData = {}
     # load placeholder data
     $scope.tracks = TrackService.data
-    $scope.selectedTrack = ''
+    $scope.myData.tracks = TrackService.data
+    $scope.selectedTrack = 'Test - Test'
+    $scope.myData.selectedTrack = 'Test - Test'
 
     # not a router, I swear.
     # This is kinda dirty, since "selectedTrack" is either a JSON object with
@@ -27,8 +29,10 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', 'TrackService',
 
       
     # get tracks from the database
-    TrackService.getData().then (newData) ->
-      $scope.tracks = newData
+    url = "/api/track"
+    resource = $resource(url)
+    resource.query {}, (result) ->
+      $scope.tracks = result
 
     return null
 

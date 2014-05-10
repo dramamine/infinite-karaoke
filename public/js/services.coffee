@@ -40,54 +40,62 @@ allServices.service('SampleService', [
     return null
 ])
 
-allServices.service('TrackService', ['$http',
-  ($http) ->
+allServices.service('TrackService', ['$http', '$resource',
+  ($http, $resource) ->
 
     this.data = [{
       artist_name: "Placeholder",
       track_name: "Be Patient"
       }]
 
-    this.getData = ->
+    # this.getData = ->
+    #   console.log 'getData called.'
+    #   url = "/api/track"
+    #   resource = $resource(url)
+    #   things = resource.query {}, (result) ->
+    #     console.log result
+    #     return result
+
+    # this.getData = ->
       
-      url = '../data/tracklist'
-      promise = $http.get(url)
-      .then (results) ->
-        # TODO check headers and stuff
+    #   url = '../data/tracklist'
+    #   promise = $http.get(url)
+    #   .then (results) ->
+    #     # TODO check headers and stuff
         
 
           
         
-        menuItems = []
-        for track in results.data
+    #     menuItems = []
+    #     for track in results.data
 
-          # TODO ew, too much html in the label
-          # just use a custom template vi angular-strap
-          # and maybe a custom filter for these icons / classes
+    #       # TODO ew, too much html in the label
+    #       # just use a custom template vi angular-strap
+    #       # and maybe a custom filter for these icons / classes
           
-          switch track.total_quality
-            when 0
-              icon = 'fa-star-o'
-            when 1
-              icon = 'fa-star-half-o'
-            when 2
-              icon = 'fa-star'
+    #       switch track.total_quality
+    #         when 0
+    #           icon = 'fa-star-o'
+    #         when 1
+    #           icon = 'fa-star-half-o'
+    #         when 2
+    #           icon = 'fa-star'
 
-          menuItems.push {
-            "value": track.track_id,
-            "label": "<i class=\"fa #{icon}\"></i> #{track.artist_name} - #{track.track_name}",
-            "total_quality": track.total_quality
-          }
+    #       menuItems.push {
+    #         "value": track.track_id,
+    #         "label": "<i class=\"fa #{icon}\"></i> #{track.artist_name} - #{track.track_name}",
+    #         "total_quality": track.total_quality
+    #       }
 
-        menuItems.push {
-          "value": 1,
-          "label": "",
-          "total_quality": 0
-        }
+    #     menuItems.push {
+    #       "value": 1,
+    #       "label": "",
+    #       "total_quality": 0
+    #     }
 
-        return menuItems
+    #     return menuItems
 
-      return promise
+    #   return promise
 
     this.lookupTrack = (trackId) ->
       url = '../data/track/' + trackId

@@ -27,6 +27,9 @@ app.configure ->
   app.set 'view engine', 'jade'
   app.locals.pretty = true
 
+  # connect to our db
+  mongoose = require './db/db.coffee'
+
   # put everything you 'use' in here!
   middleware = [
 
@@ -38,8 +41,8 @@ app.configure ->
   #app.use express.static path.join __dirname, '../public'
   #app.use express.static path.join __dirname, '../app'
   
-  app.use '/public', express.static path.resolve __dirname, '../public'
-  app.use '/public', harp.mount path.resolve __dirname, '../public'
+  app.use '/', express.static path.resolve __dirname, '../public'
+  app.use '/', harp.mount path.resolve __dirname, '../public'
   #app.use '/public', harp.mount path.resolve __dirname, '../public'
   app.use 'favicon', path.resolve __dirname, '../public/favicon.ico'
 
@@ -63,14 +66,14 @@ app.configure 'development', ->
 
 app.configure 'production', ->
   app.use express.errorHandler()
-  app.set 'domain', 'shorttrack.me'
+  app.set 'domain', 'metal-heart.org'
   app.set 'port', 80
 
 # get some frackin routes
-# require('./routes') app
+require('./routes') app
 
 app.listen (app.get 'port'), (app.get 'domain')
-console.log "Listenting to #{app.get 'domain'}:#{app.get 'port'}"
+console.log "Listening to #{app.get 'domain'}:#{app.get 'port'}"
 
 module.exports = app
 

@@ -37,14 +37,17 @@ block content
           | Tracks that have been verified by the community have         
           | <i class="fa fa-star"></i>s by them!
 
-
-      .col-md-12
-        h3.text-center In Space, No-one Can Hear You Sing
-        .input-group
-          input(type="text" class="form-control" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
-          span(class="input-group-btn")
-            a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
-      .col-md-12
-        p Debug output
-        p {{selectedTrack}}
+      div(ng-controller="TrackSearchCtrl")
+        .col-md-12
+          h3.text-center In Space, No-one Can Hear You Sing
+          .input-group
+            input(type="text" class="form-control" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
+            span(class="input-group-btn")
+              a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
+        .col-md-12
+          p Debug output
+          p {{selectedTrack}}
+          p {{tracks}}
+          p {{myData.selectedTrack}}
+          p {{myData.tracks}}
 

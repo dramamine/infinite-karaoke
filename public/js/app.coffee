@@ -8,14 +8,15 @@ karaokeApp = angular.module 'karaokeApp', [
   'allControllers',
   'allDirectives',
   'mgcrea.ngStrap',
-  'ngSanitize'
+  'ngSanitize', 
+  'ngResource'
 ]
 
 karaokeApp.config(['$routeProvider',
   ($routeProvider) -> 
     $routeProvider.
       when('/', {
-        templateUrl: 'index.jade',
+        #templateUrl: 'index.jade'
         controller: 'TrackSearchCtrl'
       }).
       otherwise({

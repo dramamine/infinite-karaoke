@@ -13,6 +13,6 @@ mongoose.connect addy
 db = mongoose.connection
 db.on 'error', console.error.bind(console, 'connection error:')
 db.once 'open', ->
-  console.log 'Got a db connection.'
+  console.log 'got a connection!'
 
 module.exports = mongoose
