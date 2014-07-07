@@ -29,10 +29,20 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
 
       
     # get tracks from the database
+    # @see routes/api.coffee
     url = "/api/track"
     resource = $resource(url)
     resource.query {}, (result) ->
+
+      # convert to menu-items
+      # TODO probs shouldn't do this in the controller, but whatever.
+      angular.forEach result, (track) ->
+        track.label = "#{track.artist} - #{track.track}"
+        track.value = track._id
+
       $scope.tracks = result
+
+      console.log result
 
     return null
 
@@ -40,6 +50,8 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
 
 allControllers.controller 'PlayCtrl', ['$scope', '$routeParams', 'TrackService', 
   ($scope, $routeParams, TrackService) -> 
+
+    $scope.code = 'oHg5SJYRHA0';
 
     TrackService.lookupTrack( $routeParams.id ).then (newData) ->
       console.log newData
