@@ -5,6 +5,8 @@
 module.exports = (app) ->
   routes = [
     'api'
+    'karaoke'
+    'main'
   ]
   require("./#{r}") app for r in routes
   

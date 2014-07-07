@@ -11,17 +11,3 @@ karaokeApp = angular.module 'karaokeApp', [
   'ngSanitize', 
   'ngResource'
 ]
-
-karaokeApp.config(['$routeProvider',
-  ($routeProvider) -> 
-    $routeProvider.
-      when('/', {
-        #templateUrl: 'index.jade'
-        controller: 'TrackSearchCtrl'
-      }).
-      otherwise({
-        redirectTo: '/'
-      })
-
-    return null
-])

@@ -53,9 +53,9 @@ allControllers.controller 'PlayCtrl', ['$scope', '$routeParams', 'TrackService',
 
     $scope.code = 'oHg5SJYRHA0';
 
-    TrackService.lookupTrack( $routeParams.id ).then (newData) ->
-      console.log newData
+    # TrackService.lookupTrack( $routeParams.id ).then (newData) ->
+    #   console.log newData
 
-      $scope.data = newData
+    #   $scope.data = newData
 
 ]
