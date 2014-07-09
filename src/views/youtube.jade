@@ -1,6 +1,9 @@
-extends ../layout
+extends layout
 
 block content
-  div(ng-controller="PlayCtrl")
+  div(ng-controller="PlayCtrl" ng-init="users= #{JSON.stringify(users)}")
     p Hello from youtube.jade!
-    youtuber(code="code")
+
+    p Users: {{users}}
+
+    //- youtuber(code="code")

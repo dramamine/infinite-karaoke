@@ -15,7 +15,8 @@ app = express()
 
 
 app.configure ->
-
+  app.set 'views', __dirname + '/views'
+  app.locals.basedir = app.get 'views'
   app.set 'view engine', 'jade'
   app.locals.pretty = true
 

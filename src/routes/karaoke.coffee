@@ -17,9 +17,14 @@ class Karaoke
     # ideally I would load up the track info and send it to the
     # controller. or I could just pass the param to the controller
     # and let the controller hit TrackService.
-    TrackModel.findOne {_id: id}, (err, track) ->
-      console.log track
+
+    # TrackModel.findOne {_id: id}, (err, track) ->
+    #   console.log track
+
+      # how do I send this to the controller
     
-    res.render 'youtube'
+    res.render 'youtube', {
+      users: id
+    }
 
 module.exports = (app) -> new Karaoke app
