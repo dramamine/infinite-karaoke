@@ -3,9 +3,6 @@ TrackModel = require '../models/track'
 class Karaoke
   constructor: (@app) ->
 
-    console.log 'karaoke being constructed.'
-
-    @app.get '/karaoke', @karaoke
     @app.get '/karaoke/:id', @karaoke
 
   karaoke: (req, res) ->
@@ -24,7 +21,7 @@ class Karaoke
       # how do I send this to the controller
     
     res.render 'youtube', {
-      users: id
+      trackid: id
     }
 
 module.exports = (app) -> new Karaoke app

@@ -1,7 +1,7 @@
 # HI HI
 
 # Run with grunt
-cd ~/Dropbox/lastfm-stats-js
+cd ~/Dropbox/karaoke
 grunt
 
 # Then go to

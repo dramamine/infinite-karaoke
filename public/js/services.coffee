@@ -97,16 +97,16 @@ allServices.service('TrackService', ['$http', '$resource',
 
     #   return promise
 
-    this.lookupTrack = (trackId) ->
-      url = '../data/track/' + trackId
-      console.log 'checking this: ' + url
-      promise = $http.get(url)
-      .then (results) ->
-        # TODO check headers and stuff
-        console.log(results.data)
-        return results.data
+    # killed this and put it straight in the Playback Controller
+    # this.lookupTrack = (trackId) ->
 
-      return promise
+    #   url = "/api/track"
+    #   resource = $resource(url)
+    #   resource.query { _id: trackId }, (result) ->
+    #     console.log 'lookupTrack getting this:'
+    #     console.log result
+    #     return result
+    #   return resource
 
 
 

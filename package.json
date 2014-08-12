@@ -30,7 +30,11 @@
     "grunt-contrib-jade": "~0.11.0",
     "grunt-shell": "~0.6.4",
     "sqlite3": "^2.2.3",
-    "mongoose": "~3.8.8"
+    "mongoose": "~3.8.8",
+    "mongodb": "~1.4.7",
+    "regexp-clone": "0.0.1",
+    "sliced": "0.0.5",
+    "mpath": "~0.2.1"
   },
   "repository": {
     "type": "git",

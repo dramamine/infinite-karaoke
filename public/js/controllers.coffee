@@ -10,8 +10,8 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
     # load placeholder data
     $scope.tracks = TrackService.data
     $scope.myData.tracks = TrackService.data
-    $scope.selectedTrack = 'Test - Test'
-    $scope.myData.selectedTrack = 'Test - Test'
+    # $scope.selectedTrack = 'Test - Test'
+    # $scope.myData.selectedTrack = 'Test - Test'
 
     # not a router, I swear.
     # This is kinda dirty, since "selectedTrack" is either a JSON object with
@@ -24,7 +24,7 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
         # I could write a new directive...some day.
         # 
         # return '#/track/' + $scope.selectedTrack.value
-        return '/local/' + $scope.selectedTrack.value
+        return '/karaoke/' + $scope.selectedTrack.value
       return '#/search/' + $scope.selectedTrack
 
       
@@ -48,17 +48,21 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
 
 ]
 
-allControllers.controller 'PlayCtrl', ['$scope', '$routeParams', 'TrackService', 
-  ($scope, $routeParams, TrackService) -> 
+allControllers.controller 'PlayCtrl', ['$scope', '$resource', 
+  ($scope, $resource) -> 
 
-    $scope.code = 'oHg5SJYRHA0';
-    $scope.users = '';
+    $scope.code = 'oHg5SJYRHA0'
+    $scope.trackData = {}
 
-        
+    # ng-init gets loaded after the page
+    $scope.$watch 'trackid', (newId) ->
 
-    # TrackService.lookupTrack( $routeParams.id ).then (newData) ->
-    #   console.log newData
+      # console.log "querying this ID:" + newId
+      url = "/api/track"
+      resource = $resource(url)
+      resource.query { _id: newId }, (result) ->
+        $scope.trackData = result
 
-    #   $scope.data = newData
+    return null
 
 ]

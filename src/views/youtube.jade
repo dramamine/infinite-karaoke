@@ -1,9 +1,14 @@
 extends layout
 
 block content
-  div(ng-controller="PlayCtrl" ng-init="users= #{JSON.stringify(users)}")
+  div(ng-controller="PlayCtrl" ng-init="trackid= #{JSON.stringify(trackid)}")
     p Hello from youtube.jade!
 
-    p Users: {{users}}
+    p Track ID: {{trackid}}
+    p Track info: TODO
 
-    //- youtuber(code="code")
+    h3 DEBUG
+    p Track data from controller: {{trackData}}
+
+
+    youtuber(code='code' trackid='trackid')
