@@ -19,6 +19,7 @@ fs = require 'fs'
 db = require '../data/db.coffee'
 schemas = require '../data/schemas.coffee'
 
+youtube = require 'youtube-api'
 
 ## params ##
 args = process.argv.slice(2)
@@ -129,4 +130,47 @@ handleEveryFile = ->
 
   return null
 
-handleEveryFile()
+# Finds a youtube ID
+# TODO for now just grab one youtube ID.
+# 
+# https://www.npmjs.org/package/youtube-node
+# 
+findYoutubeId = (artist, track) ->
+  # number of search results to expect
+  results = 10
+
+  youtube = require 'youtube-node'
+  config = require '../data/youtube-api-cfg'
+
+  youtube.setKey config.api_key
+
+  # search term, number of results, callback
+  youtube.search(artist + ' ' + track, results, (response) ->
+
+    console.error "Weird response." unless response.items.count > 0
+    
+    for item in response.items
+      console.error item.id.kind + " was a weird response " unless item.id.kind = "youtube#searchResult"
+
+      video = {
+        id: item.id.videoId
+        title: item.snippet.title
+        description: item.snippet.description
+        published: item.snippet.publishedAt
+        thumbnail: item.snippet.thumbnails.default.url
+      }
+
+      console.log video
+
+  )
+
+
+# TEST CODE
+findYoutubeId('owl city', 'deer in the headlights')
+
+##
+# this is the part of the file that executes
+##
+# handleEveryFile()
+
+

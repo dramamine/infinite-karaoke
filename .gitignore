@@ -19,3 +19,5 @@ public/javascripts/youtube-lyrics.js
 npm-debug.log
 data/dbconfig.coffee
 public/lib/
+README-private.md
+data/youtube-api-cfg.json
