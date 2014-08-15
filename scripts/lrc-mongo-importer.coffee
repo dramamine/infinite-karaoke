@@ -72,21 +72,6 @@ lineProcessor = (lyrics, line) ->
   # recursion
   lineProcessor lyrics, line.substr( line.indexOf("\]") + 1 )
 
-getLyrics = ( track, file ) ->
-
-  console.log "lyrics being processed..."
-  data = fs.readFileSync LYRIC_FOLDER + file, 'utf-8'
-
-  lyrics = []
-  lineProcessor(lyrics, line) for line in data.toString().split '\n'
-
-  lyric = new schemas.Lyric
-    content: lyrics
-    imported: true
-
-  console.log "returning them."
-  return lyric
-
 
 handleFile = (file) ->
   
@@ -102,29 +87,27 @@ handleFile = (file) ->
 
   # shitty async
   getVideos(track)
-  .then (data) ->
-    # console.log 'then called.'
-    track.video = data
-    track.lyric = getLyrics track, file
-
+  .then (track) ->
+    console.log track
+    # get lyrics from file
+    return getLyrics track, file
+  .then (track) ->
+    # save the track we created to mongodb. insert or maybe update.
     schemas.Track.findOne {"artist": track.artist, "title": track.title}, (err, one) ->
       console.error err if err
       if one 
         if force_update
           # already exists, update
-          
-
           one.save (err, track) ->
             console.error err if err
             console.log "updated lyric content of #{track.artist} - #{track.title}" unless err
         else
           console.log "track already exists for #{track.artist} - #{track.title}" unless err
-
       else
-
         track.save (err, track) ->
           console.error err if err
           console.log "created track with lyrics for #{track.artist} - #{track.title}" unless err
+    
 
   return null
 
@@ -149,7 +132,7 @@ getVideos = (track) ->
   # number of search results to expect
   results = 10
   # result array
-  videos = []
+  track.videos = []
 
   youtube = require 'youtube-node'
   config = require '../data/youtube-api-cfg'
@@ -173,17 +156,34 @@ getVideos = (track) ->
         thumbnail: item.snippet.thumbnails.default.url
       
       video.save (err, video) ->
-        videos.push(video)
+        track.videos.push(video)
         # console.log video
 
         # shitty async??
-        deferred.resolve videos if videos.length == response.items.length
+        deferred.resolve track if track.videos.length == response.items.length
 
 
       
 
   )
   return deferred.promise
+
+# get lyrics from the file
+getLyrics = ( track, file ) ->
+
+  console.log "lyrics being processed..."
+  data = fs.readFileSync LYRIC_FOLDER + file, 'utf-8'
+
+  lyrics = []
+  lineProcessor(lyrics, line) for line in data.toString().split '\n'
+
+  track.lyrics = new schemas.Lyric
+    content: lyrics
+    imported: true
+
+  console.log "returning them."
+  return track
+
 
 
 # TEST CODE
@@ -202,7 +202,7 @@ getVideos = (track) ->
 
 
 
-#handleFile('Owl City -Deer in the Headlights.lrc')
+# handleFile('Owl City -Deer in the Headlights.lrc')
 
 ##
 # this is the part of the file that executes
