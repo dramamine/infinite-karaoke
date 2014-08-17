@@ -17,7 +17,7 @@ app.directive('youtuber', ($sce)->
 
         if newVal
           console.log 'got code!'
-          scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/embed/" + newVal)
+          scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/v/" + newVal + "?version=3&enablejsapi=1")
 
       scope.$watch 'trackid', (newVal) ->
 

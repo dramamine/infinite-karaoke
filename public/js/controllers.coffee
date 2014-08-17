@@ -51,7 +51,7 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
 allControllers.controller 'PlayCtrl', ['$scope', '$resource', 
   ($scope, $resource) -> 
 
-    $scope.code = 'oHg5SJYRHA0'
+    # $scope.code = 'oHg5SJYRHA0'
     $scope.trackData = {}
 
     # ng-init gets loaded after the page
@@ -61,7 +61,11 @@ allControllers.controller 'PlayCtrl', ['$scope', '$resource',
       url = "/api/track"
       resource = $resource(url)
       resource.query { _id: newId }, (result) ->
+        console.log 'updating scope with new data.'
         $scope.trackData = result
+        # TODO this is pretty shitty for now, but can fix this up when we add
+        # better support for choosing a video.
+        $scope.code = result[0].videos[0].youtube_id
 
     return null
 

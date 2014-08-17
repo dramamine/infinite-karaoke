@@ -38,7 +38,7 @@ TrackSchema.methods.allTags = ->
   return "#" + tags.all.join(' #')
 
 TrackSchema.methods.formatForDropdown = ->
-  return "#{artist} - #{name}"
+  return "#{artist} - #{title}"
 
 Track = mongoose.model('Track', TrackSchema)
 Lyric = mongoose.model('Lyric', LyricSchema)
