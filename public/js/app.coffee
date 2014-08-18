@@ -9,5 +9,6 @@ karaokeApp = angular.module 'karaokeApp', [
   'allDirectives',
   'mgcrea.ngStrap',
   'ngSanitize', 
-  'ngResource'
+  'ngResource',
+  'youtube-embed' # https://github.com/brandly/angular-youtube-embed
 ]

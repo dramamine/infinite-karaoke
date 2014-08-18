@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-
+    "angular-youtube-mb": "~0.0.4"
   }
 }
