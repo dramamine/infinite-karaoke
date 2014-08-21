@@ -37,7 +37,8 @@ allControllers.controller 'TrackSearchCtrl', ['$scope', '$resource', 'TrackServi
       # convert to menu-items
       # TODO probs shouldn't do this in the controller, but whatever.
       angular.forEach result, (track) ->
-        track.label = "#{track.artist} - #{track.track}"
+        # TODO use formatForDropdown insteadls
+        track.label = "#{track.artist} - #{track.title}"
         track.value = track._id
 
       $scope.tracks = result
@@ -97,21 +98,25 @@ allControllers.controller 'PlayCtrl', ['$scope', '$resource', '$youtube',
         initLyric()
 
       initLyric = ->
+        # usually called via $on, needs outside reference
+        lyrics = self.lyrics
+        lyricIndex = self.lyricIndex
+
         console.log "Init lyric called."
 
         currentTime = getCurrentTime()
         console.error "Weird current time." unless currentTime >= 0
 
-        for lyric, idx in self.lyrics
+        for lyric, idx in lyrics
 
           # find the lyric which comes right after the current time
           console.log "examining " + lyric.time + " vs. current time " + currentTime
           if lyric.time > currentTime
             self.lyricIndex = idx-1
-            console.log "Setting current index to " + self.lyricIndex
-            $scope.currentLyric = self.lyrics[self.lyricIndex].line
+            console.log "Setting current index to " + lyricIndex
+            $scope.currentLyric = lyrics[lyricIndex].line
 
-            wait = (lyric.time - self.lyrics[self.lyricIndex].time)
+            wait = (lyric.time - lyrics[lyricIndex].time)
             timer = $timeout( updateLyric, wait )
 
             console.log "Waiting " + wait + " to change lyric."
@@ -122,13 +127,17 @@ allControllers.controller 'PlayCtrl', ['$scope', '$resource', '$youtube',
 
 
       updateLyric = ->
+        # usually called via $timeout, needs outside reference
+        lyrics = self.lyrics
+        lyricIndex = self.lyricIndex
+
         console.log "Update lyric called."
         self.lyricIndex++
-        $scope.currentLyric = self.lyrics[self.lyricIndex].line
-        console.log "Updated lyric to " + self.lyrics[self.lyricIndex].line
-        console.log self.lyrics[self.lyricIndex]
-        console.log self.lyrics[self.lyricIndex + 1]
-        wait = self.lyrics[self.lyricIndex + 1].time - self.lyrics[self.lyricIndex].time
+        $scope.currentLyric = lyrics[lyricIndex].line
+        console.log "Updated lyric to " + lyrics[lyricIndex].line
+        console.log lyrics[lyricIndex]
+        console.log lyrics[lyricIndex + 1]
+        wait = lyrics[lyricIndex + 1].time - lyrics[lyricIndex].time
         console.log "Waiting " + wait + " to update again."
         timer = $timeout( updateLyric, wait )
 
