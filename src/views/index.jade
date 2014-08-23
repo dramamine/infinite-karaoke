@@ -2,52 +2,75 @@ extends layout
 
 block content
     
-  .container
-    .jumbotron.clearfix
-      img(src="img/totally-not-a-stolen-stock-photo.jpg" style="height:230px;" class="pull-right")
-      h1.text-center Infinite Karaoke
-      .lead
-        h6 And beckons me to look through to these infinite possibilities. <em>Tool - Lateralus</em>
-    .row
-      .col-md-6
-        h3.text-center What Is This?
-        p 
-          | Do you ever get sick of the shitty song selection at your local
-          | karaoke bar? 
-        p
-          | Do you love getting a private karaoke booth with your friends, but
-          | hate leaving the house?
-        p
-          | Have you ever been weirded out by pop songs with weird Korean music videos?
-        p
-          | Infinite Karaoke solves all of your problems. Now you can sing any
-          | song your heart desires, set to official-ish music videos, forever.
-      .col-md-6
-        h3.text-center How Does It Work?
-        p 
-          | Infinite Karaoke combines time-synced lyrics from the Internet, with
-          | videos from the Internet.
-        p
-          | Yeah, the Internet is pretty awesome, eh?
-        p
-          | Infinite Karaoke magically finds the right lyrics and videos for you.
-          | If you're trying a song that's never been played before, you can help
-          | out the karaoke community by adjusting the lyrics.
-        p
-          | Tracks that have been verified by the community have         
-          | <i class="fa fa-star"></i>s by them!
+  div.container(ng-controller="StateCtrl")
+    div(ng-hide="hasSearched")
+      .jumbotron.clearfix
+        img(src="img/totally-not-a-stolen-stock-photo.jpg" style="height:230px;" class="pull-right")
+        h1.text-center Infinite Karaoke
+        .lead
+          h6 And beckons me to look through to these infinite possibilities. <em>Tool - Lateralus</em>
+      .row
+        .col-md-6
+          h3.text-center What Is This?
+          p 
+            | Do you ever get sick of the shitty song selection at your local
+            | karaoke bar? 
+          p
+            | Do you love getting a private karaoke booth with your friends, but
+            | hate leaving the house?
+          p
+            | Have you ever been weirded out by pop songs with weird Korean music videos?
+          p
+            | Infinite Karaoke solves all of your problems. Now you can sing any
+            | song your heart desires, set to official-ish music videos, forever.
+        .col-md-6
+          h3.text-center How Does It Work?
+          p 
+            | Infinite Karaoke combines time-synced lyrics from the Internet, with
+            | videos from the Internet.
+          p
+            | Yeah, the Internet is pretty awesome, eh?
+          p
+            | Infinite Karaoke magically finds the right lyrics and videos for you.
+            | If you're trying a song that's never been played before, you can help
+            | out the karaoke community by adjusting the lyrics.
+          p
+            | Tracks that have been verified by the community have         
+            | <i class="fa fa-star"></i>s by them!
 
-      div(ng-controller="TrackSearchCtrl")
-        .col-md-12
-          h3.text-center In Space, No-one Can Hear You Sing
-          .input-group
-            input(type="text" class="form-control" ng-model="selectedTrack" data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" ng-options="track as track.label for track in tracks" placeholder="Type to infinity..." bs-typeahead)
-            span(class="input-group-btn")
-              a(class="btn btn-default" type="button" ng-href="{{pickUrl()}}") Search!
-        .col-md-12
-          p Debug output
-          p {{selectedTrack}}
-          p {{tracks}}
-          p {{myData.selectedTrack}}
-          p {{myData.tracks}}
+    div(ng-controller="TrackSearchCtrl")
+      .col-md-12
+        h3.text-center In Space, No-one Can Hear You Sing
+        .input-group
+          input(type="text" class="form-control" ng-model="selectedTrack" 
+            data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" 
+            ng-options="track as track.label for track in tracks" 
+            placeholder="Type to infinity..." bs-typeahead)
+          span(class="input-group-btn")
+            a(class="btn btn-default" type="button" ng-click="pickTrack()") Search!
+
+      p userAddedTrackId: {{userAddedTrackId}}
+      karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
+
+      //- div(ng-controller="PlayCtrl" ng-if="hasSearched" 
+      //-   ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}")
+
+      //-   youtube-video(id="onlyvid" video-id="code")
+      //-   h3 {{currentLyric}}
+      //-   //-youtuber(code='code' trackid='trackid')
+
+      //-   p Track ID: {{trackid}}
+      //-   p Track info: TODO
+
+      //-   h3 DEBUG
+      //-   p Track data from controller: {{trackData}}
+
+
+
+
+
+  .col-md-12
+    p Here's a footer.
+    p Here's some more stuff.
+
 
