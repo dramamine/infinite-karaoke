@@ -1,9 +1,5 @@
-'use strict';
 
-# Directives
-app = angular.module 'allDirectives', []
-
-app.directive 'youtuber', ($sce) ->
+angular.module('karaoke.directives').directive 'youtuber', ($sce) ->
   return {
     restrict: 'EA'
     scope:
@@ -28,26 +24,3 @@ app.directive 'youtuber', ($sce) ->
       
       return null
   }  
-
-
-app.directive 'karaoke', -> 
-  return {
-    restrict: 'E'
-    scope: {
-      'trackid': '=' # probs get rid of this
-    }
-    controller: 'PlayCtrl'
-    # require: '^TrackSearchCtrl'
-    templateUrl: '../partials/karaoke.html'
-    link: (scope, elem, attr) ->
-
-      scope.$watch 'trackid', (newVal) ->
-        console.log "trackid changed!"
-        if newVal
-          # from controller
-          scope.queueTrack newVal 
-
-        return null
-
-      return null
-  }

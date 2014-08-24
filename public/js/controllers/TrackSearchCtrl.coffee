@@ -1,10 +1,11 @@
 angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
-  '$scope', '$resource', 'TrackService', 
-  ($scope, $resource, TrackService) -> 
+  '$scope', '$resource', 
+  ($scope, $resource) -> 
     $scope.myData = {}
     # load placeholder data
-    $scope.tracks = TrackService.data
-    $scope.myData.tracks = TrackService.data
+    #$scope.tracks = TrackService.data
+    $scope.tracks = []
+    #$scope.myData.tracks = TrackService.data
     $scope.selectedTrack = {}
     #$scope.myData.selectedTrack = 'Test - Test'
 
