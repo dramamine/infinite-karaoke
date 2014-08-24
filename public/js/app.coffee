@@ -1,14 +1,17 @@
-'use strict';
+'use strict'
 
 # App Module
 
 karaokeApp = angular.module 'karaokeApp', [
-  'ngRoute',
-  'ngAnimate',
-  'allControllers',
-  'allDirectives',
-  'mgcrea.ngStrap',
-  'ngSanitize', 
-  'ngResource',
+  'ngRoute'
+  'ngAnimate'
+  'allDirectives'
+  'allServices'
+  'mgcrea.ngStrap'
+  'ngSanitize' 
+  'ngResource'
   'youtube-embed' # https://github.com/brandly/angular-youtube-embed
+  'karaoke.controllers'
 ]
+
+angular.module 'karaoke.controllers', ['allServices']
