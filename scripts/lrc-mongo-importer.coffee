@@ -2,10 +2,6 @@
 # This file imports everything in the `lyrics` folder into the sqlite
 # database. it does this by looking up tracks by artist/track name,
 # then inserting/updating the best lyrics record it finds.
-# 
-# This seems "not great" for the long term, but I'm not too worried
-# about it at the moment! Would like to switch to mongoDB for the 
-# experience + performance comparison
 #
 # Usage:
 # cd scripts

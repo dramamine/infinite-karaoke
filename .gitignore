@@ -21,3 +21,6 @@ data/dbconfig.coffee
 public/lib/
 README-private.md
 data/youtube-api-cfg.json
+forever/
+err.out
+old-views/
