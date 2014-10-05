@@ -26,9 +26,13 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
         $scope.trackData = result[0]
         self.lyrics = $scope.trackData.lyrics[0].content
 
-        # TODO this is pretty shitty for now, but can fix this up when we add
-        # better support for choosing a video.
-        $scope.code = result[0].videos[0].youtube_id
+        # TODO could just use sortBy from unserscore        
+        chosenVideo = result[0].videos[0]
+        for video in result[0].videos
+          if chosenVideo == {} || video.score > chosenVideo.score
+            chosenVideo = video
+        
+        $scope.code = chosenVideo.youtube_id
 
 
         # autoplay

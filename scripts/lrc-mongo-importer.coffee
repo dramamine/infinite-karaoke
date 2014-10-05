@@ -23,6 +23,7 @@ db = require '../src/db/db'
 Track = require '../src/models/track'
 Video = require '../src/models/video'
 Lyric = require '../src/models/lyric'
+_ = require 'underscore'
 
 
 youtube = require 'youtube-node'
@@ -81,7 +82,7 @@ lineProcessor = (lyrics, line) ->
 handleFile = (file) ->
   
   track = new Track
-  
+
   rex = /(.*?)-.*/
   artist_arr = rex.exec file
   track.artist = artist_arr[1].trim()
@@ -93,7 +94,7 @@ handleFile = (file) ->
   # shitty async
   getVideos(track)
   .then (track) ->
-    console.log track
+    # console.log track
     # get lyrics from file
     return getLyrics track, file
   .then (track) ->
@@ -164,6 +165,8 @@ getVideos = (track) ->
         description: item.snippet.description
         published: item.snippet.publishedAt
         thumbnail: item.snippet.thumbnails.default.url
+
+      video = rateTitle video
       
       video.save (err, video) ->
         track.videos.push(video)
@@ -187,6 +190,9 @@ getLyrics = ( track, file ) ->
   lyrics = []
   lineProcessor(lyrics, line) for line in data.toString().split '\n'
 
+  lyrics = _.sortBy lyrics, 'time'
+  lyrics = _.unique lyrics, false, (item) -> return JSON.stringify(item)
+
   lyric = new Lyric
     content: lyrics
     imported: true
@@ -196,6 +202,32 @@ getLyrics = ( track, file ) ->
   console.log "returning them."
   return track
 
+# basic function to look at video titles and pre-rate them before users see them
+rateTitle = (video) ->
+  return video unless video.title
+  title = video.title.toLowerCase()
+  score = 0
+  comments = []
+
+  stringsToCheck = 
+    'official': 1
+    'lyric': -1
+    'live': -1
+
+  for check, rating of stringsToCheck
+    if title.indexOf(check) > -1
+      score += rating
+      comments.push
+        rating: rating
+        category: 0 # TODO magic number, oops
+        reason: 'has \'' + check + '\' in name'
+        ip: '127.0.0.1'
+
+      # console.log 'found a ' + check + ' music video.'
+
+  video.score = score
+  video.comments = comments
+  return video
 
 
 # TEST CODE
