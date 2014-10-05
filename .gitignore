@@ -24,3 +24,4 @@ scripts/youtube-api-cfg.json
 forever/
 err.out
 old-views/
+config.js

@@ -36,7 +36,8 @@
     "sliced": "0.0.5",
     "youtube-node": "~1.0.1",
     "q": "~1.0.1",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "grunt-ng-constant": "~1.0.0"
   },
   "repository": {
     "type": "git",

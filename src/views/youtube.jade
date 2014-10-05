@@ -6,10 +6,11 @@ block content
     youtube-video(id="onlyvid" video-id="code")
     h3 {{currentLyric}}
     //-youtuber(code='code' trackid='trackid')
+    
+    div(ng-show="DEBUG")
+      h3 DEBUG
 
-    p Track ID: {{trackid}}
-    p Track info: TODO
+      p Track ID: {{trackid}}
+      p Track info: TODO
 
-    h3 DEBUG
-    p Track data from controller: {{trackData}}
-
+      p Track data from controller: {{trackData}}

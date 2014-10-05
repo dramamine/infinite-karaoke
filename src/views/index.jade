@@ -49,28 +49,8 @@ block content
           span(class="input-group-btn")
             a(class="btn btn-default" type="button" ng-click="pickTrack()") Search!
 
-      p userAddedTrackId: {{userAddedTrackId}}
       karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
 
-      //- div(ng-controller="PlayCtrl" ng-if="hasSearched" 
-      //-   ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}")
-
-      //-   youtube-video(id="onlyvid" video-id="code")
-      //-   h3 {{currentLyric}}
-      //-   //-youtuber(code='code' trackid='trackid')
-
-      //-   p Track ID: {{trackid}}
-      //-   p Track info: TODO
-
-      //-   h3 DEBUG
-      //-   p Track data from controller: {{trackData}}
-
-
-
-
-
-  .col-md-12
-    p Here's a footer.
-    p Here's some more stuff.
-
-
+    div(ng-show="DEBUG")
+      h3 Some debug stuff goes here.
+      p userAddedTrackId: {{userAddedTrackId}}

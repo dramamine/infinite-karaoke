@@ -61,6 +61,19 @@ module.exports = (grunt) ->
       watch:
         background: true
 
+
+    ngconstant:
+      options: 
+        dest: 'public/js/config.js'
+        name: 'config'
+      development:
+        constants:
+          DEBUG: true
+      production:
+        constants:
+          DEBUG: false
+
+
     watch:
       express:
         files: '<%= targets.src %>'
@@ -193,16 +206,13 @@ module.exports = (grunt) ->
   grunt.registerTask 'default', [
     # 'coffeelint'
     # 'jade'
+    'ngconstant:development'
     'express:watch'
     'watch'
     ]
 
-  grunt.registerTask 'db-reset', [
-    'shell:dbsetup',
-    'shell:dbtest'
-    ]
-
   grunt.registerTask 'forever-start', [
+    'ngconstant:production'
     'forever:server:start'
     ]
   grunt.registerTask 'forever-stop', [
