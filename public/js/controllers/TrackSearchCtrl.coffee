@@ -12,7 +12,7 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
 
     $scope.pickTrack = ->
       console.log "pickTrack called."
-      console.log $scope.selectedTrack.value
+      console.log $scope.selectedTrack
 
       $scope.$parent.trackid = $scope.selectedTrack.value
       $scope.userAddedTrackId = $scope.selectedTrack.value

@@ -2,8 +2,6 @@ express = require 'express'
 #expose = require 'express-expose'
 require 'coffee-script'
 require 'jade'
-tracks = require './tracks'
-db = require './db'
 path = require 'path'
 harp = require 'harp'
 # these get app.locals working some magic, I guess

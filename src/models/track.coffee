@@ -4,9 +4,9 @@ Lyric = require './lyric'
 
 TrackSchema = mongoose.Schema
   artist: String
-  track: String
-  lyric: [Lyric.schema]
-  video: [Video.schema]
+  title: String
+  lyrics: [Lyric.schema]
+  videos: [Video.schema]
   tags: [String]
 
 # turn tags into searchable item
@@ -14,6 +14,6 @@ TrackSchema.methods.allTags = ->
   return "#" + tags.all.join(' #')
 
 TrackSchema.methods.formatForDropdown = ->
-  return "#{artist} - #{track}"
+  return "#{artist} - #{title}"
 
 module.exports = mongoose.model 'Track', TrackSchema

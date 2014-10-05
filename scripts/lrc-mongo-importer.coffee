@@ -2,6 +2,12 @@
 # This file imports everything in the `lyrics` folder into the sqlite
 # database. it does this by looking up tracks by artist/track name,
 # then inserting/updating the best lyrics record it finds.
+# 
+# If you get 'Bad Request' errors, make sure your IP is allowed! Go here to
+# edit the IP list
+# https://console.developers.google.com/project/bloodrocution-666/apiui/credential
+# Also make sure you have this module installed globally
+# npm install youtube-node -g
 #
 # Usage:
 # cd scripts
@@ -13,10 +19,13 @@ LYRIC_FOLDER = '../data/lyrics/'
 
 fs = require 'fs'
 q = require 'q'
-db = require '../data/db.coffee'
-schemas = require '../data/schemas.coffee'
+db = require '../src/db/db'
+Track = require '../src/models/track'
+Video = require '../src/models/video'
+Lyric = require '../src/models/lyric'
 
-youtube = require 'youtube-api'
+
+youtube = require 'youtube-node'
 
 ## params ##
 args = process.argv.slice(2)
@@ -28,9 +37,9 @@ force_update = false
 force_update = true for arg in args when arg is '--update'
 
 
-schemas.Track.find().remove().exec() if reset
-schemas.Video.find().remove().exec() if reset
-schemas.Lyric.find().remove().exec() if reset
+Track.find().remove().exec() if reset
+Video.find().remove().exec() if reset
+Lyric.find().remove().exec() if reset
 
 # Recursive function to process a line. 
 # 
@@ -71,8 +80,8 @@ lineProcessor = (lyrics, line) ->
 
 handleFile = (file) ->
   
-  track = new schemas.Track
-
+  track = new Track
+  
   rex = /(.*?)-.*/
   artist_arr = rex.exec file
   track.artist = artist_arr[1].trim()
@@ -89,7 +98,7 @@ handleFile = (file) ->
     return getLyrics track, file
   .then (track) ->
     # save the track we created to mongodb. insert or maybe update.
-    schemas.Track.findOne {"artist": track.artist, "title": track.title}, (err, one) ->
+    Track.findOne {"artist": track.artist, "title": track.title}, (err, one) ->
       console.error err if err
       if one 
         if force_update
@@ -112,7 +121,7 @@ handleFile = (file) ->
 handleEveryFile = ->
   folder_contents = fs.readdirSync LYRIC_FOLDER
   for file in folder_contents
-
+    # TODO warning, no validation here! just grabbing all the files! oh no
     handleFile file
 
   return null
@@ -131,7 +140,7 @@ getVideos = (track) ->
   track.videos = []
 
   youtube = require 'youtube-node'
-  config = require '../data/youtube-api-cfg'
+  config = require './youtube-api-cfg'
 
   youtube.setKey config.api_key
 
@@ -139,12 +148,17 @@ getVideos = (track) ->
   # search term, number of results, callback
   youtube.search(track.artist + ' ' + track.title, results, (response) ->
 
-    console.error "Weird response." unless response.items.length > 0
+    if response.items.length == 0
+      console.error "Weird response."
+      console.error response
+      console.error response.items.length
+      deferred.fail
+      return
     
     for item in response.items
       console.error item.id.kind + " was a weird response " unless item.id.kind = "youtube#searchResult"
 
-      video = new schemas.Video
+      video = new Video
         youtube_id: item.id.videoId
         title: item.snippet.title
         description: item.snippet.description
@@ -173,9 +187,11 @@ getLyrics = ( track, file ) ->
   lyrics = []
   lineProcessor(lyrics, line) for line in data.toString().split '\n'
 
-  track.lyrics = new schemas.Lyric
+  lyric = new Lyric
     content: lyrics
     imported: true
+
+  track.lyrics.push(lyric)
 
   console.log "returning them."
   return track
