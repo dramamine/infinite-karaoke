@@ -1,7 +1,7 @@
 # Infinite Karaoke App
 ![Progress Bar](http://progressed.io/bar/30?title=progress)
 
-Karaoke app to sync youtube videos and lyrics. See a live demo at http://metal-heart.org/app/
+Karaoke app to sync youtube videos and lyrics. See a live demo at http://metal-heart.org
 
 Written using the MEAN stack (MongoDB, Express, AngularJS, Node)
 
