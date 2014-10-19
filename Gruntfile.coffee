@@ -1,18 +1,23 @@
 module.exports = (grunt) ->
   
-  #load tasks
-  require('load-grunt-tasks') grunt
+
+  require('load-grunt-config') grunt,
+    init: true #auto grunt.initConfig
+    config:
+      # load in the module information
+      #pkg: grunt.file.readJSON 'package.json'
+      # path to Grunt file for exclusion
+
+      targets:
+        src: [
+          'src/**/*.coffee'
+          'src/views/*.jade'
+        ]
+      gruntfile: ['Gruntfile.coffee']
+      bower: '<json:bower.json>'
 
   
-  grunt.loadNpmTasks 'grunt-contrib-jade'
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-shell'
-  grunt.loadNpmTasks 'grunt-forever'
 
-  #config
-  grunt.initConfig
-
-    pkg: grunt.file.readJSON 'package.json'
 
     # express:
     #   options:
@@ -42,11 +47,6 @@ module.exports = (grunt) ->
       all: '<%= targets %>'
 
 
-    jade:
-      options:
-        pretty: true
-      src: ['src/**/*.jade']
-
     express:
       options:
         cmd: 'coffee'
@@ -62,16 +62,16 @@ module.exports = (grunt) ->
         background: true
 
 
-    ngconstant:
-      options: 
-        dest: 'public/js/config.js'
-        name: 'config'
-      development:
-        constants:
-          DEBUG: true
-      production:
-        constants:
-          DEBUG: false
+    # ngconstant:
+    #   options: 
+    #     dest: 'public/js/config.js'
+    #     name: 'config'
+    #   development:
+    #     constants:
+    #       DEBUG: true
+    #   production:
+    #     constants:
+    #       DEBUG: false
 
 
     watch:
@@ -86,11 +86,6 @@ module.exports = (grunt) ->
         options:
           command: 'coffee'
           index: '<%= pkg.main %>'
-
-    shell:
-      file: 'data/marten.db',
-      setupScript: 'data/sqlite_setup.sql',
-      testScript: 'test/sqliteSpec.sql'
 
       options:
         stdout: true
@@ -202,22 +197,38 @@ module.exports = (grunt) ->
 
   #tasks
   
-
-  grunt.registerTask 'default', [
-    # 'coffeelint'
-    # 'jade'
+  grunt.registerTask 'build', [
+    'coffeelint'
+    'clean'
+    'copy'
     'ngconstant:development'
+  ]
+
+  grunt.registerTask 'build:prod', [
+    'coffeelint'
+    'clean'
+    'copy'
+    'ngconstant:production'
+  ]
+
+  grunt.registerTask 'develop', [
+    'build'
     'express:watch'
     'watch'
-    ]
+  ]
+
+  grunt.registerTask 'deploy', [
+    'shell'
+  ]
 
   grunt.registerTask 'forever-start', [
     'ngconstant:production'
     'forever:server:start'
     ]
+
   grunt.registerTask 'forever-stop', [
     'forever:server:stop'
-    ]
+  ]
   grunt.registerTask 'forever-restart', [
     'forever:server:restart'
-    ]
+  ]
