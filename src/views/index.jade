@@ -42,12 +42,14 @@ block content
       .col-md-12
         h3.text-center In Space, No-one Can Hear You Sing
         .input-group
-          input(type="text" class="form-control" ng-model="selectedTrack" 
-            data-min-length="0" data-limit="15" data-html="1" data-animation="am-flip-x" 
-            ng-options="track as track.label for track in tracks" 
-            placeholder="Type to infinity..." bs-typeahead)
+
+          input(type="text" ng-model="selectedTrack" placeholder="Type to infinity..." 
+            typeahead="track as track.label for track in tracks | limitTo:8" typeahead-template-url="partials/dropdownEntry.html" class="form-control")
+
+
           span(class="input-group-btn")
             a(class="btn btn-default" type="button" ng-click="pickTrack()") Search!
+
 
       karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
 

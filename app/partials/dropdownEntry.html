@@ -1,0 +1,6 @@
+
+  <a>
+    <i class="fa fa-star" style="{{match.model.vidQualityCSS}}"></i>      
+      <span bind-html-unsafe="match.model.artist | typeaheadHighlight:query"></span> - 
+      <span bind-html-unsafe="match.model.title | typeaheadHighlight:query"></span>
+  </a>

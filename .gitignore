@@ -9,7 +9,7 @@ chromaoke.sublime-project
 chromaoke.sublime-workspace
 README.html
 src-angular/lib/
-app/
+app/lib/
 
 data/lyrics/
 data/marten.db

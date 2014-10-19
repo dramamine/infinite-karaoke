@@ -2,7 +2,7 @@ module.exports =
   express:
     files: '<%= targets.src %>'
     tasks: [
-      'build'
+      'build:fast'
       'express'
     ]
     options:

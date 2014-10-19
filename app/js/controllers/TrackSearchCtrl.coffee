@@ -1,3 +1,5 @@
+
+
 angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
   '$scope', '$resource', 
   ($scope, $resource) -> 
@@ -6,9 +8,10 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
     #$scope.tracks = TrackService.data
     $scope.tracks = []
     #$scope.myData.tracks = TrackService.data
-    $scope.selectedTrack = {}
+    $scope.selectedTrack
     #$scope.myData.selectedTrack = 'Test - Test'
 
+    console.log 'updated'
 
     $scope.pickTrack = ->
       console.log "pickTrack called."
@@ -46,9 +49,12 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
       # convert to menu-items
       # TODO probs shouldn't do this in the controller, but whatever.
       angular.forEach result, (track) ->
-        # TODO use formatForDropdown insteadls
-        track.label = "#{track.artist} - #{track.title}"
+        # use the label since this gets indexed
+        track.label = track.artist + " - " + track.title
         track.value = track._id
+
+        # TODO placeholder for now
+        track.vidQualityCSS = "color:silver"
 
       $scope.tracks = result
 
