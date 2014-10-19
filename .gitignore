@@ -15,10 +15,9 @@ data/lyrics/
 data/marten.db
 data/tracks.json
 bower_components/
-public/javascripts/youtube-lyrics.js
+public/
 npm-debug.log
 data/dbconfig.coffee
-public/lib/
 README-private.md
 scripts/youtube-api-cfg.json
 forever/
