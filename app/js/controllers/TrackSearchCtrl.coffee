@@ -1,8 +1,8 @@
 
 
 angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
-  '$scope', '$resource', 
-  ($scope, $resource) -> 
+  '$scope', 'TrackService', '$q', 
+  ($scope, TrackService, $q) -> 
     $scope.myData = {}
     # load placeholder data
     #$scope.tracks = TrackService.data
@@ -42,23 +42,26 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
 
     # get tracks from the database
     # @see routes/api.coffee
-    url = "/api/track"
-    resource = $resource(url)
-    resource.query {}, (result) ->
+    # url = "/api/track"
+    # resource = $resource(url)
+    # resource.query {}, (result) ->
 
-      # convert to menu-items
-      # TODO probs shouldn't do this in the controller, but whatever.
-      angular.forEach result, (track) ->
-        # use the label since this gets indexed
-        track.label = track.artist + " - " + track.title
-        track.value = track._id
+    #   # convert to menu-items
+    #   # TODO probs shouldn't do this in the controller, but whatever.
+    #   angular.forEach result, (track) ->
+    #     # use the label since this gets indexed
+    #     track.label = track.artist + " - " + track.title
+    #     track.value = track._id
 
         # TODO placeholder for now
-        track.vidQualityCSS = "color:silver"
+       # track.vidQualityCSS = "color:silver"
 
-      $scope.tracks = result
-
-      console.log result
+    promise = TrackService.getTrackList()
+    promise.then (response) ->
+      console.log response
+      $scope.tracks = response
+    , (error) ->
+      console.log 'did not work.'
 
     return null
 

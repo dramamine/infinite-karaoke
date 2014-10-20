@@ -5,6 +5,7 @@
 karaokeApp = angular.module 'karaokeApp', [
   'karaoke.controllers'
   'karaoke.directives'
+  'karaoke.services'
   'ngRoute'
   'ngAnimate'
   'ngSanitize' 
@@ -13,5 +14,6 @@ karaokeApp = angular.module 'karaokeApp', [
   'config'
 ]
 
-angular.module 'karaoke.controllers', ['ui.bootstrap']
+angular.module 'karaoke.controllers', ['ui.bootstrap', 'karaoke.services']
 angular.module 'karaoke.directives', []
+angular.module 'karaoke.services', []

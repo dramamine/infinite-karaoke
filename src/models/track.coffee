@@ -13,7 +13,4 @@ TrackSchema = mongoose.Schema
 TrackSchema.methods.allTags = ->
   return "#" + tags.all.join(' #')
 
-TrackSchema.methods.formatForDropdown = ->
-  return "#{artist} - #{title}"
-
 module.exports = mongoose.model 'Track', TrackSchema
