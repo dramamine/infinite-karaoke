@@ -12,6 +12,7 @@ karaokeApp = angular.module 'karaokeApp', [
   'ngResource'
   'youtube-embed' # https://github.com/brandly/angular-youtube-embed
   'config'
+  'angular-underscore'
 ]
 
 angular.module 'karaoke.controllers', ['ui.bootstrap', 'karaoke.services']

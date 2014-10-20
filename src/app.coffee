@@ -22,10 +22,10 @@ app.configure ->
   mongoose = require './db/db.coffee'
 
   # put everything you 'use' in here!
-  # middleware = [
-
-  # ]
-  # app.use m for m in middleware
+  middleware = [
+    express.bodyParser()
+  ]
+  app.use m for m in middleware
   
   app.use '/', express.static path.resolve __dirname, '../public'
   app.use '/', harp.mount path.resolve __dirname, '../public'

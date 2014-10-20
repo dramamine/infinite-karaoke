@@ -7,6 +7,10 @@ TrackSchema = mongoose.Schema
   title: String
   lyrics: [Lyric.schema]
   videos: [Video.schema]
+  quality: {
+    video: Number
+    lyric: Number
+  }
   tags: [String]
 
 # turn tags into searchable item
