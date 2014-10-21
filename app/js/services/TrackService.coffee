@@ -21,9 +21,24 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', (
           track.label = track.artist + " - " + track.title
           track.value = track._id
 
-          self.refreshQuality(track)
-          # TODO placeholder for now
-          track.vidQualityCSS = "color:silver"
+          # temporarily needed for old entries
+          self.refreshQuality(track)# unless track.quality
+
+          track.vidQualityCSS = switch track.quality.video
+            when 2 then "color:gold"
+            when 1 then "color:silver"
+            else "display:none"
+
+          track.lyricQualityCSS = switch track.quality.lyric
+            when 2 then "color:gold"
+            when 1 then "color:silver"
+            else "display:none"
+
+          track.popularCSS = switch track.quality.popular
+            when true then "color:gold"
+            else "display:none"
+
+          # track.vidQualityCSS = "color:silver"
 
         deferred.resolve result
 
@@ -34,10 +49,12 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', (
       console.log 'refreshQuality called.'
 
       # temporarily needed for old entries
-      unless track.quality
-        track.quality = 
-          video: 0
-          lyric: 0
+      track.quality = 
+        video: 0
+        lyric: 2
+        popular: false
+      if track.artist == "Tool"
+        track.quality.popular = true
 
       origQuality = track.quality.video
       

@@ -10,6 +10,7 @@ TrackSchema = mongoose.Schema
   quality: {
     video: Number
     lyric: Number
+    popular: Boolean
   }
   tags: [String]
 
