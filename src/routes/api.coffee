@@ -1,6 +1,7 @@
 Video = require '../models/video'
 Lyric = require '../models/lyric'
 Track = require '../models/track'
+_ = require 'underscore-node'
 
 class Api
   constructor: (@app) ->
@@ -52,36 +53,42 @@ class Api
         res.send 406, err
 
       console.log req.body
-      console.log req.body.comment?
+      console.log typeof req.body.comment.rating
+      console.log typeof req.body.comment.category
+      console.log typeof req.body.comment.reason
+      #console.log req.body.comment?
 
       if !req.body.comment? or
         !req.body.comment.rating? or
         !req.body.comment.category? or
         !req.body.comment.reason?
           console.log 'Missing some shit.'
-          res.send 300, 'Missing some critical shit.'
+          res.send 500, 'Missing some critical shit.'
           return
 
       newcomment = {}
-      if typeof req.body.comment.rating == Number and
+      if typeof req.body.comment.rating == "number" and
         req.body.comment.rating >= -1 and
         req.body.comment.rating <= 1 
           newcomment.rating = req.body.comment.rating
       else
-        res.send 300, 'Rating not valid.'
+        console.log 'Rating not valid.'
+        res.send 500, 'Rating not valid.'
 
-      if typeof req.body.comment.category == Number and
+      if typeof req.body.comment.category == "number" and
         req.body.comment.category >= 0
           newcomment.category = req.body.comment.category
       else
-        res.send 300, 'Category not valid.'
+        console.log 'Category not valid.'
+        res.send 500, 'Category not valid.'
 
-      if typeof req.body.comment.reason == String
+      if typeof req.body.comment.reason == "string"
           newcomment.reason = req.body.comment.reason
       else
-        res.send 300, 'Reason not valid.'
+        console.log 'Reason not valid.'
+        res.send 500, 'Reason not valid.'
 
-      if typeof req.body.comment.ip == String
+      if typeof req.body.comment.ip == "string"
         match = _.find(video.comments, (comment) -> comment.ip == req.body.comment.ip )
         console.log "matching IP?"
         console.log match
@@ -89,7 +96,23 @@ class Api
         # figure the above shit out later.
         newcomment.ip = req.body.comment.ip
 
+        video.comments.push(newcomment)
+        video.save()
+        console.log video
         res.send 200
+      # Video.update(
+      #   {_id: _id}
+      #   $push: {comments: newcomment}
+      #   (err, comment) ->
+      #     if err
+      #       console.log err 
+      #       res.send 501
+      #     else
+      #       console.log comment
+      #       res.send 200
+      # )
+
+      
 
 
       #     newcomment.reason = req.body.comment.reason

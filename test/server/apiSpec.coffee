@@ -2,11 +2,9 @@ http = require("http")
 assert = require("assert")
 request = require('supertest')
 should = require('should')
-winston = require('winston')
 express = require('express')
-app = express()
 
-# app = require("../../src/app")
+app = require("../../src/app")
 
 # request = request('http://localhost:3000')
 
@@ -51,14 +49,35 @@ describe "API", ->
 
 
 
+  describe "POST /api/track/", ->
+    it "should update a track", (done) ->
+
+      postData = 
+        quality:
+          video: 1
+
+      request(app)
+        .post("/api/track/5430bd0131e8de5e5d668458")
+        .set('Content-Type', 'application/json')
+        # .send(postData)
+        .send({"quality":"1"})
+        .expect(200)
+        .end (err, res) ->
+            if(err)
+              done(err)
+            else
+              done()
+
+
   describe "POST /api/video/comment/", ->
     it "should post a video comment", (done) ->
 
       postData = 
-        rating: -1
-        category: 1
-        reason: "shitty lyric vid"
-        ip: "127.0.0.1"
+        comment:
+          rating: -1
+          category: 1
+          reason: "shitty lyric vid"
+          ip: "127.0.0.1"
 
       request(app)
         .post("/api/video/comment/5430bd0131e8de5e5d6685cd")
