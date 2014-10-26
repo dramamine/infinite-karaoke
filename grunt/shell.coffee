@@ -3,6 +3,22 @@ module.exports =
     stdout: true
     stderr: true
 
+  backup:
+    command: [
+      'mongoexport -h dbh36.mongolab.com:27367 -d infinite -c tracks -u infinite -p "sm<hC3Jjz86&Q68" -o data/backup/tracks.json'
+      'mongoexport -h dbh36.mongolab.com:27367 -d infinite -c videos -u infinite -p "sm<hC3Jjz86&Q68" -o data/backup/videos.json'
+      'mongoexport -h dbh36.mongolab.com:27367 -d infinite -c lyrics -u infinite -p "sm<hC3Jjz86&Q68" -o data/backup/lyrics.json'
+      'mongoexport -h dbh36.mongolab.com:27367 -d infinite -c comments -u infinite -p "sm<hC3Jjz86&Q68" -o data/backup/comments.json'
+    ].join('&&')
+
+  dbclean:
+    command: [
+      'mongoimport --drop --collection tracks --file data/testdata/tracks.json'
+      'mongoimport --drop --collection videos --file data/testdata/videos.json'
+      'mongoimport --drop --collection lyrics --file data/testdata/lyrics.json'
+      'mongoimport --drop --collection comments --file data/testdata/comments.json'
+    ].join('&&')
+
   testharness:
     options:
       async: true

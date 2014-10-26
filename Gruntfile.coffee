@@ -53,6 +53,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'env:test'
     'shell:testharness'
+    'shell:dbclean'
     'mochaTest'
   ]
 
