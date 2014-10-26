@@ -13,6 +13,7 @@ module.exports =
 
   dbclean:
     command: [
+     #  'mongoimport --drop --collection tracks --file data/testdata/tracks.json --db infinite --dbpath test/data'
       'mongoimport --drop --collection tracks --file data/testdata/tracks.json'
       'mongoimport --drop --collection videos --file data/testdata/videos.json'
       'mongoimport --drop --collection lyrics --file data/testdata/lyrics.json'

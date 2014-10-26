@@ -8,13 +8,9 @@ VideoSchema = mongoose.Schema
   published: String
   thumbnail: String
   score: Number
-  comments: [
-    rating: Number
-    category: Number
-    reason: String
-    ip: String
-  ]
-  patches: [{}]
-  offset: Number
+  # patches: [{}]
+  # offset: Number
+
+  best: Boolean
 
 module.exports = mongoose.model 'Video', VideoSchema

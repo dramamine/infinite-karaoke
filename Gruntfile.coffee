@@ -14,6 +14,7 @@ module.exports = (grunt) ->
           'app/**/*.html'
           'src/**/*.coffee'
           'src/**/*.jade'
+          'test/**/*.coffee'
         ]
       gruntfile: ['Gruntfile.coffee']
       bower: '<json:bower.json>'
@@ -44,6 +45,13 @@ module.exports = (grunt) ->
     'express:watch'
     'watch'
   ]
+  grunt.registerTask 'test-develop', [
+    'env:test'
+    'shell:testharness'
+    'build'
+    'express:watch'
+    'watch'
+  ]
 
   grunt.registerTask 'deploy', [
     'env:prod'
@@ -51,9 +59,9 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'test', [
-    'env:test'
-    'shell:testharness'
-    'shell:dbclean'
+    'env:dev' # not using the test db...yet...
+    # 'shell:testharness'
+    # 'shell:dbclean'
     'mochaTest'
   ]
 

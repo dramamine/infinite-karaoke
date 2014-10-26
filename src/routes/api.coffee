@@ -8,20 +8,77 @@ class Api
 
     @app.get '/api/track', @getTracks
     @app.get '/api/track/:_id', @getTrack
+    @app.get '/api/video/:_id', @getBestVideo
+    @app.get '/api/videos/:_id', @getVideos
+    @app.post '/api/video', @createVideo
     @app.post '/api/track/:_id', @updateTrack
     @app.post '/api/video/comment/:_id', @addVideoFeedback
 
-  
+
   getTracks: (req, res, next) ->
     Track.find req.query, (err, docs) ->
       return res.send 500, err if err
-      res.json docs 
+      res.json docs
 
   getTrack: (req, res) ->
-      {_id} = req.params
-      Track.findOne {_id}, (err, track) ->
-        return res.send 500, err if err
-        res.json track
+    {_id} = req.params
+    Track.findOne {_id}, (err, track) ->
+      return res.send 500, err if err
+      return res.send 404 if track == null
+      res.json track
+
+  getBestVideo: (req, res) ->
+
+    # shittily putting this here until I figure out accessing
+    # class members inside callbacks
+    _maintainBestVideo = (videos) ->
+      newBestVid = _.max videos, (video) ->
+        return video.score
+
+      Video.find {best: true}, (err, videos) ->
+        for video in videos
+          if video != newBestVid
+            video.best = false
+            video.save()
+          else
+            console.log 'found the same best video.'
+
+      newBestVid.best = true
+      newBestVid.save()
+
+      return newBestVid
+
+
+    console.log 'best vid called.'
+    {_id} = req.params
+    Video.findOne {track: _id, best: true}, (err, video) ->
+      if err
+        console.log 'got an error trying to find one.'
+      if video == null
+        # it's okay, just make one the best!
+        Video.find {track: _id}, (err, videos) ->
+          # return the thing we made the new best video.
+          res.json _maintainBestVideo videos
+      else
+        res.json video
+
+
+
+
+
+
+
+  getVideos: (req, res) ->
+    {_id} = req.params
+    return Video.find {track: _id}, (err, videos) ->
+      if err
+        console.log err
+        res.send 400, err
+      res.json videos
+
+  createVideo: (req, res) ->
+    res.send 400, "Not implemented yet"
+
 
   updateTrack: (req, res, next) ->
     {_id} = req.params
@@ -67,9 +124,10 @@ class Api
           return
 
       newcomment = {}
-      if typeof req.body.comment.rating == "number" and
+      if (typeof req.body.comment.rating == "number" and
         req.body.comment.rating >= -1 and
-        req.body.comment.rating <= 1 
+        req.body.comment.rating <= 1)
+
           newcomment.rating = req.body.comment.rating
       else
         console.log 'Rating not valid.'
@@ -83,7 +141,7 @@ class Api
         res.send 500, 'Category not valid.'
 
       if typeof req.body.comment.reason == "string"
-          newcomment.reason = req.body.comment.reason
+        newcomment.reason = req.body.comment.reason
       else
         console.log 'Reason not valid.'
         res.send 500, 'Reason not valid.'
@@ -105,14 +163,14 @@ class Api
       #   $push: {comments: newcomment}
       #   (err, comment) ->
       #     if err
-      #       console.log err 
+      #       console.log err
       #       res.send 501
       #     else
       #       console.log comment
       #       res.send 200
       # )
 
-      
+
 
 
       #     newcomment.reason = req.body.comment.reason
