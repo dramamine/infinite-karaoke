@@ -51,7 +51,9 @@
     "supertest": "~0.14.0",
     "winston": "~0.8.1",
     "should": "~4.1.0",
-    "underscore-node": "~0.1.2"
+    "underscore-node": "~0.1.2",
+    "grunt-env": "~0.4.2",
+    "grunt-shell-spawn": "~0.3.0"
   },
   "repository": {
     "type": "git",

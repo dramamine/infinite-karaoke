@@ -1,11 +1,21 @@
-module.exports = 
+module.exports =
   options:
     stdout: true
     stderr: true
 
-  target: 
+  testharness:
+    options:
+      async: true
+      stdout: false
+      # stderr: true
+
     command: [
-      'echo "copying libs..."'
+      'mongod --dbpath test/data --port 12345 --quiet'
+    ].join('&&')
+
+  deploy:
+    command: [
+      # 'echo "copying libs..."'
       # 'scp -r ./public/lib ocean:/var/www/infinite-karaoke/public/'
       'echo "copying css..."'
       'scp -r ./public/css ocean:/var/www/infinite-karaoke/public/'
@@ -15,3 +25,6 @@ module.exports =
       # handle everything on the server from the makefile
       'ssh root@104.131.72.219 "cd /var/www/infinite-karaoke/public/ && make:deploy'
     ].join('&&')
+
+  cleanup:
+    command: 'mongod --dbpath test/data --shutdown'
