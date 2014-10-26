@@ -1,14 +1,10 @@
 mongoose = require 'mongoose'
 
 LyricSchema = mongoose.Schema
-  comments: [
-    rating: Number
-    category: Number
-    reason: String
-    ip: String
-  ]
+  track: String # ID linking to a track
   content: [{ time: Number, line: String } ]
-  patches: [{}]
   imported: Boolean
+
+  # patches: [{}]
 
 module.exports = mongoose.model 'Lyric', LyricSchema

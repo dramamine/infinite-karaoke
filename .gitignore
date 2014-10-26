@@ -25,3 +25,4 @@ err.out
 old-views/
 config.js
 results.txt
+coffeelint.json

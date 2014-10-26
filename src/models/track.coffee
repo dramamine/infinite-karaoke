@@ -5,8 +5,6 @@ Lyric = require './lyric'
 TrackSchema = mongoose.Schema
   artist: String
   title: String
-  lyrics: [Lyric.schema]
-  videos: [Video.schema]
   quality: {
     video: Number
     lyric: Number
