@@ -4,9 +4,11 @@
 # whatever. Using Adam/Daryl's setup.
 module.exports = (app) ->
   routes = [
-    'api'
+    #'api'
+    'comment'
     'karaoke'
     'main'
+    'track'
+    'video'
   ]
   require("./#{r}") app for r in routes
-  

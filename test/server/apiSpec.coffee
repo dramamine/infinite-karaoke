@@ -11,25 +11,25 @@ app = require("../../src/app")
 describe "API", ->
 
 
-  describe "GET /api/track", ->
+  describe "GET /track", ->
     # it "should return all tracks", (done) ->
     #   this.timeout(3000)
     #   http.get
-    #     path: "/api/track"
+    #     path: "/track"
     #     port: 3000
     #   , (res) ->
     #     assert.equal res.statusCode, 200 #, "Expected: 404 Actual: #{res.statusCode}"
     #     done()
     # it "should return a single existing track", (done) ->
     #   http.get
-    #     path: "/api/track/5430bd0131e8de5e5d668458"
+    #     path: "/track/5430bd0131e8de5e5d668458"
     #     port: 3000
     #   , (res) ->
     #     assert.equal res.statusCode, 200 #, "Expected: 404 Actual: #{res.statusCode}"
     #     done()
     # it "should not return a nonexistent track", (done) ->
     #   http.get
-    #     path: "/api/track/ballz"
+    #     path: "/track/ballz"
     #     port: 3000
     #   , (res) ->
     #     assert.equal res.statusCode, 500 #, "Expected: 404 Actual: #{res.statusCode}"
@@ -37,7 +37,7 @@ describe "API", ->
 
     it "should return all tracks", (done) ->
       request(app)
-        .get("/api/track")
+        .get("/track")
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -47,7 +47,7 @@ describe "API", ->
 
     it "should return a single existing track using request", (done) ->
       request(app)
-        .get("/api/track/544c40750ebddbd3157698a3")
+        .get("/track/544c40750ebddbd3157698a3")
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -57,7 +57,7 @@ describe "API", ->
 
     it "should not return a nonexistent track", (done) ->
       request(app)
-        .get("/api/track/5430bd0131e8de5e5d668458")
+        .get("/track/5430bd0131e8de5e5d668458")
         .expect(404)
         .end (err, res) ->
           if(err)
@@ -67,7 +67,7 @@ describe "API", ->
 
     it "should fail on a non-ID-looking ID", (done) ->
       request(app)
-        .get("/api/track/ballz")
+        .get("/track/ballz")
         .expect(500)
         .end (err, res) ->
           if(err)
@@ -77,7 +77,7 @@ describe "API", ->
 
 
 
-  # describe "POST /api/track/", ->
+  # describe "POST /track/", ->
   #   it "should update a track", (done) ->
 
   #     postData =
@@ -85,7 +85,7 @@ describe "API", ->
   #         video: 1
 
   #     request(app)
-  #       .post("/api/track/5430bd0131e8de5e5d668458")
+  #       .post("/track/5430bd0131e8de5e5d668458")
   #       .set('Content-Type', 'application/json')
   #       # .send(postData)
   #       .send({"quality":"1"})
@@ -96,10 +96,10 @@ describe "API", ->
   #           else
   #             done()
 
-  describe "GET /api/video", ->
+  describe "GET /video", ->
     it "should return a single existing best vid", (done) ->
       request(app)
-        .get("/api/video/544c40750ebddbd3157698a3")
+        .get("/video/544c40750ebddbd3157698a3")
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -109,10 +109,10 @@ describe "API", ->
             assert res.body.best == true
             done()
 
-  describe "GET /api/videos/", ->
+  describe "GET /videos/", ->
     it "should return multiple videos", (done) ->
       request(app)
-        .get("/api/videos/544c40750ebddbd3157698a3")
+        .get("/videos/544c40750ebddbd3157698a3")
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -121,7 +121,7 @@ describe "API", ->
             assert res.body.length > 1
             done()
 
-  # describe "POST /api/video/comment/", ->
+  # describe "POST /video/comment/", ->
   #   it "should post a video comment", (done) ->
 
   #     postData =
@@ -132,7 +132,7 @@ describe "API", ->
   #         ip: "127.0.0.1"
 
   #     request(app)
-  #       .post("/api/video/comment/5430bd0131e8de5e5d6685cd")
+  #       .post("/video/comment/5430bd0131e8de5e5d6685cd")
   #       .send(postData)
   #       .expect(200)
   #       .end (err, res) ->
@@ -142,7 +142,7 @@ describe "API", ->
 
 
       # http.post
-      #   path: "/api/video/comment/5430bd0131e8de5e5d668458"
+      #   path: "/video/comment/5430bd0131e8de5e5d668458"
       #   port: 3000
       # , (res) ->
       #   assert.equal res.statusCode, 500 #, "Expected: 404 Actual: #{res.statusCode}"

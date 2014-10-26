@@ -13,14 +13,14 @@ class Karaoke
 
     console.log 'rendering karaoke class or something'
     {id} = req.params
-    
+
 
 
     # TrackModel.findOne {_id: id}, (err, track) ->
     #   console.log track
 
       # how do I send this to the controller
-    
+
     res.render 'youtube', {
       trackid: id
     }
