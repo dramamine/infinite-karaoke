@@ -11,6 +11,26 @@ df = require 'dateformat'
 
 app = express()
 
+app.configure 'development', ->
+  app.use express.errorHandler {dumpExceptions: true, showStack: true}
+  app.locals.pretty = true
+  app.set 'domain', 'localhost'
+  app.set 'port', 3000
+  app.set 'database', 'devel'
+
+app.configure 'test', ->
+  app.use express.errorHandler {dumpExceptions: true, showStack: true}
+  app.locals.pretty = true
+  app.set 'domain', 'localhost'
+  app.set 'port', 3000
+  app.set 'database', 'test'
+
+app.configure 'production', ->
+  app.use express.errorHandler()
+  app.set 'domain', 'metal-heart.org'
+  app.set 'port', 80
+  app.set 'database', 'prod'
+
 
 app.configure ->
   app.set 'views', __dirname + '/views'
@@ -19,14 +39,14 @@ app.configure ->
   app.locals.pretty = true
 
   # connect to our db
-  mongoose = require './db/db.coffee'
+  mongoose = require('./db/db').init(app.get('database'))
 
   # put everything you 'use' in here!
   middleware = [
     express.bodyParser()
   ]
   app.use m for m in middleware
-  
+
   app.use '/', express.static path.resolve __dirname, '../public'
   app.use '/', harp.mount path.resolve __dirname, '../public'
   app.use 'favicon', path.resolve __dirname, '../public/favicon.ico'
@@ -43,16 +63,6 @@ app.configure ->
 # console.log 'Listening on port 666'
 
 
-app.configure 'development', ->
-  app.use express.errorHandler {dumpExceptions: true, showStack: true}
-  app.locals.pretty = true
-  app.set 'domain', 'localhost'
-  app.set 'port', 3000
-
-app.configure 'production', ->
-  app.use express.errorHandler()
-  app.set 'domain', 'metal-heart.org'
-  app.set 'port', 80
 
 # get some frackin routes
 require('./routes') app
