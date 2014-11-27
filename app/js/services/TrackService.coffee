@@ -1,16 +1,11 @@
 angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', ($resource, $q) ->
-  
 
-
-
-
-  obj = 
-
+  obj =
     getTrackList: () ->
       self = this
       deferred = $q.defer()
 
-      url = "/api/track"
+      url = "/track"
       resource = $resource(url)
       resource.query {}, (result) ->
 
@@ -22,7 +17,7 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', (
           track.value = track._id
 
           # temporarily needed for old entries
-          self.refreshQuality(track)# unless track.quality
+          # self.refreshQuality(track)# unless track.quality
 
           track.vidQualityCSS = switch track.quality.video
             when 2 then "color:gold"
@@ -45,40 +40,40 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', (
       return deferred.promise
 
     # private functions
-    refreshQuality: (track) ->
-      console.log 'refreshQuality called.'
+    # refreshQuality: (track) ->
+    #   console.log 'refreshQuality called.'
 
-      # temporarily needed for old entries
-      track.quality = 
-        video: 0
-        lyric: 2
-        popular: false
-      if track.artist == "Tool"
-        track.quality.popular = true
+    #   # temporarily needed for old entries
+    #   track.quality =
+    #     video: 0
+    #     lyric: 2
+    #     popular: false
+    #   if track.artist == "Tool"
+    #     track.quality.popular = true
 
-      origQuality = track.quality.video
-      
-      bestVid = _.max track.videos, (video) -> 
-        return video.score
+    #   origQuality = track.quality.video
 
-      if bestVid.score > 0
-        track.quality.video = 2
-      else if bestVid.score == 0
-        track.quality.video = 1
-      else
-        track.quality.video = 0
+    #   bestVid = _.max track.videos, (video) ->
+    #     return video.score
 
-      unless track.quality.video == origQuality
-        url = "/api/track/" + track._id
-        console.log url
-        #trackid = track._id
-        resource = $resource url
-        
-        resource.save track, () ->
-          console.log 'track updated...?'
-          console.log track
+    #   if bestVid.score > 0
+    #     track.quality.video = 2
+    #   else if bestVid.score == 0
+    #     track.quality.video = 1
+    #   else
+    #     track.quality.video = 0
 
-      return track
+    #   unless track.quality.video == origQuality
+    #     url = "/api/track/" + track._id
+    #     console.log url
+    #     #trackid = track._id
+    #     resource = $resource url
+
+    #     resource.save track, () ->
+    #       console.log 'track updated...?'
+    #       console.log track
+
+    #   return track
 
   return obj
 ]

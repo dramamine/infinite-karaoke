@@ -3,6 +3,9 @@ Lyric = require '../models/lyric'
 Track = require '../models/track'
 _ = require 'underscore-node'
 
+Helper = require '../lib/helper'
+q = require 'q'
+
 class TrackApi
   constructor: (@app) ->
 
@@ -34,8 +37,14 @@ class TrackApi
         res.send 404
 
       # only updating quality for now
-      if req.body.quality
-        track.quality = req.body.quality
+      if !track.quality
+        console.log 'updating quality...'
+        promise = Helper.updateTrackQuality track
+        promise.then (track) ->
+          console.log 'got promise back! returning my track now.'
+          res.send track
+
+
 
       # do nothing
       return track.save (err) ->

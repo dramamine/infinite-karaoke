@@ -7,6 +7,7 @@ module.exports = (app) ->
     #'api'
     'comment'
     'karaoke'
+    'lyric'
     'main'
     'track'
     'video'

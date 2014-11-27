@@ -14,12 +14,13 @@
 # coffee lrc-mongo-importer.coffee
 # --reset: reset all tracks before doing anything
 # --update: force update of lyric object even if track exists
+# --prod: use production instead of devel
 
 LYRIC_FOLDER = '../data/lyrics/'
 
 fs = require 'fs'
 q = require 'q'
-db = require '../src/db/db'
+
 Track = require '../src/models/track'
 Video = require '../src/models/video'
 Lyric = require '../src/models/lyric'
@@ -36,6 +37,11 @@ reset = true for arg in args when arg is '--reset'
 
 force_update = false
 force_update = true for arg in args when arg is '--update'
+
+dbstring = 'devel'
+dbstring = 'prod' for arg in args when arg is '--prod'
+
+db = require('../src/db/db').init(dbstring)
 
 
 Track.find().remove().exec() if reset
@@ -122,6 +128,12 @@ createOrFindTrack = (track) ->
         console.log "track already exists for #{track.artist} - #{track.title}" unless err
         deferred.resolve track
     else
+      # lying/guessing here.
+      track.quality =
+        video: 2
+        lyric: 2
+        popular: false
+
       track.save (err, track) ->
         console.error err if err
         console.log "created track with lyrics for #{track.artist} - #{track.title}" unless err
@@ -143,11 +155,13 @@ handleEveryFile = ->
 #
 # https://www.npmjs.org/package/youtube-node
 #
+# @return the numeric video quality
+#
 getVideos = (track) ->
 
   deferred = q.defer()
   # number of search results to ask for
-  results = 10
+  results = 5
 
   youtube = require 'youtube-node'
   config = require './youtube-api-cfg'

@@ -6,34 +6,10 @@ express = require('express')
 
 app = require("../../src/app")
 
-# request = request('http://localhost:3000')
-
 describe "API", ->
 
 
   describe "GET /track", ->
-    # it "should return all tracks", (done) ->
-    #   this.timeout(3000)
-    #   http.get
-    #     path: "/track"
-    #     port: 3000
-    #   , (res) ->
-    #     assert.equal res.statusCode, 200 #, "Expected: 404 Actual: #{res.statusCode}"
-    #     done()
-    # it "should return a single existing track", (done) ->
-    #   http.get
-    #     path: "/track/5430bd0131e8de5e5d668458"
-    #     port: 3000
-    #   , (res) ->
-    #     assert.equal res.statusCode, 200 #, "Expected: 404 Actual: #{res.statusCode}"
-    #     done()
-    # it "should not return a nonexistent track", (done) ->
-    #   http.get
-    #     path: "/track/ballz"
-    #     port: 3000
-    #   , (res) ->
-    #     assert.equal res.statusCode, 500 #, "Expected: 404 Actual: #{res.statusCode}"
-    #     done()
 
     it "should return all tracks", (done) ->
       request(app)
@@ -95,6 +71,39 @@ describe "API", ->
   #             done(err)
   #           else
   #             done()
+
+
+  describe "GET /lyric", ->
+    it "should return a lyric object for an existing track", (done) ->
+      request(app)
+        .get("/lyric/544c40750ebddbd3157698a3")
+        .expect(200)
+        .end (err, res) ->
+          if(err)
+            done(err)
+          else
+            done()
+
+    it "should not return a lyric object for a  non-existent track", (done) ->
+      request(app)
+        .get("/lyric/000000000000000000000000")
+        .expect(204)
+        .end (err, res) ->
+          if(err)
+            done(err)
+          else
+            done()
+
+    it "should return an error for non-IDs", (done) ->
+      request(app)
+        .get("/lyric/ballz")
+        .expect(204)
+        .end (err, res) ->
+          if(err)
+            done(err)
+          else
+            done()
+
 
   describe "GET /video", ->
     it "should return a single existing best vid", (done) ->

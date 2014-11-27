@@ -1,7 +1,7 @@
 
 angular.module('karaoke.controllers').controller 'PlayCtrl', [
-  '$scope', '$resource', '$youtube', '$timeout', 
-  ($scope, $resource, $youtube, $timeout) -> 
+  '$scope', '$resource', '$youtube', '$timeout',
+  ($scope, $resource, $youtube, $timeout) ->
 
     currentTime = 0
     lyrics = []
@@ -16,24 +16,15 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
     $scope.trackData = {}
 
     $scope.queueTrack = (newId) ->
-      console.log 
       console.log "queueTrack called. querying this ID:" + newId
-      url = "/api/track"
-      resource = $resource(url)
-      resource.query { _id: newId }, (result) ->
 
-        # TODO do I need all this?
-        $scope.trackData = result[0]
-        self.lyrics = $scope.trackData.lyrics[0].content
 
-        # TODO could just use sortBy from unserscore        
-        chosenVideo = result[0].videos[0]
-        for video in result[0].videos
-          if chosenVideo == {} || video.score > chosenVideo.score
-            chosenVideo = video
-        
-        $scope.code = chosenVideo.youtube_id
+      videoApiCall = $resource('/video/:id', {id: newId})
+      videoApiCall.get {}, (result) ->
+        console.log 'video received.'
+        console.log result
 
+        $scope.code = result.youtube_id
 
         # autoplay
         $scope.$on 'youtube.player.ready', () ->
@@ -46,7 +37,13 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
         $scope.$on 'youtube.player.playing', () ->
           console.log "Video's playing."
 
-          initLyric()
+      lyricApiCall = $resource('/lyric/' + newId)
+      lyricApiCall.get {}, (result) ->
+        console.log 'lyric received.'
+        console.log result
+
+        self.lyrics = result.content
+        initLyric()
 
       initLyric = ->
         # usually called via $on, needs outside reference
@@ -96,7 +93,11 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
 
 
       getCurrentTime = ->
-        return $youtube.player.getCurrentTime() * 1000
+        result = 0
+        try
+          result = $youtube.player.getCurrentTime() * 1000
+        finally
+          return result
 
 
 
