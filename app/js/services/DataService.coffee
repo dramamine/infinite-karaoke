@@ -1,4 +1,4 @@
-angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', '$http', ($resource, $q, $http) ->
+angular.module('karaoke.services').service 'DataService', ['$resource', '$q', '$http', ($resource, $q, $http) ->
 
 
   obj =
@@ -7,6 +7,12 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', '
     # the comments model
     TYPE_VIDEO: 0
     TYPE_LYRIC: 1
+    FEEDBACK_OPTIONS: [
+      {rating: -1, category: 1, text: 'Not the official music video' }
+      {rating: -1, category: 2, text: 'Better video available' }
+      {rating: -1, category: 3, text: 'Wrong song' }
+      {rating: -5, category: 4, text: 'SHADOWBANNED' }
+    ]
 
     getTrackList: () ->
       self = this

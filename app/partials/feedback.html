@@ -12,15 +12,11 @@
   <div id="detailed-feedback" ng-show="rating == -1">
     <span>What's the problem?</span>
     <div class="btn-group" role="group">
-      <button class="btn btn-default" ng-click="setCategory(0)">
-        Not the official music video
+
+      <button ng-repeat="option in FEEDBACK_OPTIONS" class="btn btn-default" ng-click="setCategory(option.category)">
+        {{option.text}}
       </button>
-      <button class="btn btn-default" ng-click="setCategory(1)">
-        Better video available
-      </button>
-      <button class="btn btn-default" ng-click="setCategory(2)">
-        Wrong song
-      </button>
+
     </div>
   </div>
   <div id="new-video" ng-show="category">

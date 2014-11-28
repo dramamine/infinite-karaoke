@@ -1,13 +1,13 @@
 
 
 angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
-  '$scope', 'TrackService', '$q',
-  ($scope, TrackService, $q) ->
+  '$scope', 'DataService', '$q',
+  ($scope, DataService, $q) ->
     $scope.myData = {}
     # load placeholder data
-    #$scope.tracks = TrackService.data
+    #$scope.tracks = DataService.data
     $scope.tracks = []
-    #$scope.myData.tracks = TrackService.data
+    #$scope.myData.tracks = DataService.data
     $scope.selectedTrack
     #$scope.myData.selectedTrack = 'Test - Test'
 
@@ -23,7 +23,7 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
 
 
 
-    promise = TrackService.getTrackList()
+    promise = DataService.getTrackList()
     promise.then (response) ->
       console.log response
       $scope.tracks = response
