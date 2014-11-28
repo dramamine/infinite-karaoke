@@ -1,14 +1,15 @@
 # used to track application state
-angular.module('karaoke.controllers').controller 'FeedbackCtrl', ['$scope', '$http',
-  ($scope, $http) ->
+angular.module('karaoke.controllers').controller 'FeedbackCtrl', ['$scope', 'TrackService',
+  ($scope, TrackService) ->
 
-    $scope.videoFeedback = null
-    $scope.videoMoreFeedback = null
+    $scope.rating = null
+    $scope.category = null
     $scope.otherVideos = []
 
-    $scope.setVideoFeedback = (newValue) ->
-      $scope.videoFeedback = newValue
+    $scope.setRating = (newValue) ->
+      $scope.rating = newValue
       if newValue == 1
+
         console.log 'Would submit an $http request here.'
 
       if newValue == 0
@@ -16,9 +17,11 @@ angular.module('karaoke.controllers').controller 'FeedbackCtrl', ['$scope', '$ht
 
 
 
-    $scope.setVideoMoreFeedback = (newValue) ->
+    $scope.setCategory = (newValue) ->
+      $scope.category = newValue
       console.log 'Got ' + newValue + ' for more vid feedback'
 
+      TrackService.submitFeedback '547782acad1c9c711908b90f', $scope.rating, newValue, TrackService.TYPE_VIDEO
     return null
 ]
 

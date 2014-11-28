@@ -2,7 +2,7 @@ mongoose = require 'mongoose'
 
 CommentSchema = mongoose.Schema
   parent: String # ID of the thing this is a comment on
-  # might want type in here...
+  type: Number
   rating: Number
   category: Number
   reason: String

@@ -1,6 +1,13 @@
-angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', ($resource, $q) ->
+angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', '$http', ($resource, $q, $http) ->
+
 
   obj =
+    # enums.
+    # these are for comment types. if touching these, check out
+    # the comments model
+    TYPE_VIDEO: 0
+    TYPE_LYRIC: 1
+
     getTrackList: () ->
       self = this
       deferred = $q.defer()
@@ -38,6 +45,20 @@ angular.module('karaoke.services').service 'TrackService', ['$resource', '$q', (
         deferred.resolve result
 
       return deferred.promise
+
+    submitFeedback: (id, rating, category, type) ->
+      url = '/video/comment/' + id
+      $http.post(url, {
+        rating: rating
+        category: category
+        type: type
+      }).success( (data, status, headers, config) ->
+        console.log 'success!'
+        console.log data
+        ).error( (data, status, headers, config) ->
+        console.log 'fucked!'
+        console.log data
+      )
 
     # private functions
     # refreshQuality: (track) ->

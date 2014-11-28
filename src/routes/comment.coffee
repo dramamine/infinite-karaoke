@@ -1,6 +1,7 @@
 Video = require '../models/video'
 Lyric = require '../models/lyric'
 Track = require '../models/track'
+Comment = require '../models/comment'
 _ = require 'underscore-node'
 
 class CommentApi
@@ -18,55 +19,62 @@ class CommentApi
         console.log 'Just couldnt find that video.'
         res.send 406, err
 
+      newcomment = new Comment
+
       console.log req.body
-      console.log typeof req.body.comment.rating
-      console.log typeof req.body.comment.category
-      console.log typeof req.body.comment.reason
+      console.log typeof req.body.rating
+      console.log typeof req.body.category
+      console.log typeof req.body.type
       #console.log req.body.comment?
 
-      if !req.body.comment? or
-        !req.body.comment.rating? or
-        !req.body.comment.category? or
-        !req.body.comment.reason?
+      if !req.body? or
+        !req.body.rating? or
+        !req.body.category? or
+        !req.body.type?
           console.log 'Missing some shit.'
           res.send 500, 'Missing some critical shit.'
           return
 
-      newcomment = {}
-      if (typeof req.body.comment.rating == "number" and
-        req.body.comment.rating >= -1 and
-        req.body.comment.rating <= 1)
+      if (typeof req.body.rating == "number" and
+        req.body.rating >= -1 and
+        req.body.rating <= 1)
 
-          newcomment.rating = req.body.comment.rating
+          newcomment.rating = req.body.rating
       else
         console.log 'Rating not valid.'
         res.send 500, 'Rating not valid.'
 
-      if typeof req.body.comment.category == "number" and
-        req.body.comment.category >= 0
-          newcomment.category = req.body.comment.category
+      if typeof req.body.category == "number" and
+        req.body.category >= 0
+          newcomment.category = req.body.category
       else
         console.log 'Category not valid.'
         res.send 500, 'Category not valid.'
 
-      if typeof req.body.comment.reason == "string"
-        newcomment.reason = req.body.comment.reason
+      if typeof req.body.type == "number"
+        newcomment.type = req.body.type
       else
-        console.log 'Reason not valid.'
-        res.send 500, 'Reason not valid.'
+        console.log 'Type not valid.'
+        res.send 500, 'Type not valid.'
 
-      if typeof req.body.comment.ip == "string"
-        match = _.find(video.comments, (comment) -> comment.ip == req.body.comment.ip )
-        console.log "matching IP?"
-        console.log match
+      if req.body.reason and
+        typeof req.body.reason == "string"
+          newcomment.reason = req.body.reason
+
+      if typeof req.ip == "string"
+        console.log 'checking IP ' + req.ip
+        # match = _.find(video.comments, (comment) -> comment.ip == req.ip )
+        # console.log match
 
         # figure the above shit out later.
-        newcomment.ip = req.body.comment.ip
+        newcomment.ip = req.ip
 
-        video.comments.push(newcomment)
-        video.save()
-        console.log video
-        res.send 200
+      newcomment.save (err, comment) ->
+        if err
+          console.error err
+          res.send 500, 'DB error.'
+        else
+          res.send 200
       # Video.update(
       #   {_id: _id}
       #   $push: {comments: newcomment}

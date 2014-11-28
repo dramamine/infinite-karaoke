@@ -2,28 +2,28 @@
   <div id="initial-feedback" ng-hide="videoFeedback">
     <span>Right video?</span>
     <div class="btn-group" role="group">
-      <button id="good" class="btn btn-success" ng-click="setVideoFeedback(1)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-      <button id="bad" class="btn btn-danger" ng-click="setVideoFeedback(0)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+      <button id="good" class="btn btn-success" ng-click="setRating(1)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+      <button id="bad" class="btn btn-danger" ng-click="setRating(-1)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
     </div>
   </div>
-  <div id="thanks" ng-show="videoFeedback == 1">
+  <div id="thanks" ng-show="rating == 1">
     <p>Thanks!</p>
   </div>
-  <div id="detailed-feedback" ng-show="videoFeedback == 0">
+  <div id="detailed-feedback" ng-show="rating == -1">
     <span>What's the problem?</span>
     <div class="btn-group" role="group">
-      <button class="btn btn-default" ng-click="setVideoMoreFeedback(0)">
+      <button class="btn btn-default" ng-click="setCategory(0)">
         Not the official music video
       </button>
-      <button class="btn btn-default" ng-click="setVideoMoreFeedback(1)">
+      <button class="btn btn-default" ng-click="setCategory(1)">
         Better video available
       </button>
-      <button class="btn btn-default" ng-click="setVideoMoreFeedback(2)">
+      <button class="btn btn-default" ng-click="setCategory(2)">
         Wrong song
       </button>
     </div>
   </div>
-  <div id="new-video" ng-show="videoMoreFeedback">
+  <div id="new-video" ng-show="category">
     <p>Pick another video:</p>
     <div ng-repeat="video in otherVideos">
       <img src="{{video.thumbnail}}">
