@@ -10,8 +10,7 @@ angular.module('karaoke.controllers').controller 'FeedbackCtrl', ['$scope', 'Dat
     $scope.setRating = (newValue) ->
       $scope.rating = newValue
       if newValue == 1
-
-        console.log 'Would submit an $http request here.'
+        DataService.submitFeedback $scope.video._id, newValue, 0, DataService.TYPE_VIDEO
 
       if newValue == 0
         console.log 'Would gather other videos here.'
@@ -22,7 +21,7 @@ angular.module('karaoke.controllers').controller 'FeedbackCtrl', ['$scope', 'Dat
       $scope.category = newValue
       console.log 'Got ' + newValue + ' for more vid feedback'
 
-      DataService.submitFeedback '547782acad1c9c711908b90f', $scope.rating, newValue, DataService.TYPE_VIDEO
+      DataService.submitFeedback $scope.video._id, $scope.rating, newValue, DataService.TYPE_VIDEO
     return null
 ]
 

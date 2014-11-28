@@ -1,5 +1,5 @@
 
-angular.module('karaoke.controllers').controller 'PlayCtrl', [
+angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
   '$scope', '$resource', '$youtube', '$timeout',
   ($scope, $resource, $youtube, $timeout) ->
 
@@ -7,6 +7,7 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
     lyrics = []
     lyricIndex = 0
     timer = null
+    video = null
 
     self = this
 
@@ -25,6 +26,8 @@ angular.module('karaoke.controllers').controller 'PlayCtrl', [
         console.log result
 
         $scope.code = result.youtube_id
+        $scope.video = result
+        console.log 'set scope.video...'
 
         # autoplay
         $scope.$on 'youtube.player.ready', () ->

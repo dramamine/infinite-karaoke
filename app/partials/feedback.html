@@ -1,5 +1,5 @@
 <div>
-  <div id="initial-feedback" ng-hide="videoFeedback">
+  <div id="initial-feedback" ng-hide="rating">
     <span>Right video?</span>
     <div class="btn-group" role="group">
       <button id="good" class="btn btn-success" ng-click="setRating(1)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
@@ -9,7 +9,7 @@
   <div id="thanks" ng-show="rating == 1">
     <p>Thanks!</p>
   </div>
-  <div id="detailed-feedback" ng-show="rating == -1">
+  <div id="detailed-feedback" ng-show="rating == -1 && !category">
     <span>What's the problem?</span>
     <div class="btn-group" role="group">
 

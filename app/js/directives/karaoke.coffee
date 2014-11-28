@@ -1,11 +1,11 @@
 
-angular.module('karaoke.directives').directive 'karaoke', -> 
+angular.module('karaoke.directives').directive 'karaoke', ->
   return {
     restrict: 'E'
     scope: {
       'trackid': '=' # probs get rid of this
     }
-    controller: 'PlayCtrl'
+    controller: 'KaraokeCtrl'
     # require: '^TrackSearchCtrl'
     templateUrl: '../partials/karaoke.html'
     link: (scope, elem, attr) ->
@@ -14,7 +14,7 @@ angular.module('karaoke.directives').directive 'karaoke', ->
         console.log "trackid changed!"
         if newVal
           # from controller
-          scope.queueTrack newVal 
+          scope.queueTrack newVal
 
         return null
 
