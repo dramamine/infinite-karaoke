@@ -8,7 +8,7 @@ karaokeApp = angular.module 'karaokeApp', [
   'karaoke.services'
   'ngRoute'
   'ngAnimate'
-  'ngSanitize' 
+  'ngSanitize'
   'ngResource'
   'youtube-embed' # https://github.com/brandly/angular-youtube-embed
   'config'

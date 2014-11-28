@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    
+
   div.container(ng-controller="StateCtrl")
     div(ng-hide="hasSearched")
       .jumbotron.clearfix
@@ -12,9 +12,9 @@ block content
       .row
         .col-md-6
           h3.text-center What Is This?
-          p 
+          p
             | Do you ever get sick of the shitty song selection at your local
-            | karaoke bar? 
+            | karaoke bar?
           p
             | Do you love getting a private karaoke booth with your friends, but
             | hate leaving the house?
@@ -25,7 +25,7 @@ block content
             | song your heart desires, set to official-ish music videos, forever.
         .col-md-6
           h3.text-center How Does It Work?
-          p 
+          p
             | Infinite Karaoke combines time-synced lyrics from the Internet, with
             | videos from the Internet.
           p
@@ -35,15 +35,15 @@ block content
             | If you're trying a song that's never been played before, you can help
             | out the karaoke community by adjusting the lyrics.
           p
-            | Tracks that have been verified by the community have         
+            | Tracks that have been verified by the community have
             | <i class="fa fa-star"></i>s by them!
 
-    div(ng-controller="TrackSearchCtrl")
+    div(ng-controller="TrackSearchCtrl" ng-init="trackid= #{JSON.stringify(trackid)}")
       .col-md-12
         h3.text-center In Space, No-one Can Hear You Sing
         .input-group
 
-          input(type="text" ng-model="selectedTrack" placeholder="Type to infinity..." 
+          input(type="text" ng-model="selectedTrack" placeholder="Type to infinity..."
             typeahead="track as track.label for track in tracks | limitTo:8" typeahead-template-url="partials/dropdownEntry.html" class="form-control")
 
 

@@ -4,14 +4,9 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
   '$scope', 'DataService', '$q',
   ($scope, DataService, $q) ->
     $scope.myData = {}
-    # load placeholder data
-    #$scope.tracks = DataService.data
     $scope.tracks = []
-    #$scope.myData.tracks = DataService.data
     $scope.selectedTrack
-    #$scope.myData.selectedTrack = 'Test - Test'
 
-    console.log 'updated'
 
     $scope.pickTrack = ->
       console.log "pickTrack called."
@@ -27,6 +22,15 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
     promise.then (response) ->
       console.log response
       $scope.tracks = response
+
+      # user's using parameters to choose a track.
+      if $scope.trackid
+        mytrack = response.filter (i) ->
+          return i._id == $scope.trackid
+        if mytrack.length == 1
+          $scope.selectedTrack = mytrack[0]
+          $scope.pickTrack()
+
     , (error) ->
       console.log 'did not work.'
 

@@ -5,6 +5,9 @@ class Main
 
     @app.get '/', @index
 
-  index: (req, res) -> res.render 'index'
+  index: (req, res) ->
+    console.log req.query
+    res.render 'index', req.query
+
 
 module.exports = (app) -> new Main app
