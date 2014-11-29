@@ -1,6 +1,13 @@
 <div>
   <youtube-video id="onlyvid" video-id="code"></youtube-video>
-  <h3>{{currentLyric}}</h3>
+
+  <div class="lyricbox">
+    <h3 class="lyric">{{currentLyric}}</h3>
+    <div ng-class="style"></div>
+  </div>
+
+  <input ng-click="toggleStyle()" placeholder="Type: bold, strike or red"><br>
+  <p>{{style}}</p>
 </div>
 <div>
   <feedback />

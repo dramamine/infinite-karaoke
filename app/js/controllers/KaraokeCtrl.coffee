@@ -9,6 +9,16 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
     timer = null
     video = null
 
+    $scope.style = "lyricbox-inactive-5s";
+
+    $scope.toggleStyle = () ->
+      console.log 'toggling style'
+      if $scope.style == "lyricbox-inactive-5s"
+        $scope.style = "lyricbox-inactive-5s-reset"
+      else
+        $scope.style = "lyricbox-inactive-5s"
+
+
     self = this
 
     $scope.currentLyric = ''
