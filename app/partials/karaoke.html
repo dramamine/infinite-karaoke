@@ -3,11 +3,8 @@
 
   <div class="lyricbox">
     <h3 class="lyric">{{currentLyric}}</h3>
-    <div ng-class="style"></div>
+    <div ng-class="tracker.class" ng-style="tracker.style"></div>
   </div>
-
-  <input ng-click="toggleStyle()" placeholder="Type: bold, strike or red"><br>
-  <p>{{style}}</p>
 </div>
 <div>
   <feedback />

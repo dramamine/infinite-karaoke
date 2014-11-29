@@ -3,28 +3,26 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
   '$scope', '$resource', '$youtube', '$timeout',
   ($scope, $resource, $youtube, $timeout) ->
 
+    # used for the CSS 'progress bar'. basically, we swap the class to
+    # 'inactive' for this many milliseconds, before swapping to 'active' with
+    # the transition.
+    CSS_TRANSITION_MS = 20
+
     currentTime = 0
     lyrics = []
     lyricIndex = 0
     timer = null
     video = null
 
-    $scope.style = "lyricbox-inactive-5s";
-
-    $scope.toggleStyle = () ->
-      console.log 'toggling style'
-      if $scope.style == "lyricbox-inactive-5s"
-        $scope.style = "lyricbox-inactive-5s-reset"
-      else
-        $scope.style = "lyricbox-inactive-5s"
-
+    # used for the 'progress bar' tracker
+    $scope.tracker =
+      class: 'lyricbox-inactive'
+      style: {}
 
     self = this
 
+    # current lyric being displayed
     $scope.currentLyric = ''
-
-    # $scope.code = 'oHg5SJYRHA0'
-    $scope.trackData = {}
 
     $scope.queueTrack = (newId) ->
       console.log "queueTrack called. querying this ID:" + newId
@@ -90,20 +88,52 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
       updateLyric = ->
         # usually called via $timeout, needs outside reference
         lyrics = self.lyrics
-
-
-        console.log "Update lyric called."
         self.lyricIndex++
         $scope.currentLyric = lyrics[self.lyricIndex].line
-        console.log "Updated lyric to " + lyrics[self.lyricIndex].line
-        console.log lyrics[self.lyricIndex]
-        console.log lyrics[self.lyricIndex + 1]
-        wait = lyrics[self.lyricIndex + 1].time - lyrics[self.lyricIndex].time
-        console.log "Waiting " + wait + " to update again."
-        timer = $timeout( updateLyric, wait )
+        # console.log "Updated lyric to " + lyrics[self.lyricIndex].line
+        # console.log lyrics[self.lyricIndex]
+        # console.log lyrics[self.lyricIndex + 1]
+
+
+        if lyrics[self.lyricIndex+1] != null
+          # time to wait before showing the next lyric
+          wait = lyrics[self.lyricIndex + 1].time - lyrics[self.lyricIndex].time
+          timer = $timeout( updateLyric, wait )
+          # console.log "Waiting " + wait + " to update again."
+
+          updateProgressBar(wait)
 
         return null
 
+      updateProgressBar = (wait) ->
+        $scope.tracker =
+          class: 'lyricbox-inactive'
+          style: {}
+
+        $scope.$apply()
+
+        # how long is our wait?
+        seconds = Math.floor (wait-CSS_TRANSITION_MS)/100 # now it's tenths of a second
+        seconds = seconds/10
+
+        $timeout () ->
+          $scope.tracker =
+            class: 'lyricbox-active'
+            style: getTransitionCSS(seconds)
+          return null
+        , CSS_TRANSITION_MS
+
+        $scope.$apply()
+
+      getTransitionCSS = (seconds) ->
+        console.log 'using ' + seconds + ' as my seconds'
+        return {
+          '-webkit-transition': 'width ' + seconds + 's linear'
+          '-moz-transition': 'width ' + seconds + 's linear'
+          '-o-transition': 'width ' + seconds + 's linear'
+          '-ms-transition': 'width ' + seconds + 's linear'
+          'transition': 'width ' + seconds + 's linear'
+        }
 
       getCurrentTime = ->
         result = 0
