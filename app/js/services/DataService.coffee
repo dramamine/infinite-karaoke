@@ -1,4 +1,5 @@
-angular.module('karaoke.services').service 'DataService', ['$resource', '$q', '$http', ($resource, $q, $http) ->
+angular.module('karaoke.services').service 'DataService',
+['$resource', '$q', '$http', ($resource, $q, $http) ->
 
 
   obj =
@@ -61,10 +62,25 @@ angular.module('karaoke.services').service 'DataService', ['$resource', '$q', '$
       }).success( (data, status, headers, config) ->
         console.log 'success!'
         console.log data
-        ).error( (data, status, headers, config) ->
+      ).error( (data, status, headers, config) ->
         console.log 'fucked!'
         console.log data
       )
+
+    getVideos: (trackid) ->
+      deferred = $q.defer()
+
+      url = 'videos/' + trackid
+      $http.get(url).success( (data, status, headers, config) ->
+        console.log 'got all the vids'
+        deferred.resolve data
+      ).error( (data, status, headers, config) ->
+        console.log 'fucked!'
+        console.log data
+        deferred.reject data
+      )
+
+      return deferred.promise
 
     # private functions
     # refreshQuality: (track) ->

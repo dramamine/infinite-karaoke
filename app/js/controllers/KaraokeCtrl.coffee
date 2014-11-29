@@ -142,6 +142,11 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         finally
           return result
 
+      $scope.selectVideo = (video) ->
+        console.log 'selectVideo from KaraokeCtrl'
+        $scope.code = video.youtube_id
+        $scope.video = video
+        initLyric()
 
 
 
