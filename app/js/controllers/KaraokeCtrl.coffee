@@ -14,6 +14,8 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
     timer = null
     video = null
 
+    validation = null
+
     # used for the 'progress bar' tracker
     $scope.tracker =
       class: 'lyricbox-inactive'
@@ -44,9 +46,13 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         $scope.$on 'youtube.player.paused', () ->
           console.log "Cancelling timer."
           $timeout.cancel(timer)
+          $timeout.cancel(validation)
 
         $scope.$on 'youtube.player.playing', () ->
           console.log "Video's playing."
+          initLyric()
+          validation = $timeout( validator, 1000 )
+
 
       lyricApiCall = $resource('/lyric/' + newId)
       lyricApiCall.get {}, (result) ->
@@ -54,7 +60,8 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         console.log result
 
         self.lyrics = result.content
-        initLyric()
+
+
 
       initLyric = ->
         # usually called via $on, needs outside reference
@@ -77,6 +84,7 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
 
             wait = (lyric.time - currentTime)
             timer = $timeout( updateLyric, wait )
+            updateProgressBar(wait)
 
             console.log "Waiting " + wait + " to change lyric."
 
@@ -141,6 +149,26 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
           result = $youtube.player.getCurrentTime() * 1000
         finally
           return result
+
+      # makes sure our lyrics are on-track. this is running every second
+      # to deal with people fast-forwarding or rewinding. buffering and
+      # whatnot gets handled already in listeners from queueTrack
+      validator = (onetime = false) ->
+        currentTime = getCurrentTime()
+        console.log 'validator called'
+        console.log self.lyrics[self.lyricIndex]
+        if currentTime > self.lyrics[self.lyricIndex].time and
+          self.lyrics[self.lyricIndex+1] != null and
+          currentTime < self.lyrics[self.lyricIndex+1].time
+            console.log 'yep, it\'s valid'
+            # everything's great!
+        else
+          console.log 'timer is off, oh no'
+          # time is off!
+          $timeout.cancel(timer)
+          initLyric()
+
+        validation = $timeout( validator, 1000 )
 
 
 
