@@ -10,10 +10,10 @@ angular.module('karaoke.directives').directive 'karaoke', ->
     templateUrl: '../partials/karaoke.html'
     link: (scope, elem, attr) ->
 
+      # HEY. not sure if this is ever being used, might be better to call
+      # straight from whatever's changing the trackid.
       scope.$watch 'trackid', (newVal) ->
-        console.log "trackid changed!"
         if newVal
-          # from controller
           scope.queueTrack newVal
 
         return null

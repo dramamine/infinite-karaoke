@@ -10,10 +10,17 @@ module.exports = (grunt) ->
 
       targets:
         src: [
-          'app/**/*.coffee'
-          'app/**/*.html'
+          'app/partials/*.*'
+          'app/js/**/*.coffee'
+          'app/js/**/*.js'
+          'app/css/*.css'
           'src/**/*.coffee'
           'src/**/*.jade'
+          'test/**/*.coffee'
+        ]
+        coffeeonly: [
+          'app/js/**/*.coffee'
+          'src/**/*.coffee'
           'test/**/*.coffee'
         ]
       gruntfile: ['Gruntfile.coffee']
