@@ -9,6 +9,8 @@ q = require 'q'
 class TrackApi
   constructor: (@app) ->
 
+    self = this
+
     @app.get '/track', @getTracks
     @app.get '/track/:_id', @getTrack
     @app.post '/track/:_id', @updateTrack
@@ -59,7 +61,22 @@ class TrackApi
   search: (req, res, next) ->
 
     {phrase} = req.params
-    return res.send 'Not ready', 401
+    Track.find { $text: { $search: phrase } },
+      { score: { $meta: 'textScore' }, keywords: 0, __v: 0 }
+    .sort { score: { $meta: 'textScore' } }
+    .limit 5
+    .exec (err, tracks) ->
+      if err
+        console.log err
+        return res.send err, 400
+
+      promise = addThumbnails(tracks).then (results) ->
+        return res.json results, 200
+
+
+
+
+
 
   # untested, unused function to add keywords!
   #
@@ -95,5 +112,40 @@ class TrackApi
         track.save (err) ->
           console.log err if err
 
+
+addThumbnails = (tracks) ->
+  deferred = q.defer()
+
+  results = []
+  for track in tracks
+    Video.findOne {track: track._id }
+    .sort { score: -1 }
+    .exec (err, video) ->
+      if err
+        console.log err
+        promise.reject
+
+      if video == null
+        console.log 'no results for ' + track._id
+        return
+
+      mytrack = _.find tracks, (track) ->
+        return (String(track._id) == video.track)
+
+      newinfo =
+        _id: mytrack._id
+        artist: mytrack.artist
+        title: mytrack.title
+        quality: mytrack.quality
+        tags: mytrack.tags
+        thumbnail: video.thumbnail
+      results.push newinfo
+
+      if results.length == tracks.length
+        console.log 'using results:'
+        console.log results
+        return deferred.resolve results
+
+  return deferred.promise
 
 module.exports = (app) -> new TrackApi app
