@@ -21,11 +21,13 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
       class: 'lyricbox-inactive'
       style: {}
 
+    # helpful for callbacks
     self = this
 
     # current lyric being displayed
     $scope.currentLyric = ''
 
+    # queues up a track. this is the 'init' function essentially.
     $scope.queueTrack = (newId) ->
       console.log "queueTrack called. querying this ID:" + newId
 
@@ -63,6 +65,7 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
 
 
 
+      # initializes the lyric control
       initLyric = ->
         # usually called via $on, needs outside reference
         lyrics = self.lyrics
@@ -74,9 +77,7 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         console.error "Weird current time." unless currentTime >= 0
 
         for lyric, idx in lyrics
-          console.log "initLyric: idx" + idx + ", lyric " + lyric
           # find the lyric which comes right after the current time
-          console.log "examining " + lyric.time + " vs. current time " + currentTime
           if lyric.time > currentTime
             self.lyricIndex = idx - 1
             console.log "Setting current index to " + self.lyricIndex
@@ -92,15 +93,20 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
 
         return null
 
-
+      # update to the next lyric
       updateLyric = ->
         # usually called via $timeout, needs outside reference
         lyrics = self.lyrics
         self.lyricIndex++
-        $scope.currentLyric = lyrics[self.lyricIndex].line
-        # console.log "Updated lyric to " + lyrics[self.lyricIndex].line
-        # console.log lyrics[self.lyricIndex]
-        # console.log lyrics[self.lyricIndex + 1]
+
+        if lyrics[self.lyricIndex] != null
+          $scope.currentLyric = lyrics[self.lyricIndex].line
+          # console.log "Updated lyric to " + lyrics[self.lyricIndex].line
+          # console.log lyrics[self.lyricIndex]
+          # console.log lyrics[self.lyricIndex + 1]
+        else
+          console.log 'Uh oh. couldn\'t find lyrics here:' + self.lyricIndex
+
 
 
         if lyrics[self.lyricIndex+1] != null
@@ -113,36 +119,41 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
 
         return null
 
+      # updates the progress bar
       updateProgressBar = (wait) ->
         $scope.tracker =
           class: 'lyricbox-inactive'
           style: {}
 
-        $scope.$apply()
+        # how long is our wait? (convert to x.x seconds)
+        seconds = (Math.floor (wait-CSS_TRANSITION_MS)/100) / 10
 
-        # how long is our wait?
-        seconds = Math.floor (wait-CSS_TRANSITION_MS)/100 # now it's tenths of a second
-        seconds = seconds/10
-
-        $timeout () ->
+        $timeout ->
           $scope.tracker =
             class: 'lyricbox-active'
             style: getTransitionCSS(seconds)
           return null
         , CSS_TRANSITION_MS
 
-        $scope.$apply()
-
+      # Helper function for rendering the correct transition CSS to use.
+      #
+      # @param seconds Number The length of the transition, in seconds
+      #                       (ex. '2.4')
+      # @return Object A CSS object to be rendered by ng-style
       getTransitionCSS = (seconds) ->
-        console.log 'using ' + seconds + ' as my seconds'
+        TYPE = 'linear'
         return {
-          '-webkit-transition': 'width ' + seconds + 's linear'
-          '-moz-transition': 'width ' + seconds + 's linear'
-          '-o-transition': 'width ' + seconds + 's linear'
-          '-ms-transition': 'width ' + seconds + 's linear'
-          'transition': 'width ' + seconds + 's linear'
+          '-webkit-transition': 'width ' + seconds + 's ' + TYPE
+          '-moz-transition': 'width ' + seconds + 's ' + TYPE
+          '-o-transition': 'width ' + seconds + 's ' + TYPE
+          '-ms-transition': 'width ' + seconds + 's ' + TYPE
+          'transition': 'width ' + seconds + 's ' + TYPE
         }
 
+      # Returns the current time of the youtube player.
+      #
+      # @return Int The number of milliseconds we're into the video. Returns 0
+      #             if there is some error getting the time.
       getCurrentTime = ->
         result = 0
         try
@@ -171,6 +182,16 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         validation = $timeout( validator, 1000 )
 
 
+      # Call this if we're choosing a new video but don't want to change the
+      # lyrics or anything.
+      #
+      # @param video Object The video object to load.
+      # @return null
+      $scope.selectVideo = (video) ->
+        console.log 'selectVideo from KaraokeCtrl'
+        $scope.code = video.youtube_id
+        $scope.video = video
+        initLyric()
 
 
     return null

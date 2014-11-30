@@ -40,3 +40,20 @@ body {
   top: 0px;
   left: 0px;
 }
+
+.vid-thumbnail {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+p.vid-description {
+  font-size: small;
+}
+
+.vid-option {
+  background: #DDD;
+}
+
+.spacer {
+  margin-bottom: 10px;
+}

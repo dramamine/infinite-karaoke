@@ -28,25 +28,24 @@ class CommentApi
       #console.log req.body.comment?
 
       if !req.body? or
-        !req.body.rating? or
-        !req.body.category? or
-        !req.body.type?
-          console.log 'Missing some shit.'
-          res.send 500, 'Missing some critical shit.'
-          return
+      !req.body.rating? or
+      !req.body.category? or
+      !req.body.type?
+        console.log 'Missing some shit.'
+        res.send 500, 'Missing some critical shit.'
+        return
 
       if (typeof req.body.rating == "number" and
-        req.body.rating >= -1 and
-        req.body.rating <= 1)
-
-          newcomment.rating = req.body.rating
+      req.body.rating >= -1 and
+      req.body.rating <= 1)
+        newcomment.rating = req.body.rating
       else
         console.log 'Rating not valid.'
         res.send 500, 'Rating not valid.'
 
       if typeof req.body.category == "number" and
-        req.body.category >= 0
-          newcomment.category = req.body.category
+      req.body.category >= 0
+        newcomment.category = req.body.category
       else
         console.log 'Category not valid.'
         res.send 500, 'Category not valid.'
@@ -58,8 +57,8 @@ class CommentApi
         res.send 500, 'Type not valid.'
 
       if req.body.reason and
-        typeof req.body.reason == "string"
-          newcomment.reason = req.body.reason
+      typeof req.body.reason == "string"
+        newcomment.reason = req.body.reason
 
       if typeof req.ip == "string"
         console.log 'checking IP ' + req.ip

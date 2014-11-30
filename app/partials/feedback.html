@@ -22,7 +22,15 @@
   <div id="new-video" ng-show="category">
     <p>Pick another video:</p>
     <div ng-repeat="video in otherVideos">
-      <img src="{{video.thumbnail}}">
-      <p>{{video.description}}</p>
+      <div class="row vid-option" ng-click="selectVideo(video); reset()">
+        <div class="col-md-2 vid-thumbnail">
+          <img ng-src="{{video.thumbnail}}">
+        </div>
+        <div class="col-md-10">
+          <p class="vid-description"><strong>Title:</strong> {{video.title}}</p>
+          <p class="vid-description"><strong>Description:</strong> {{video.description}}</p>
+        </div>
+      </div>
+      <div class="spacer"></div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-module.exports = 
-  app: ['app/**/*.coffee', 'src/**/*.coffee']
+module.exports =
+  app: '<%= targets.coffeeonly %>'
   options:
     force: true
