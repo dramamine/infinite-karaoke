@@ -13,7 +13,7 @@ module.exports.devel =
 
 
 module.exports.test =
-  database: 'infinite'
-  username: null
-  password: null
-  connection: 'localhost:12345'
+  database: 't3st'
+  username: 'infinite'
+  password: 'sm<hC3Jjz86&Q68'
+  connection: 'ds053390.mongolab.com:5339'

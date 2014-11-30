@@ -8,6 +8,13 @@ app = require('../../src/app')
 
 describe 'API', ->
 
+  describe 'GET /search', (done) ->
+    it 'should run a search', (done) ->
+      request(app)
+        .get('/search/TLC')
+        .expect(200)
+        .end
+
 
   describe 'GET /track', ->
 
@@ -23,7 +30,7 @@ describe 'API', ->
 
     it 'should return a single existing track using request', (done) ->
       request(app)
-        .get('/track/544c40750ebddbd3157698a3')
+        .get('/track/547782a8ad1c9c711908ab32')
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -76,7 +83,7 @@ describe 'API', ->
   describe 'GET /lyric', ->
     it 'should return a lyric object for an existing track', (done) ->
       request(app)
-        .get('/lyric/544c40750ebddbd3157698a3')
+        .get('/lyric/547782a8ad1c9c711908ab32')
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -108,7 +115,7 @@ describe 'API', ->
   describe 'GET /video', ->
     it 'should return a single existing best vid', (done) ->
       request(app)
-        .get('/video/544c40750ebddbd3157698a3')
+        .get('/video/547782a8ad1c9c711908ab32')
         .expect(200)
         .end (err, res) ->
           if(err)
@@ -121,7 +128,7 @@ describe 'API', ->
   describe 'GET /videos/', ->
     it 'should return multiple videos', (done) ->
       request(app)
-        .get('/videos/544c40750ebddbd3157698a3')
+        .get('/videos/547782a8ad1c9c711908ab32')
         .expect(200)
         .end (err, res) ->
           if(err)

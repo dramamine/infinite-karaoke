@@ -11,6 +11,7 @@ TrackSchema = mongoose.Schema
     popular: Boolean
   }
   tags: [String]
+  keywords: [String]
 
 # turn tags into searchable item
 TrackSchema.methods.allTags = ->
