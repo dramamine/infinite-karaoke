@@ -54,6 +54,16 @@ block content
             i(class="fa fa-star" style="{{track.vidQualityCSS}}")
             i(class="fa fa-star" style="{{track.popularCSS}}")
 
+            .row(ng-if="$index==3")
+
+          .col-md-3(ng-if="placeholder")
+            img(src="img/results-placeholder-sm.jpg")
+            p Search the web for <em>{{searchTerms}}</em>...
+
+        .row
+          .col-md-12
+            button(ng-click="moreResults()") See more results...
+
       karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
 
     div(ng-show="DEBUG")

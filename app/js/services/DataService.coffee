@@ -97,10 +97,16 @@ angular.module('karaoke.services').service 'DataService',
 
       return deferred.promise
 
-    searchFor: (terms) ->
+    searchFor: (terms, page = 0) ->
       deferred = $q.defer()
 
-      url = 'search/' + terms
+      if terms.match(/[a-zA-Z0-9]+/)
+        url = 'search/' + terms
+      else # use default search
+        url = 'search'
+      if page > 0
+        url += '/page/' + page
+
       $http.get(url).success( (data, status, headers, config) ->
 
         angular.forEach data, (track) ->

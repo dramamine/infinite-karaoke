@@ -14,6 +14,9 @@ class TrackApi
     @app.get '/track', @getTracks
     @app.get '/track/:_id', @getTrack
     @app.post '/track/:_id', @updateTrack
+    @app.get '/search/page/:page', @defaultSearch
+    @app.get '/search', @defaultSearch
+    @app.get '/search/:phrase/page/:page', @search
     @app.get '/search/:phrase', @search
 
     @app.get '/keywords', @updateAllKeywords
@@ -58,13 +61,18 @@ class TrackApi
         if err then res.send err, 400
         else res.send 200
 
-  search: (req, res, next) ->
+  defaultSearch: (req, res, next) ->
+    PAGE_SIZE = 8
 
-    {phrase} = req.params
-    Track.find { $text: { $search: phrase } },
-      { score: { $meta: 'textScore' }, keywords: 0, __v: 0 }
-    .sort { score: { $meta: 'textScore' } }
-    .limit 5
+    {page} = req.params
+    if !page
+      page = 0
+
+    Track.find { },
+      { keywords: 0, __v: 0 }
+    .sort { 'quality.popular': -1, 'quality.video': -1, 'quality.lyric': -1 }
+    .skip page*PAGE_SIZE
+    .limit PAGE_SIZE
     .exec (err, tracks) ->
       if err
         console.log err
@@ -73,6 +81,29 @@ class TrackApi
       promise = addThumbnails(tracks).then (results) ->
         return res.json results, 200
 
+  search: (req, res, next) ->
+    PAGE_SIZE = 7
+
+    {phrase, page} = req.params
+    if !page
+      page = 0
+    console.log 'using page number' + page
+
+    Track.find { $text: { $search: phrase } },
+      { score: { $meta: 'textScore' }, keywords: 0, __v: 0 }
+    .sort { score: { $meta: 'textScore' } }
+    .skip page*PAGE_SIZE
+    .limit PAGE_SIZE
+    .exec (err, tracks) ->
+      console.log 'got results back.'
+      if err
+        console.log err
+        return res.send err, 400
+      if tracks.length == 0
+        return res.send 'NO RESULTS', 200
+
+      promise = addThumbnails(tracks).then (results) ->
+        return res.json results, 200
 
 
 
