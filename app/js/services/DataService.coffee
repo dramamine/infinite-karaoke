@@ -1,6 +1,24 @@
 angular.module('karaoke.services').service 'DataService',
 ['$resource', '$q', '$http', '$log', ($resource, $q, $http, $log) ->
 
+  addQualityCSS = (track) ->
+
+    track.vidQualityCSS = switch track.quality.video
+      when 2 then 'color:gold'
+      when 1 then 'color:silver'
+      else 'display:none'
+
+    track.lyricQualityCSS = switch track.quality.lyric
+      when 2 then 'color:gold'
+      when 1 then 'color:silver'
+      else 'display:none'
+
+    track.popularCSS = switch track.quality.popular
+      when true then 'color:gold'
+      else 'display:none'
+
+    return track
+
   obj =
     # enums.
     # these are for comment types. if touching these, check out
@@ -28,22 +46,7 @@ angular.module('karaoke.services').service 'DataService',
         # TODO probs shouldn't do this in the controller, but whatever.
         angular.forEach result, (track) ->
           # use the label since this gets indexed
-          track.label = track.artist + ' - ' + track.title
-          track.value = track._id
-
-          track.vidQualityCSS = switch track.quality.video
-            when 2 then 'color:gold'
-            when 1 then 'color:silver'
-            else 'display:none'
-
-          track.lyricQualityCSS = switch track.quality.lyric
-            when 2 then 'color:gold'
-            when 1 then 'color:silver'
-            else 'display:none'
-
-          track.popularCSS = switch track.quality.popular
-            when true then 'color:gold'
-            else 'display:none'
+          track = addQualityCSS(track)
 
           # track.vidQualityCSS = "color:silver"
 
@@ -99,6 +102,10 @@ angular.module('karaoke.services').service 'DataService',
 
       url = 'search/' + terms
       $http.get(url).success( (data, status, headers, config) ->
+
+        angular.forEach data, (track) ->
+          track = addQualityCSS(track)
+
         deferred.resolve data
       ).error( (data, status, headers, config) ->
         $log.error 'error when trying to run a search.'
@@ -107,6 +114,8 @@ angular.module('karaoke.services').service 'DataService',
       )
 
       return deferred.promise
+
+
 
   return obj
 ]
