@@ -43,13 +43,13 @@ block content
         h3.text-center In Space, No-one Can Hear You Sing
         .input-group
 
-          input(type="text" ng-model="selectedTrack" placeholder="Type to infinity..."
-            typeahead="track as track.label for track in tracks | limitTo:8" typeahead-template-url="partials/dropdownEntry.html" class="form-control")
+          input(type="text" ng-model="searchTerms" ng-change="searchTermsUpdated()" placeholder="Type to Infinity"
+            ng-model-options="{ updateOn: 'default', debounce: {'default': 500} }")
 
-
-          span(class="input-group-btn")
-            a(class="btn btn-default" type="button" ng-click="pickTrack()") Search!
-
+        ul
+          li(ng-repeat="track in tracks")
+            img(ng-src="{{track.thumbnail}}")
+            {{track.artist}} - {{track.title}}
 
       karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
 

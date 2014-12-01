@@ -4,6 +4,7 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
     $scope.myData = {}
     $scope.tracks = []
     $scope.selectedTrack
+    $scope.searchTerms = ''
 
     DataService.getTrackList().then (tracks) ->
       $log.info tracks
@@ -30,6 +31,11 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
       $scope.userAddedTrackId = $scope.selectedTrack.value
       $scope.$parent.hasSearched = true
 
+    $scope.searchTermsUpdated = ->
+      # console.log 'searchTermsUpdated called with search terms ' + $scope.searchTerms
+      DataService.searchFor($scope.searchTerms).then (tracks) ->
+        $log.info tracks
+        $scope.tracks = tracks
 
 
 

@@ -94,5 +94,19 @@ angular.module('karaoke.services').service 'DataService',
 
       return deferred.promise
 
+    searchFor: (terms) ->
+      deferred = $q.defer()
+
+      url = 'search/' + terms
+      $http.get(url).success( (data, status, headers, config) ->
+        deferred.resolve data
+      ).error( (data, status, headers, config) ->
+        $log.error 'error when trying to run a search.'
+        $log.error data
+        deferred.reject data
+      )
+
+      return deferred.promise
+
   return obj
 ]
