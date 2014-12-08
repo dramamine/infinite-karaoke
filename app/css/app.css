@@ -57,3 +57,9 @@ p.vid-description {
 .spacer {
   margin-bottom: 10px;
 }
+
+img .thumbnail {
+  float:left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}

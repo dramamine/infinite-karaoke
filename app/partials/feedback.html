@@ -23,10 +23,8 @@
     <p>Pick another video:</p>
     <div ng-repeat="video in otherVideos">
       <div class="row vid-option" ng-click="selectVideo(video); reset()">
-        <div class="col-md-2 vid-thumbnail">
-          <img ng-src="{{video.thumbnail}}">
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
+          <img ng-src="{{video.thumbnail}}" class="thumbnail" />
           <p class="vid-description"><strong>Title:</strong> {{video.title}}</p>
           <p class="vid-description"><strong>Description:</strong> {{video.description}}</p>
         </div>

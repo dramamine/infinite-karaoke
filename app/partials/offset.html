@@ -1,9 +1,23 @@
 <div>
-  <div id="lyric-feedback">
+  <div id="lyric-feedback" ng-hide="rating">
     <span>Lyrics work?</span>
     <div class="btn-group" role="group">
-      <button id="good" class="btn btn-success" ng-click="setRating(1)"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-      <button id="bad" class="btn btn-danger" ng-click="setRating(-1)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+      <button class="btn btn-success" ng-click="alert('hi')"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+      <button class="btn btn-danger" ng-click="setRating(-1)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
     </div>
   </div>
+
+  <div id="thanks" ng-show="rating == 1">
+    <p>Thanks!</p>
+  </div>
+
+  <div id="offsets" ng-show="rating == -1">
+    <span>Wanna update the offset?</span>
+    <button ng-click="changeOffset(-1000)">--</button>
+    <button ng-click="changeOffset(-50)">-</button>
+    <input type="text" ng-model="offset" />
+    <button ng-click="changeOffset(50)">+</button>
+    <button ng-click="changeOffset(1000)">++</button>
+  </div>
+
 </div>

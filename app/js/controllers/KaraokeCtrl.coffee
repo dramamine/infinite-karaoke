@@ -14,6 +14,8 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
     timer = null
     video = null
 
+    $scope.offset = 69
+
     validation = null
 
     # used for the 'progress bar' tracker
@@ -74,20 +76,19 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
         console.log "Init lyric called."
 
         currentTime = getCurrentTime()
-        console.error "Weird current time." unless currentTime >= 0
 
         for lyric, idx in lyrics
           # find the lyric which comes right after the current time
           if lyric.time > currentTime
             self.lyricIndex = idx - 1
-            console.log "Setting current index to " + self.lyricIndex
+            # console.log "Setting current index to " + self.lyricIndex
             $scope.currentLyric = lyrics[self.lyricIndex].line
 
             wait = (lyric.time - currentTime)
             timer = $timeout( updateLyric, wait )
             updateProgressBar(wait)
 
-            console.log "Waiting " + wait + " to change lyric."
+            # console.log "Waiting " + wait + " to change lyric."
 
             return null
 
@@ -101,12 +102,8 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
 
         if lyrics[self.lyricIndex] != null
           $scope.currentLyric = lyrics[self.lyricIndex].line
-          # console.log "Updated lyric to " + lyrics[self.lyricIndex].line
-          # console.log lyrics[self.lyricIndex]
-          # console.log lyrics[self.lyricIndex + 1]
         else
           console.log 'Uh oh. couldn\'t find lyrics here:' + self.lyricIndex
-
 
 
         if lyrics[self.lyricIndex+1] != null
@@ -157,24 +154,28 @@ angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
       getCurrentTime = ->
         result = 0
         try
-          result = $youtube.player.getCurrentTime() * 1000
+          result = ($youtube.player.getCurrentTime() * 1000) - $scope.offset
         finally
-          return result
+          return Math.max 0, result
+
+      $scope.changeOffset = (delta) ->
+        console.log 'NEW OFFSET YO'
+        $scope.offset += delta
+
+      $scope.$watch 'offset', () ->
+        console.log 'offset was updated'
 
       # makes sure our lyrics are on-track. this is running every second
       # to deal with people fast-forwarding or rewinding. buffering and
       # whatnot gets handled already in listeners from queueTrack
       validator = (onetime = false) ->
         currentTime = getCurrentTime()
-        console.log 'validator called'
-        console.log self.lyrics[self.lyricIndex]
         if currentTime > self.lyrics[self.lyricIndex].time and
           self.lyrics[self.lyricIndex+1] != null and
           currentTime < self.lyrics[self.lyricIndex+1].time
-            console.log 'yep, it\'s valid'
+
             # everything's great!
         else
-          console.log 'timer is off, oh no'
           # time is off!
           $timeout.cancel(timer)
           initLyric()
