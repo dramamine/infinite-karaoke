@@ -9,21 +9,10 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
 
     page = 0
 
-    # DataService.getTrackList().then (tracks) ->
-    #   $log.info tracks
-    #   $scope.tracks = tracks
-
-    #   # if trackid is set, user's using parameters to choose a track.
-    #   if $scope.trackid
-    #     mytrack = tracks.filter (i) ->
-    #       return i._id == $scope.trackid
-    #     if mytrack.length == 1
-    #       $scope.selectedTrack = mytrack[0]
-    #       $scope.pickTrack()
-
-    # , (error) ->
-    #   $log.error 'error from getting track list.'
-
+    $scope.$watch 'trackid', (trackid) ->
+      $scope.$parent.trackid = trackid
+      $scope.userAddedTrackId = trackid
+      $scope.$parent.hasSearched = true
 
     # Function called when user picks a track.
     $scope.pickTrack = ->

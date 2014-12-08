@@ -38,8 +38,9 @@ block content
             | Tracks that have been verified by the community have
             | <i class="fa fa-star"></i>s by them!
 
-    div(ng-controller="TrackSearchCtrl" ng-init="trackid= #{JSON.stringify(trackid)}")
-      .col-md-12
+    div(ng-controller="TrackSearchCtrl"
+      ng-init="trackid= #{JSON.stringify(trackid)}")
+      .col-md-12(ng-hide='hasSearched')
         h3.text-center In Space, No-one Can Hear You Sing
         .input-group
 
