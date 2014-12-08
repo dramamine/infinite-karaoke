@@ -26,7 +26,6 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
     $scope.searchTermsUpdated = ->
       page = 0
 
-      # console.log 'searchTermsUpdated called with search terms ' + $scope.searchTerms
       DataService.searchFor($scope.searchTerms).then (tracks) ->
         $log.info tracks
 
