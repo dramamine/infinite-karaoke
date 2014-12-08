@@ -7,4 +7,3 @@ angular.module('karaoke.controllers').controller 'OffsetCtrl',
 
     return null
 ]
-
