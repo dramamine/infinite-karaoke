@@ -10,17 +10,16 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
     page = 0
 
     $scope.$watch 'trackid', (trackid) ->
-      $scope.$parent.trackid = trackid
-      $scope.userAddedTrackId = trackid
-      $scope.$parent.hasSearched = true
+      # sometimes this gets 'undefined' from ng-init
+      return unless trackid
+      pickTrack(trackid)
 
     # Function called when user picks a track.
-    $scope.pickTrack = ->
+    $scope.pickTrack = (trackid)->
       $log.info 'pickTrack called.'
-      $log.info $scope.selectedTrack
 
-      $scope.$parent.trackid = $scope.selectedTrack.value
-      $scope.userAddedTrackId = $scope.selectedTrack.value
+      $scope.$parent.trackid = trackid
+      $scope.userAddedTrackId = trackid
       $scope.$parent.hasSearched = true
 
     $scope.searchTermsUpdated = ->
@@ -29,10 +28,8 @@ angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
       DataService.searchFor($scope.searchTerms).then (tracks) ->
         $log.info tracks
 
-        if $scope.searchTerms != ''
-          $scope.placeholder = true
-        else
-          $scope.placeholder = false
+        # use a placeholder when the user searched for something
+        $scope.placeholder = ($scope.searchTerms != '')
 
         $scope.tracks = tracks
 

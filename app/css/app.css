@@ -63,3 +63,17 @@ img .thumbnail {
   margin-left: 10px;
   margin-bottom: 10px;
 }
+
+img.search-result-thumbnail {
+  display:inline;
+  float:left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.search-result {
+  background: #7BE8C0;
+  height: 100px;
+  margin-bottom: 10px;
+}

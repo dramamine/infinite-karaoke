@@ -49,11 +49,18 @@ block content
 
         .row
           .col-md-3(ng-repeat="track in tracks")
-            img(ng-src="{{track.thumbnail}}")
-            {{track.artist}} - {{track.title}}
-            i(class="fa fa-star" style="{{track.lyricQualityCSS}}")
-            i(class="fa fa-star" style="{{track.vidQualityCSS}}")
-            i(class="fa fa-star" style="{{track.popularCSS}}")
+            div.search-result(ng-click="pickTrack(track._id)")
+              img.search-result-thumbnail(ng-src="{{track.thumbnail}}")
+              div
+                i(class="fa fa-star" style="{{track.lyricQualityCSS}}")
+                i(class="fa fa-star" style="{{track.vidQualityCSS}}")
+                i(class="fa fa-star" style="{{track.popularCSS}}")
+
+                p
+                  strong {{track.artist}}
+                  br
+                  {{track.title}}
+
 
             .row(ng-if="$index==3")
 
