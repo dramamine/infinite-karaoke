@@ -73,6 +73,12 @@ block content
             button(ng-click="moreResults()") See more results...
 
       karaoke(trackid='userAddedTrackId' ng-if='userAddedTrackId')
+        .row(ng-if='userAddedTrackId')
+          .col-md-6
+            include feedback
+          .col-md-6
+            include offset
+
 
     div(ng-show="DEBUG")
       h3 Some debug stuff goes here.

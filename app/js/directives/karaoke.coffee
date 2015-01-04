@@ -1,7 +1,7 @@
 
 angular.module('karaoke.directives').directive 'karaoke', ->
   return {
-    restrict: 'E'
+    restrict: 'AE'
     scope: {
       'trackid': '=' # probs get rid of this
     }

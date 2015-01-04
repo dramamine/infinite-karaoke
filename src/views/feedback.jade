@@ -1,0 +1,28 @@
+div(ng-controller='FeedbackCtrl')
+  #initial-feedback(ng-hide='rating')
+    span Right video?
+    .btn-group(role='group')
+      button#good.btn.btn-success(ng-click='setRating(1)')
+        span.glyphicon.glyphicon-thumbs-up
+      button#bad.btn.btn-danger(ng-click='setRating(-1)')
+        span.glyphicon.glyphicon-thumbs-down
+  #thanks(ng-show='rating == 1')
+    p Thanks!
+  #detailed-feedback(ng-show='rating == -1 && !category')
+    span What's the problem?
+    .btn-group(role='group')
+      button.btn.btn-default(ng-repeat='option in FEEDBACK_OPTIONS', ng-click='setCategory(option.category)')
+        | {{option.text}}
+  #new-video(ng-show='category')
+    p Pick another video:
+    div(ng-repeat='video in otherVideos')
+      .row.vid-option(ng-click='selectVideo(video); reset()')
+        .col-md-12
+          img.thumbnail(ng-src='{{video.thumbnail}}')
+          p.vid-description
+            strong Title:
+            | {{video.title}}
+          p.vid-description
+            strong Description:
+            | {{video.description}}
+      .spacer

@@ -1,0 +1,17 @@
+div(ng-controller="OffsetCtrl")
+  div#lyric-feedback(ng-hide='rating')
+    span Lyrics work?
+    div.btn-group(role='group')
+      button.btn.btn-success(ng-click='alert("hi")')
+        span.glyphicon.glyphicon-thumbs-up
+      button.btn.btn-danger(ng-click='setRating(-1)')
+        span.glyphicon.glyphicon-thumbs-down
+  div#thanks(ng-show='rating == 1')
+    p Thanks!
+  div#offsets(ng-show='rating == -1')
+    span Wanna update the offset?
+    button(ng-click='changeOffset(-1000)') --
+    button(ng-click='changeOffset(-50)') -
+    input(type='text', ng-model='offset')
+    button(ng-click='changeOffset(50)') +
+    button(ng-click='changeOffset(1000)') ++
