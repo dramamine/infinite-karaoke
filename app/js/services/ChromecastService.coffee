@@ -7,8 +7,8 @@ angular.module('karaoke.services').factory 'cast', [
       setTimeout(initializeCastApi, 1000)
 
 
-    CAST_APP_ID = 'something'
-    MESSAGE_NAMESPACE = 'somethingelse'
+    CAST_APP_ID = '8F0DAF02'
+    MESSAGE_NAMESPACE = 'urn:x-cast:com.angular.cast.message'
 
     # Initialize the Google Cast API for use
     initializeCastApi = ->
