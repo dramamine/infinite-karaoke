@@ -6,6 +6,7 @@ html(lang="en" ng-app="karaokeApp")
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css")
     script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js")
+    script(type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js")
     script(src="../lib/angular/angular.js")
     script(src="../lib/angular-route/angular-route.js")
     script(src="../lib/angular-animate/angular-animate.js")
@@ -21,13 +22,15 @@ html(lang="en" ng-app="karaokeApp")
     script(src="../js/controllers/TrackSearchCtrl.js")
     script(src="../js/controllers/FeedbackCtrl.js")
     script(src="../js/controllers/OffsetCtrl.js")
+    script(src="../js/controllers/ChromecastCtrl.js")
     script(src="../js/directives/karaoke.js")
     script(src="../js/directives/youtuber.js")
     script(src="../js/services/DataService.js")
+    script(src="../js/services/ChromecastService.js")
     script(src="../js/config.js")
+    script(src="../js/chromecast.js")
 
     script(src="../lib/angular-youtube-mb/src/angular-youtube-embed.js")
-
 
   body
     block content
