@@ -72,6 +72,12 @@ module.exports = (grunt) ->
     'mochaTest'
   ]
 
+  grunt.registerTask 'build-cast', [
+    'copy:cast'
+    'coffee:cast'
+    'jade:cast'
+  ]
+
   grunt.registerTask 'forever-start', [
     'env:prod'
     'ngconstant:production'

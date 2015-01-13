@@ -1,8 +1,15 @@
 # MOAR COFFEE
-module.exports = 
+module.exports =
 
-  compile: 
-    files: 
+  compile:
+    files:
       'public/js/app.js': [
         'src/app/**/*.coffee'
       ]
+  # use this to compile all your coffeescript into a single app.js file
+  cast:
+    files:
+      'chromecast-receiver/dist/app.js': [
+        'chromecast-receiver/src/**/*.coffee'
+      ]
+

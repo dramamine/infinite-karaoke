@@ -28,3 +28,4 @@ results.txt
 coffeelint.json
 test/data/
 data/backup/
+src/log/
