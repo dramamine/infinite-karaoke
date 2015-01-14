@@ -6,29 +6,41 @@ html(lang="en" ng-app="karaokeReceiverApp")
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
     link(rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css")
     script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js")
-    script(src="../lib/angular/angular.js")
-    script(src="../lib/angular-route/angular-route.js")
-    script(src="../lib/angular-animate/angular-animate.js")
-    script(src="../lib/angular-sanitize/angular-sanitize.js")
-    script(src="../lib/angular-resource/angular-resource.js")
-    script(src="../lib/angular-underscore/angular-underscore.js")
+    script(src="../../lib/angular/angular.js")
+    script(src="../../lib/angular-route/angular-route.js")
+    script(src="../../lib/angular-animate/angular-animate.js")
+    script(src="../../lib/angular-sanitize/angular-sanitize.js")
+    script(src="../../lib/angular-resource/angular-resource.js")
+    script(src="../../lib/angular-underscore/angular-underscore.js")
 
-    script(src=s"../lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
+    script(src="../../lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
 
-    script(src="../js/app.js")
-    script(src="../js/controllers/KaraokeCtrl.js")
-    script(src="../js/controllers/StateCtrl.js")
-    script(src="../js/controllers/TrackSearchCtrl.js")
-    script(src="../js/controllers/FeedbackCtrl.js")
-    script(src="../js/controllers/OffsetCtrl.js")
-    script(src="../js/controllers/ChromecastCtrl.js")
-    script(src="../js/directives/karaoke.js")
-    script(src="../js/directives/youtuber.js")
-    script(src="../js/services/DataService.js")
-    script(src="../js/services/ChromecastService.js")
-    script(src="../js/config.js")
+    script(src="../../lib/angular-youtube-mb/src/angular-youtube-embed.js")
+    script(src="app.js")
 
-    script(src="../lib/angular-youtube-mb/src/angular-youtube-embed.js")
+    script(type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js")
 
   body
-    block content
+    h3 You did it, marten!! Good for you!!
+    div(ng-controller='HeaderCtrl')
+      app-heading
+    test-receiver
+    div(ng-controller='ReceiverCtrl')
+      p Filter Value: {{ filter }}
+      h4
+        | Currently Viewing Games For: {{ console }}
+        small {{ consoleMessage }}
+      // Grid View
+      .row(ng-if="view === 'grid'")
+        .col-sm-4(ng-repeat='game in games')
+          .grid {{ game }}
+      // Table View
+      table.table(ng-if="view == 'table'")
+        thead
+          tr
+            th Console
+            th Game
+        tbody
+          tr(ng-repeat='game in games')
+            td {{ console }}
+            td {{ game }}

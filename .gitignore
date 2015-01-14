@@ -29,3 +29,5 @@ coffeelint.json
 test/data/
 data/backup/
 src/log/
+chromecast-receiver/builds/
+chromecast-receiver/dist/

@@ -28,21 +28,29 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'build', [
+    # build receiver files
+    'build-cast'
+
     'coffeelint'
     'clean'
-    'copy'
+    'copy:default'
     'ngconstant:development'
   ]
 
   grunt.registerTask 'build:fast', [
     'coffeelint'
-    'copy'
+    'copy:default'
   ]
 
   grunt.registerTask 'build:prod', [
+    # build and package receiver files
+    # see README for receiver deployment instructions
+    'build-cast'
+    'shell:package'
+
     'coffeelint'
     'clean'
-    'copy'
+    'copy:default'
     'ngconstant:production'
   ]
 

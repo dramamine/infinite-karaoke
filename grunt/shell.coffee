@@ -45,3 +45,10 @@ module.exports =
 
   cleanup:
     command: 'mongod --dbpath test/data --shutdown'
+
+  # for packaging up the receiver files
+  package:
+    command: [
+        'cd chromecast-receiver'
+        'zip -r builds/receiver.zip dist/*'
+      ].join('&&')
