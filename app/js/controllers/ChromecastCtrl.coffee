@@ -2,6 +2,10 @@
 angular.module('karaoke.controllers').controller 'ChromecastCtrl',
 ['$scope', '$log', '$window', 'cast', '$rootScope',
   ($scope, $log, $window, cast, $rootScope) ->
+    this.cast = cast
+    self = this
+    console.log 'here is cast:'
+    console.log cast
 
     $scope.state = 'Initializing Cast Api';
     # cast.initializeCastApi()
@@ -18,7 +22,13 @@ angular.module('karaoke.controllers').controller 'ChromecastCtrl',
       console.log "Caught Event! available"
       $scope.state = "Send to Chrome Cast"
       $scope.disabled = false
-      $scope.$apply()
+
+    $scope.sendTestMessage = ->
+      hi =
+        hi: 'hi'
+        trackid: 'xyz'
+        action: 'play'
+      self.cast.sendMessage hi
       return
 
     $rootScope.$on "RECEIVER_DEAD", ->

@@ -2,7 +2,13 @@ extends layout
 
 block content
 
+
+
   div.container(ng-controller="StateCtrl")
+
+    div(ng-controller="ChromecastCtrl")
+      button(ng-click="sendTestMessage()") SEND A TEST MESSAGE TO CC
+
     div(ng-hide="hasSearched")
       .jumbotron.clearfix
         img(src="img/totally-not-a-stolen-stock-photo.jpg" style="height:230px;" class="pull-right")
@@ -37,8 +43,6 @@ block content
           p
             | Tracks that have been verified by the community have
             | <i class="fa fa-star"></i>s by them!
-
-    div(ng-controller="ChromecastCtrl")
 
     div(ng-controller="TrackSearchCtrl"
       ng-init="trackid= #{JSON.stringify(trackid)}")

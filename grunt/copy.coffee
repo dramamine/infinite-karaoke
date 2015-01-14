@@ -5,7 +5,17 @@ module.exports =
     src: ['**'] # warning: this copies over the whole lib directory
     dest: './public/'
   cast:
-    expand: true
-    cwd: './chromecast-receiver/app'
-    src: ['**']
-    dest: './chromecast-receiver/'
+
+    files: [{
+      expand: true
+      cwd: './chromecast-receiver/app'
+      src: ['**']
+      dest: './chromecast-receiver/'
+    },{
+        expand: true
+        cwd: './app/lib'
+        src: ['**']
+        dest: './chromecast-receiver/dist/lib/'
+      }
+    ]
+

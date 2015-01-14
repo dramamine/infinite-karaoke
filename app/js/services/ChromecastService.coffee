@@ -1,4 +1,4 @@
-angular.module('karaoke.services').factory 'cast', [
+angular.module('karaoke.services').service 'cast', [
   '$rootScope','$window', ($rootScope, $window) ->
 
     console.log 'Cast service is being initialized'
@@ -9,6 +9,9 @@ angular.module('karaoke.services').factory 'cast', [
 
     CAST_APP_ID = '8F0DAF02'
     MESSAGE_NAMESPACE = 'urn:x-cast:com.angular.cast.message'
+
+
+
 
     # Initialize the Google Cast API for use
     initializeCastApi = ->
@@ -60,16 +63,30 @@ angular.module('karaoke.services').factory 'cast', [
       return
     castSession = null
     setTimeout initializeCastApi, 1000  if not chrome.cast or not chrome.cast.isAvailable
-    return startChromeCast: (message) ->
-      if castSession?
-        castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
-      else
-        chrome.cast.requestSession (e) ->
-          castSession = e
-          castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
-          return
 
-      return
+    obj =
+      sendMessage: (message) ->
+        console.log 'sending message...'
+        if !castSession
+          return false
+        onSuccess = ->
+          console.log 'Sent a thing and it was not a problem.'
+        onError = ->
+          console.error 'Sending that message did NOT work.'
+        castSession.message MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+
+
+      startChromeCast: (message) ->
+        if castSession?
+          castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+        else
+          chrome.cast.requestSession (e) ->
+            castSession = e
+            castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+
+    return obj
+
+
 ]
 
 

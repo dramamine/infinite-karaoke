@@ -19,3 +19,4 @@ karaokeApp = angular.module 'karaokeReceiverApp', [
 angular.module 'karaoke.controllers', ['ui.bootstrap', 'karaoke.services']
 angular.module 'karaoke.directives', []
 angular.module 'karaoke.services', []
+angular.module 'karaoke.receiver', []

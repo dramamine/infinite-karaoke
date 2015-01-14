@@ -17,6 +17,8 @@ module.exports = (grunt) ->
           'src/**/*.coffee'
           'src/**/*.jade'
           'test/**/*.coffee'
+          'chromecast-receiver/src/**/*.coffee'
+          'chromecast-receiver/src/**/*.jade'
         ]
         coffeeonly: [
           'app/js/**/*.coffee'
@@ -39,6 +41,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build:fast', [
     'coffeelint'
+    'build-cast'
     'copy:default'
   ]
 

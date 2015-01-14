@@ -17,9 +17,9 @@ angular.module("karaoke.receiver").controller "ReceiverCtrl", [
       console.log "Setting", settings
 
       # Set them on the scope
-      $scope.view = settings.view
-      $scope.filter = settings.filter
-      $scope.console = settings.console
+      $scope.view = settings.hi
+      $scope.filter = settings.trackid
+      $scope.console = e.data
       $scope.$apply()
       return
 
