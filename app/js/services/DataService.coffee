@@ -35,6 +35,7 @@ angular.module('karaoke.services').service 'DataService',
     # Retrieves the track list, formats some CSS for displaying as search
     # results. Right now, this is 'dumb' and just retrieves every track.
     getTrackList: () ->
+      # do I need this line?
       self = this
       deferred = $q.defer()
 

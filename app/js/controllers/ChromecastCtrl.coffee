@@ -2,13 +2,18 @@
 angular.module('karaoke.controllers').controller 'ChromecastCtrl',
 ['$scope', '$log', '$window', 'cast', '$rootScope',
   ($scope, $log, $window, cast, $rootScope) ->
-    this.cast = cast
-    self = this
-    console.log 'here is cast:'
-    console.log cast
+
 
     $scope.state = 'Initializing Cast Api';
-    # cast.initializeCastApi()
+    hi =
+      hi: 'hi'
+      trackid: 'xyz'
+      action: 'play'
+
+
+
+
+
 
     ##Listen to the different states
     $rootScope.$on "INITIALIZING_CAST_API", ->
@@ -22,13 +27,11 @@ angular.module('karaoke.controllers').controller 'ChromecastCtrl',
       console.log "Caught Event! available"
       $scope.state = "Send to Chrome Cast"
       $scope.disabled = false
+      cast.startChromeCast hi
 
     $scope.sendTestMessage = ->
-      hi =
-        hi: 'hi'
-        trackid: 'xyz'
-        action: 'play'
-      self.cast.sendMessage hi
+
+      cast.startChromeCast "wtf is going on"
       return
 
     $rootScope.$on "RECEIVER_DEAD", ->
@@ -39,12 +42,12 @@ angular.module('karaoke.controllers').controller 'ChromecastCtrl',
       return
 
 
-    # Send the data to the chrome cast
-    $scope.sendToCast = ->
-      GoogleCastSession.startChromeCast
-        view: $scope.view
-        filter: $scope.filter
-        console: $scope.console
+    # # Send the data to the chrome cast
+    # $scope.sendToCast = ->
+    #   GoogleCastSession.startChromeCast
+    #     view: $scope.view
+    #     filter: $scope.filter
+    #     console: $scope.console
 
     return
 

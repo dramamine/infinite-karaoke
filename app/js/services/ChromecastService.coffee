@@ -15,13 +15,14 @@ angular.module('karaoke.services').service 'cast', [
 
     # Initialize the Google Cast API for use
     initializeCastApi = ->
+
       unless (chrome.cast && chrome.cast.isAvailable)
         setTimeout(initializeCastApi, 1000)
         return
 
-      sessionRequest = new $window.chrome.cast.SessionRequest(CAST_APP_ID)
-      apiConfig = new $window.chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener)
-      $window.chrome.cast.initialize apiConfig, onInitSuccess, onError
+      sessionRequest = new chrome.cast.SessionRequest(CAST_APP_ID)
+      apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener)
+      chrome.cast.initialize apiConfig, onInitSuccess, onError
 
       # Broadcast event for initializing API
       console.log 'Initializing API'
@@ -77,12 +78,14 @@ angular.module('karaoke.services').service 'cast', [
 
 
       startChromeCast: (message) ->
+        console.log 'attempting to start this', message
         if castSession?
           castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
         else
           chrome.cast.requestSession (e) ->
             castSession = e
             castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+        return
 
     return obj
 
