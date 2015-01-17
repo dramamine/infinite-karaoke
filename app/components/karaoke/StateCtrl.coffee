@@ -1,5 +1,5 @@
 # used to track application state
-angular.module('karaoke.controllers').controller 'StateCtrl',
+angular.module('karaoke').controller 'StateCtrl',
 ['$scope', 'DEBUG', ($scope, DEBUG) ->
   $scope.hasSearched = false
   $scope.trackid = null

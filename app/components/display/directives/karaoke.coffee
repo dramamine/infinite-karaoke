@@ -1,5 +1,5 @@
 
-angular.module('karaoke.directives').directive 'karaoke', ->
+angular.module('karaoke.display').directive 'karaoke', ->
   return {
     restrict: 'AE'
     scope: {

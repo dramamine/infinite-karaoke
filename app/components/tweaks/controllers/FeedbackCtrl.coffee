@@ -1,5 +1,5 @@
 # used to track application state
-angular.module('karaoke.controllers').controller 'FeedbackCtrl',
+angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
 ['$scope', 'DataService', '$log',
   ($scope, DataService, $log) ->
 

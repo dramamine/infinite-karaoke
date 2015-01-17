@@ -1,4 +1,4 @@
-angular.module('karaoke.controllers').controller 'TrackSearchCtrl', [
+angular.module('karaoke.search').controller 'TrackSearchCtrl', [
   '$scope', 'DataService', '$q', '$log',
   ($scope, DataService, $q, $log) ->
     $scope.myData = {}

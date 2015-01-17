@@ -1,17 +1,12 @@
-angular.module('karaoke.services').service 'cast', [
-  '$rootScope','$window', ($rootScope, $window) ->
+angular.module('karaoke.chromecast.sender').service 'cast', [
+  '$rootScope','$window', 'MESSAGE_NAMESPACE',
+  ($rootScope, $window, MESSAGE_NAMESPACE) ->
 
+    CAST_APP_ID = 'whatevr'
     console.log 'Cast service is being initialized'
     # Timeout to initialize the API
     if (!chrome.cast || !chrome.cast.isAvailable)
       setTimeout(initializeCastApi, 1000)
-
-
-    CAST_APP_ID = '8F0DAF02'
-    MESSAGE_NAMESPACE = 'urn:x-cast:com.angular.cast.message'
-
-
-
 
     # Initialize the Google Cast API for use
     initializeCastApi = ->

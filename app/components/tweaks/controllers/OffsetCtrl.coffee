@@ -1,5 +1,5 @@
 # used to track application state
-angular.module('karaoke.controllers').controller 'OffsetCtrl',
+angular.module('karaoke.tweaks').controller 'OffsetCtrl',
 ['$scope', 'DataService', '$log',
   ($scope, DataService, $log) ->
     console.log 'OffsetCtrl loaded'

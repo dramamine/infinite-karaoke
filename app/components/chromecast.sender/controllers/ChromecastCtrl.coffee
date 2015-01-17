@@ -1,5 +1,5 @@
 # for communicating with Chromecast
-angular.module('karaoke.controllers').controller 'ChromecastCtrl',
+angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
 ['$scope', '$log', '$window', 'cast', '$rootScope',
   ($scope, $log, $window, cast, $rootScope) ->
 
@@ -9,9 +9,6 @@ angular.module('karaoke.controllers').controller 'ChromecastCtrl',
       hi: 'hi'
       trackid: 'xyz'
       action: 'play'
-
-
-
 
 
 

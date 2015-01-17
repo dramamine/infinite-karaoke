@@ -10,9 +10,8 @@ module.exports = (grunt) ->
 
       targets:
         src: [
-          'app/partials/*.*'
-          'app/js/**/*.coffee'
-          'app/js/**/*.js'
+          'app/**/partials/*.html'
+          'app/**/*.coffee'
           'app/css/*.css'
           'src/**/*.coffee'
           'src/**/*.jade'
@@ -36,7 +35,8 @@ module.exports = (grunt) ->
     'coffeelint'
     'clean'
     'copy:default'
-    'ngconstant:development'
+    'coffee:compile'
+    # 'ngconstant:development'
   ]
 
   grunt.registerTask 'build:fast', [
@@ -54,7 +54,7 @@ module.exports = (grunt) ->
     'coffeelint'
     'clean'
     'copy:default'
-    'ngconstant:production'
+    # 'ngconstant:production'
   ]
 
   grunt.registerTask 'develop', [
@@ -91,7 +91,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'forever-start', [
     'env:prod'
-    'ngconstant:production'
+    # 'ngconstant:production'
     'forever:server:start'
   ]
 

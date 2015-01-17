@@ -1,5 +1,5 @@
 
-angular.module('karaoke.controllers').controller 'KaraokeCtrl', [
+angular.module('karaoke.display').controller 'KaraokeCtrl', [
   '$scope', '$resource', '$youtube', '$timeout',
   ($scope, $resource, $youtube, $timeout) ->
 

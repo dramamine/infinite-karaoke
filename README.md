@@ -33,6 +33,59 @@ coffee scripts/lrc-mongo-importer.coffee
 
 ## Rough TODO List, Maybe Up-to-Date
 
+
+## TODO LIST
+- (8) Chromecast Support
+  + you started this on 'chromecast' branch
+  + the sender app maybe works, but you need a receiver app
+  + host this on mylifeismetal without https, or find https host?
+  + this FINALLY ANSWERED MY QUESTION about how to host on google drive
+    https://productforums.google.com/forum/#!topic/drive/MyD7dgLJaEo
+  + hosting on:
+    https://googledrive.com/host/0B5dY8T0BcJ0Sa1M5OHNLSE1hSmM/index.html
+  + upload by dragging filez to your folder karaoke-receiver on google drive
+  + Chromecast debugger
+  + http://192.168.1.4:9222/
+
+- (2) Fix Gruntfile file lists
+  + Right now, you have chromecast receiver files in your main app
+    and vice versa
+    Fix up your 'targets' list and update 'copy' task!
+    http://gruntjs.com/configuring-tasks
+
+- (2) Set up config / ngconstant
+    + You removed this while reorganizing everything bc it wasn't 
+      doing anything
+- (1) Move search further up the page
+- (3) Add lyric offset adjustment
+- (1) Fix 'cannot read property time/line of undefined' from updateLyric
+- (2) Make sure bestVid is running
+- (2) Try using jade partials instead of html
+- (3) Override $log and implement AJAX /log endpoint
+- (2) Remove rating from the categories API call; handle this serverside only
+
++ (2) Add 'video search'; keep it modular so you can re-use it
++ (2) Set the youtube directive to refresh the clock every second
++ (3) Fix CSS, use progress bars
++ (3) Change the URL params to autoload a page
++ (5) Use search result panels instead of typeahead
+
+
+
+REORG - THINGS TO DO LATER
+- rename module 'karaokeApp'
+- create these modules:
+  + 'data' (does this really need to be its own module?)
+  + 'tweaks'
+  + 'search'
+  + 'display' (need to check the organization on this; make it fit better with cc-receiver)
+  + 'queue' (doesnt exist yet)
+  + 'chromecast-sender'
+  + 'chromecast-receiver'
+
+
+# OLDER TODO LIST, Stop Reading
+
 fix up project organization
 ---------------------
 this folder is a mess anyway

@@ -1,5 +1,5 @@
 
-angular.module('karaoke.directives').directive 'youtuber', ($sce) ->
+angular.module('karaoke.display').directive 'youtuber', ($sce) ->
   return {
     restrict: 'EA'
     scope:

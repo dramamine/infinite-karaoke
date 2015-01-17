@@ -1,4 +1,4 @@
-angular.module('karaoke.services').service 'DataService',
+angular.module('karaoke.data').service 'DataService',
 ['$resource', '$q', '$http', '$log', ($resource, $q, $http, $log) ->
 
   addQualityCSS = (track) ->
