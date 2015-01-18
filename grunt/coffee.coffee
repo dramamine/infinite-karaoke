@@ -3,9 +3,7 @@ module.exports =
 
   compile:
     files:
-      'public/js/app.js': [
-        'app/components/**/*.coffee'
-      ]
+      'public/js/app.js': '<%= targets.main %>'
   # use this to compile all your coffeescript into a single app.js file
   cast:
     files:

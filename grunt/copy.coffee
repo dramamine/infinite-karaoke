@@ -2,12 +2,8 @@ module.exports =
   default:
     files: [{
       expand: true
-      cwd: './app/'
-      src: [
-        'css/**'
-        'img/**'
-        'lib/**'
-      ]
+      cwd: 'static/'
+      src: ['**']
       dest: './public/'
     }, {
       expand: true
@@ -17,22 +13,19 @@ module.exports =
       ]
       flatten: true
       dest: './public/partials/'
+    }, {
+      expand: true
+      src: 'lib/**/*'
+      dest: 'public/'
     }]
   cast:
-
     files: [{
       expand: true
-      cwd: './app/'
-      src: [
-        'css/**'
-        'img/**'
-        'lib/**'
-      ]
-      dest: './dist/'
-    },{
-      expand: true
-      cwd: './app/lib'
+      cwd: 'static/'
       src: ['**']
-      dest: './chromecast-receiver/dist/lib/'
+      dest: 'dist/'
+    }, {
+      expand: true
+      src: 'lib/**/*'
+      dest: 'dist/'
     }]
-

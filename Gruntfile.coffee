@@ -11,8 +11,7 @@ module.exports = (grunt) ->
       targets:
         src: [
           'app/**/partials/*.html'
-          'app/components/**/*.coffee'
-          'app/css/*.css'
+          'app/**/*.coffee'
           'src/**/*.coffee'
           'src/**/*.jade'
           # 'test/**/*.coffee'
@@ -21,18 +20,18 @@ module.exports = (grunt) ->
         ]
         # be sure to exclude any receiver-only components
         main: [
-          'app/components/**/*.coffee'
-          '!app/components/cromecast.receiver/*'
+          'app/**/*.coffee'
+          '!app/cromecast.receiver/*'
         ]
         # make sure this is in sync with _chromecast.receiver.coffee
         receiver: [
-          'app/components/_config.coffee'
-          'app/components/chromecast.receiver/**/*.coffee'
-          'app/components/data/**/*.coffee'
-          'app/components/display/**/*.coffee'
+          'app/_config.coffee'
+          'app/chromecast.receiver/**/*.coffee'
+          'app/data/**/*.coffee'
+          'app/display/**/*.coffee'
         ]
         coffeeonly: [
-          'app/components/**/*.coffee'
+          'app/**/*.coffee'
           'src/**/*.coffee'
           'test/**/*.coffee'
         ]

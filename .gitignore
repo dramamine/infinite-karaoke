@@ -32,3 +32,4 @@ src/log/
 chromecast-receiver/builds/
 chromecast-receiver/dist/
 dist/
+lib/

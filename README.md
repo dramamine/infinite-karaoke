@@ -31,6 +31,29 @@ Create config files in the data/ folder; you need a youtube API key and a mongod
 Run this to populate your database
 coffee scripts/lrc-mongo-importer.coffee
 
+## Folder Structure
+app/
+  Source folder for all Angular components
+data/
+  Lyric files, misc db stuff
+forever/
+  Log files from running on production
+grunt/
+  Grunt tasks
+lib/
+  Bower components
+public/
+  Distribution folder for browser app, served as a static folder
+scripts/
+  Various one-off scripts (data import, etc.)
+src/
+  Source folder for server code (Node, Express)
+static/
+  Static components (CSS, images)
+test/
+  lol.
+
+
 ## Rough TODO List, Maybe Up-to-Date
 
 
