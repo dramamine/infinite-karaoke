@@ -6,4 +6,4 @@ module.exports =
     options:
       pretty: true
     files:
-      "chromecast-receiver/dist/index.html": "chromecast-receiver/src/views/*.jade"
+      "dist/index.html": "src/views/receiver.jade"

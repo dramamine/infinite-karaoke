@@ -47,6 +47,7 @@ module.exports =
     command: 'mongod --dbpath test/data --shutdown'
 
   # for packaging up the receiver files
+  # (not using this currently)
   package:
     command: [
         'cd chromecast-receiver'

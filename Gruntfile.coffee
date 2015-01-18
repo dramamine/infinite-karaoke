@@ -11,16 +11,28 @@ module.exports = (grunt) ->
       targets:
         src: [
           'app/**/partials/*.html'
-          'app/**/*.coffee'
+          'app/components/**/*.coffee'
           'app/css/*.css'
           'src/**/*.coffee'
           'src/**/*.jade'
-          'test/**/*.coffee'
-          'chromecast-receiver/src/**/*.coffee'
-          'chromecast-receiver/src/**/*.jade'
+          # 'test/**/*.coffee'
+          # 'chromecast-receiver/src/**/*.coffee'
+          # 'chromecast-receiver/src/**/*.jade'
+        ]
+        # be sure to exclude any receiver-only components
+        main: [
+          'app/components/**/*.coffee'
+          '!app/components/cromecast.receiver/*'
+        ]
+        # make sure this is in sync with _chromecast.receiver.coffee
+        receiver: [
+          'app/components/_config.coffee'
+          'app/components/chromecast.receiver/**/*.coffee'
+          'app/components/data/**/*.coffee'
+          'app/components/display/**/*.coffee'
         ]
         coffeeonly: [
-          'app/js/**/*.coffee'
+          'app/components/**/*.coffee'
           'src/**/*.coffee'
           'test/**/*.coffee'
         ]
@@ -33,7 +45,7 @@ module.exports = (grunt) ->
     'build-cast'
 
     'coffeelint'
-    'clean'
+    'clean:default'
     'copy:default'
     'coffee:compile'
     # 'ngconstant:development'
@@ -46,10 +58,9 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'build:prod', [
-    # build and package receiver files
     # see README for receiver deployment instructions
     'build-cast'
-    'shell:package'
+    # 'shell:package'
 
     'coffeelint'
     'clean'
@@ -84,6 +95,7 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'build-cast', [
+    'clean:cast'
     'copy:cast'
     'coffee:cast'
     'jade:cast'

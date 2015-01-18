@@ -50,7 +50,7 @@ app.configure ->
   app.use '/', express.static path.resolve __dirname, '../public'
   app.use '/', harp.mount path.resolve __dirname, '../public'
   # eh, probably not the best place but it'll do for now!
-  app.use '/receiver', express.static path.resolve __dirname, '../chromecast-receiver/dist'
+  app.use '/receiver', express.static path.resolve __dirname, '../dist'
   app.use 'favicon', path.resolve __dirname, '../public/favicon.ico'
 
   app.locals

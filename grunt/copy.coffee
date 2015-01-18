@@ -22,9 +22,13 @@ module.exports =
 
     files: [{
       expand: true
-      cwd: './chromecast-receiver/app'
-      src: ['**']
-      dest: './chromecast-receiver/'
+      cwd: './app/'
+      src: [
+        'css/**'
+        'img/**'
+        'lib/**'
+      ]
+      dest: './dist/'
     },{
       expand: true
       cwd: './app/lib'

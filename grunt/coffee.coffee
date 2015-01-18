@@ -9,7 +9,6 @@ module.exports =
   # use this to compile all your coffeescript into a single app.js file
   cast:
     files:
-      'chromecast-receiver/dist/app.js': [
-        'chromecast-receiver/src/**/*.coffee'
-      ]
+      'dist/app.js': '<%= targets.receiver %>'
+
 

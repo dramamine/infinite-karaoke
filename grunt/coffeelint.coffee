@@ -1,4 +1,6 @@
 module.exports =
-  app: '<%= targets.coffeeonly %>'
+  default: [
+    '<%= targets.coffeeonly %>'
+  ]
   options:
     force: true
