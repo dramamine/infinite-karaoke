@@ -70,12 +70,7 @@ test/
   + Chromecast debugger
   + http://192.168.1.4:9222/
 
-- (2) Fix Gruntfile file lists
-  + Right now, you have chromecast receiver files in your main app
-    and vice versa
-    Fix up your 'targets' list and update 'copy' task!
-    http://gruntjs.com/configuring-tasks
-
+- (2) Don't copy over lib files on build-fast
 - (2) Set up config / ngconstant
     + You removed this while reorganizing everything bc it wasn't 
       doing anything
@@ -87,11 +82,18 @@ test/
 - (3) Override $log and implement AJAX /log endpoint
 - (2) Remove rating from the categories API call; handle this serverside only
 
+
+
 + (2) Add 'video search'; keep it modular so you can re-use it
 + (2) Set the youtube directive to refresh the clock every second
 + (3) Fix CSS, use progress bars
 + (3) Change the URL params to autoload a page
 + (5) Use search result panels instead of typeahead
++ (2) Fix Gruntfile file lists
+  + Right now, you have chromecast receiver files in your main app
+    and vice versa
+    Fix up your 'targets' list and update 'copy' task!
+    http://gruntjs.com/configuring-tasks
 
 
 
@@ -103,6 +105,9 @@ REORG - THINGS TO DO LATER
   + 'search'
   + 'display' (need to check the organization on this; make it fit better with cc-receiver)
   + 'queue' (doesnt exist yet)
+    * addTrack
+    * prioritizeTrack
+    * playTrackNow
   + 'chromecast-sender'
   + 'chromecast-receiver'
 

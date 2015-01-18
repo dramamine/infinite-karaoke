@@ -7,7 +7,7 @@ module.exports =
       dest: './public/'
     }, {
       expand: true
-      cwd: './app/components/'
+      cwd: './app/'
       src: [
         '**/*.html'
       ]

@@ -54,6 +54,7 @@ module.exports = (grunt) ->
     'coffeelint'
     'build-cast'
     'copy:default'
+    'coffee:compile'
   ]
 
   grunt.registerTask 'build:prod', [

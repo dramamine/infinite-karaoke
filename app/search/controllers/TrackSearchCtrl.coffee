@@ -1,6 +1,6 @@
 angular.module('karaoke.search').controller 'TrackSearchCtrl', [
-  '$scope', 'DataService', '$q', '$log',
-  ($scope, DataService, $q, $log) ->
+  '$rootScope', '$scope', 'DataService', '$q', '$log',
+  ($rootScope, $scope, DataService, $q, $log) ->
     $scope.myData = {}
     $scope.tracks = []
     $scope.selectedTrack
@@ -16,10 +16,14 @@ angular.module('karaoke.search').controller 'TrackSearchCtrl', [
 
     # Function called when user picks a track.
     $scope.pickTrack = (trackid)->
-      $log.info 'pickTrack called.'
+      $log.info 'pickTrack called. gonna broadcast addTrack..'
 
-      $scope.$parent.trackid = trackid
-      $scope.userAddedTrackId = trackid
+      # wanna get rid of this..
+      # $scope.$parent.trackid = trackid
+      # $scope.userAddedTrackId = trackid
+
+      $rootScope.$broadcast 'addTrack', trackid
+
       $scope.$parent.hasSearched = true
 
     $scope.searchTermsUpdated = ->

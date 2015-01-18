@@ -1,44 +1,49 @@
 
 angular.module("karaoke.chromecast.receiver").controller "ReceiverCtrl", [
   "$scope"
+  '$rootScope'
   "GoogleCastMessageBus"
   "$timeout"
   "$http"
-  ($scope, GoogleCastMessageBus, $timeout, $http) ->
+  '$log'
+  ($scope, $rootScope, GoogleCastMessageBus, $timeout, $http, $log) ->
     $scope.view = "table"
     $scope.filter = 4
     $scope.consoleMessage = "No console selected!"
     $scope.games = []
     GoogleCastMessageBus.onMessage = (e) ->
-      console.log "Message Received:", e.data
 
-      # Parse the setting JSON
-      settings = JSON.parse(e.data)
-      console.log "Setting", settings
+      # eh, we could validate this...
+      unless e.data && e.data.action
+        $log.error "message didn't have an action :("
+        $log.error e
+        return false
 
-      # Set them on the scope
-      $scope.view = settings.hi
-      $scope.filter = settings.trackid
-      $scope.console = e.data
-      $scope.$apply()
-      return
+      $rootScope.broadcast e.data.action, e.data.message
+      # apply, maybe?
+      # $scope.$apply()
+      return true
+
+
+
+
 
 
     # Fetch games function
     $scope.fetchGames = (device) ->
-      console.log "Attempting to fire REST Call for:", device
+      $log.info "Attempting to fire REST Call for:", device
       $scope.consoleMessage = "Retrieving Games for " + device
-      console.log "Hitting URL: https://angular-cast.firebaseio.com/games/" + device + ".json"
+      $log.info "Hitting URL: https://angular-cast.firebaseio.com/games/" + device + ".json"
       $http(
         method: "GET"
         url: "https://angular-cast.firebaseio.com/games/" + device + ".json"
       ).success((data) ->
-        console.log "Success on REST Call:", data
+        $log.info "Success on REST Call:", data
         $scope.games = data
         $scope.consoleMessage = ""
         return
       ).error (e) ->
-        console.log "Error on REST Call:", e
+        $log.error "Error on REST Call:", e
         $scope.games = []
         $scope.consoleMessage = "ERROR"
         return
@@ -54,7 +59,7 @@ angular.module("karaoke.chromecast.receiver").controller "ReceiverCtrl", [
 
       # Call/refresh every 10s
       callTimeout = $timeout(->
-        console.log "From the TIMEOUT"
+        $log.info "From the TIMEOUT"
         $scope.fetchGames nv
         return
       , 10000)

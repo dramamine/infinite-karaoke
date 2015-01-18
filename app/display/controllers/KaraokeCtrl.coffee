@@ -1,7 +1,7 @@
 
 angular.module('karaoke.display').controller 'KaraokeCtrl', [
-  '$scope', '$resource', '$youtube', '$timeout',
-  ($scope, $resource, $youtube, $timeout) ->
+  '$scope', '$rootScope', '$resource', '$youtube', '$timeout', '$log',
+  ($scope, $rootScope, $resource, $youtube, $timeout, $log) ->
 
     # used for the CSS 'progress bar'. basically, we swap the class to
     # 'inactive' for this many milliseconds, before swapping to 'active' with
@@ -18,6 +18,9 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
     validation = null
 
+    currentTrack = null
+
+
     # used for the 'progress bar' tracker
     $scope.tracker =
       class: 'lyricbox-inactive'
@@ -29,10 +32,23 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     # current lyric being displayed
     $scope.currentLyric = ''
 
+
+    $rootScope.$on 'addTrack', (evt, trackid) ->
+      $log.info 'addTrack message received :)'
+
+      unless typeof trackid == 'string'
+        $log.error 'loadTrack called with bad params'
+        $log.error trackid
+        return false
+
+      $scope.queueTrack trackid
+
+
+
     # queues up a track. this is the 'init' function essentially.
     $scope.queueTrack = (newId) ->
       console.log "queueTrack called. querying this ID:" + newId
-
+      currentTrack = newId
 
       videoApiCall = $resource('/video/:id', {id: newId})
       videoApiCall.get {}, (result) ->
