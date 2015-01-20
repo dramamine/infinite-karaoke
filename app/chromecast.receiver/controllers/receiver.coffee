@@ -7,25 +7,41 @@ angular.module("karaoke.chromecast.receiver").controller "ReceiverCtrl", [
   "$http"
   '$log'
   ($scope, $rootScope, GoogleCastMessageBus, $timeout, $http, $log) ->
-    $scope.view = "table"
-    $scope.filter = 4
-    $scope.consoleMessage = "No console selected!"
-    $scope.games = []
-    GoogleCastMessageBus.onMessage = (e) ->
 
+    $log.info "Nothing happening"
+    GoogleCastMessageBus.onMessage = (e) ->
+      $log.info 'onMessage function called'
+      if !e.data
+        $log.info 'no data on this thing!'
+        return
+
+      data = JSON.parse e.data
+      $log.info 'Processing this data ' + data
       # eh, we could validate this...
-      unless e.data && e.data.action
+      unless data && data.action
         $log.error "message didn't have an action :("
         $log.error e
         return false
+      $log.info 'broadcasting message:' + data.action
+      $rootScope.$broadcast data.action, data
+      $rootScope.$broadcast 'TEST MESSAGE'
+      $scope.$broadcast data.action, data
+      $rootScope.$apply()
 
-      $rootScope.broadcast e.data.action, e.data.message
+
+      # HELLO MARTEN
+      # you're broadcasting events but nobody's receiving them
+      # what gives??
+
       # apply, maybe?
       # $scope.$apply()
       return true
 
+      $scope.$on 'addTrack', (evt, data) ->
+        $log.info 'received addTrack from inside the house'
 
-
+      $scope.$on 'TEST MESSAGE', () ->
+        $log.info 'received TEST MESSAGE from inside the house'
 
 
 

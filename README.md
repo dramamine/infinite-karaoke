@@ -61,14 +61,14 @@ test/
 - (8) Chromecast Support
   + you started this on 'chromecast' branch
   + the sender app maybe works, but you need a receiver app
-  + host this on mylifeismetal without https, or find https host?
-  + this FINALLY ANSWERED MY QUESTION about how to host on google drive
-    https://productforums.google.com/forum/#!topic/drive/MyD7dgLJaEo
-  + hosting on:
-    https://googledrive.com/host/0B5dY8T0BcJ0Sa1M5OHNLSE1hSmM/index.html
-  + upload by dragging filez to your folder karaoke-receiver on google drive
+  + hosting on
+    https://blinding-fire-1730.firebaseapp.com/
+  + edit your settings here
+    https://cast.google.com/publish/#/overview
+  + upload by running 'firebase deploy'
   + Chromecast debugger
-  + http://192.168.1.4:9222/
+    http://192.168.1.4:9222/
+  + 
 
 - (2) Don't copy over lib files on build-fast
 - (2) Set up config / ngconstant

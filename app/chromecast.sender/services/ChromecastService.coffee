@@ -1,9 +1,8 @@
 angular.module('karaoke.chromecast.sender').service 'cast', [
-  '$rootScope','$window', 'MESSAGE_NAMESPACE',
-  ($rootScope, $window, MESSAGE_NAMESPACE) ->
+  '$rootScope','$window', '$log', 'CAST_APP_ID', 'MESSAGE_NAMESPACE',
+  ($rootScope, $window, $log, CAST_APP_ID, MESSAGE_NAMESPACE) ->
 
-    CAST_APP_ID = 'whatevr'
-    console.log 'Cast service is being initialized'
+    $log.info 'Cast service is being initialized'
     # Timeout to initialize the API
     if (!chrome.cast || !chrome.cast.isAvailable)
       setTimeout(initializeCastApi, 1000)
@@ -20,33 +19,33 @@ angular.module('karaoke.chromecast.sender').service 'cast', [
       chrome.cast.initialize apiConfig, onInitSuccess, onError
 
       # Broadcast event for initializing API
-      console.log 'Initializing API'
+      $log.info 'Initializing API'
       $rootScope.$broadcast 'INITIALIZING_CAST_API'
       return
     sessionListener = (e) ->
-      console.log 'New Session ID:', e.sessionId
+      $log.info 'New Session ID:', e.sessionId
       castSession = e
       castSession.addUpdateListener sessionUpdateListener
       castSession.addMessageListener MESSAGE_NAMESPACE, receiverMessage
       return
     onInitSuccess = ->
-      console.log 'Successfully Initialized'
+      $log.info 'Successfully Initialized'
       return
     onSuccess = (message) ->
-      console.log 'Success:', message
+      $log.info 'Success:', message
       return
     onError = (message) ->
-      console.log 'Error Received:', message
+      $log.info 'Error Received:', message
       return
     receiverMessage = (namespace, message) ->
-      console.log 'Receiver Message (' + namespace + '):', message
+      $log.info 'Receiver Message (' + namespace + '):', message
       return
     receiverListener = (e) ->
-      console.log 'Receiver Listener:', e
+      $log.info 'Receiver Listener:', e
       if e is 'available'
 
         # Broadcast event for cast available
-        console.log 'Receiver Available'
+        $log.info 'Receiver Available'
         $rootScope.$broadcast 'RECEIVER_AVAILABLE'
       return
     sessionUpdateListener = (isAlive) ->
@@ -54,26 +53,16 @@ angular.module('karaoke.chromecast.sender').service 'cast', [
         castSession = null
 
         # Broadcast event for cast available
-        console.log 'Session Dead'
+        $log.info 'Session Dead'
         $rootScope.$broadcast 'RECEIVER_DEAD'
       return
     castSession = null
     setTimeout initializeCastApi, 1000  if not chrome.cast or not chrome.cast.isAvailable
 
     obj =
+
       sendMessage: (message) ->
-        console.log 'sending message...'
-        if !castSession
-          return false
-        onSuccess = ->
-          console.log 'Sent a thing and it was not a problem.'
-        onError = ->
-          console.error 'Sending that message did NOT work.'
-        castSession.message MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
-
-
-      startChromeCast: (message) ->
-        console.log 'attempting to start this', message
+        $log.info 'attempting to send this message', message
         if castSession?
           castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
         else
@@ -86,82 +75,3 @@ angular.module('karaoke.chromecast.sender').service 'cast', [
 
 
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# angular.module('karaoke.services').service('cast', ['$window', '$rootScope', '$q',
-#   ($window, $rootScope, $q) ->
-
-
-  #   NAMESPACE = "urn:x-cast:org.dutchaug.ccparty"
-  #   this.CAST_MESSAGE = "cast-message"
-  #   this.CAST_READY = "cast-ready"
-  #   this.SENDER_CONNECTED = "sender-connected"
-  #   this.SENDER_DISCONNECTED = "sender-disconnected"
-  #   receiverManager = null
-  #   messageBus = null
-  #   service = this
-  #   initPromise = $q.defer()
-
-  #   initializeCast = () ->
-  #     receiverManager = $window.cast.receiver.CastReceiverManager.getInstance()
-  #     receiverManager.onSenderConnected = (event) ->
-  #       $rootScope.$apply () ->
-  #         $rootScope.$broadcast(service.SENDER_CONNECTED, event)
-
-  #     receiverManager.onSenderDisconnected = (event) ->
-  #       $rootScope.$apply () ->
-  #         $rootScope.$broadcast(service.SENDER_DISCONNECTED, event)
-
-  #     messageBus = receiverManager.getCastMessageBus(NAMESPACE, cast.receiver.CastMessageBus.MessageType.JSON)
-  #     messageBus.onMessage = (event) ->
-  #       $rootScope.$apply ->
-  #         $rootScope.$broadcast(service.CAST_MESSAGE, event)
-
-  #     receiverManager.start()
-  #     initPromise.resolve(receiverManager)
-  #     $rootScope.$broadcast(service.CAST_READY, receiverManager)
-
-  #   this.boot = ->
-  #     $window.onload = ->
-  #       $rootScope.$apply ->
-  #         initializeCast()
-
-  #   this.initialized = ->
-  #     return initPromise
-
-
-  #   this.finish = ->
-  #     receiverManager.stop()
-  #     initPromise = $q.defer()
-
-  #   this.broadcast = (message) ->
-  #     messageBus.broadcast(message)
-
-  #   return null
-
-  # ]).run (cast) ->
-  #   cast.boot()

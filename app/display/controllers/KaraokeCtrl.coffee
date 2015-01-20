@@ -33,7 +33,7 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     $scope.currentLyric = ''
 
 
-    $rootScope.$on 'addTrack', (evt, trackid) ->
+    $scope.$on 'addTrack', (evt, trackid) ->
       $log.info 'addTrack message received :)'
 
       unless typeof trackid == 'string'

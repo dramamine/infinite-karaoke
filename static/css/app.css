@@ -77,3 +77,19 @@ img.search-result-thumbnail {
   height: 100px;
   margin-bottom: 10px;
 }
+
+.cc-indicator {
+  display: none;
+}
+.cc-indicator.available {
+  display: block;
+  color: green;
+}
+.cc-indicator.initializing {
+  display: block;
+  color: yellow;
+}
+.cc-indicator.dead {
+  display: block;
+  color: red;
+}

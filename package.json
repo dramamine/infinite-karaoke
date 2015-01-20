@@ -23,10 +23,10 @@
     "jade": "~1.1.5",
     "load-grunt-tasks": "~0.3.0",
     "tea-properties": "~0.1.1",
-    "util": "~0.10.3"
+    "util": "~0.10.3",
+    "coffee": "~1.0.0"
   },
   "devDependencies": {
-    "coffee": "0.0.1",
     "grunt-coffeelint": "0.0.8",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-coffee": "~0.9.0",

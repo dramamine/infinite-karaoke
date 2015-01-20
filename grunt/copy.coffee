@@ -28,4 +28,9 @@ module.exports =
       expand: true
       src: 'lib/**/*'
       dest: 'dist/'
+    }, {
+      expand: true
+      src: 'app/**/views/*.html'
+      dest: 'dist/partials/'
+      flatten: true
     }]
