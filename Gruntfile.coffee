@@ -41,7 +41,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', [
     # build receiver files
-    'build-cast'
+    # 'build-cast'
 
     'coffeelint'
     'clean:default'
@@ -52,7 +52,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build:fast', [
     'coffeelint'
-    'build-cast'
+    # 'build-cast'
     'copy:default'
     'coffee:compile'
   ]
@@ -99,6 +99,7 @@ module.exports = (grunt) ->
     'copy:cast'
     'coffee:cast'
     'jade:cast'
+    'shell:deploycast'
   ]
 
   grunt.registerTask 'forever-start', [

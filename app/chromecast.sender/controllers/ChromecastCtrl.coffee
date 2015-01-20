@@ -49,7 +49,7 @@ angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
     $scope.addTestTrack = ->
       cast.sendMessage
         action: 'addTrack'
-        id: '547782a8ad1c9c711908abd6'
+        trackid: '547782a8ad1c9c711908abd6'
 
     $scope.addTrack = (evt, data) ->
       $log.info 'adding track (cc ctrl)', evt, data

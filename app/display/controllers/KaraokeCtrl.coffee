@@ -33,15 +33,18 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     $scope.currentLyric = ''
 
 
-    $scope.$on 'addTrack', (evt, trackid) ->
+    $scope.$on 'addTrack', (evt, data) ->
       $log.info 'addTrack message received :)'
 
-      unless typeof trackid == 'string'
+      unless data and typeof data.trackid == 'string'
         $log.error 'loadTrack called with bad params'
-        $log.error trackid
+        $log.error typeof data.trackid
+        $log.error data
+        $log.error data.trackid
+        $log.error evt
         return false
 
-      $scope.queueTrack trackid
+      $scope.queueTrack data.trackid
 
 
 

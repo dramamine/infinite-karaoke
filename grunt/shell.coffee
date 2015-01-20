@@ -48,8 +48,5 @@ module.exports =
 
   # for packaging up the receiver files
   # (not using this currently)
-  package:
-    command: [
-        'cd chromecast-receiver'
-        'zip -r builds/receiver.zip dist/*'
-      ].join('&&')
+  deploycast:
+    command: 'firebase deploy'
