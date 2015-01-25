@@ -57,17 +57,6 @@ module.exports = (grunt) ->
     'coffee:compile'
   ]
 
-  grunt.registerTask 'build:prod', [
-    # see README for receiver deployment instructions
-    'build-cast'
-    # 'shell:package'
-
-    'coffeelint'
-    'clean'
-    'copy:default'
-    # 'ngconstant:production'
-  ]
-
   grunt.registerTask 'develop', [
     'env:dev'
     'build'
@@ -83,7 +72,6 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'deploy', [
-    'env:prod'
     'shell:deploy'
   ]
 
@@ -94,13 +82,14 @@ module.exports = (grunt) ->
     'mochaTest'
   ]
 
-  grunt.registerTask 'build-cast', [
+  grunt.registerTask 'build:cast', [
     'clean:cast'
     'copy:cast'
     'coffee:cast'
     'jade:cast'
     'shell:deploycast'
   ]
+
 
   grunt.registerTask 'forever-start', [
     'env:prod'
@@ -113,4 +102,11 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask 'forever-restart', [
     'forever:server:restart'
+  ]
+
+  grunt.registerTask 'prod:restart', [
+    'env:prod'
+    'forever-stop'
+    'build:prod'
+    'forever-start'
   ]

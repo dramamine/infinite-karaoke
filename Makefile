@@ -2,16 +2,12 @@ all:
 	npm install && npm prune
 	bower install && bower prune
 
-  
+
 deploy:
-	git pull
-	npm install && npm prune
-	bower install && bower prune
+	npm install --production && npm prune --production
+	bower install --production --allow-root && bower prune --allow-root--production
 
-	cd /var/www/infinite-karaoke/
+	git reset --hard HEAD
+	git pull origin master
 
-	
-
-	grunt forever-stop
-	grunt build:prod
-	grunt forever-start
+	grunt prod:restart

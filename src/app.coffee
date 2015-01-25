@@ -8,6 +8,7 @@ harp = require 'harp'
 util = require 'util'
 tp = require 'tea-properties'
 df = require 'dateformat'
+cors = require 'cors'
 
 app = express()
 
@@ -26,6 +27,7 @@ app.configure 'test', ->
   app.set 'database', 'test'
 
 app.configure 'production', ->
+  console.log 'using production deployment'
   app.use express.errorHandler()
   app.set 'domain', 'metal-heart.org'
   app.set 'port', 80
@@ -41,9 +43,15 @@ app.configure ->
   # connect to our db
   mongoose = require('./db/db').init(app.get('database'))
 
+
+  corsOptions = {
+    origin: 'https://blinding-fire-1730.firebaseapp.com/'
+  }
+
   # put everything you 'use' in here!
   middleware = [
     express.bodyParser()
+    cors(corsOptions)
   ]
   app.use m for m in middleware
 
