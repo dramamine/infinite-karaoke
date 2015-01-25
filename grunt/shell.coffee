@@ -40,7 +40,7 @@ module.exports =
       # 'scp -r ./public/img ocean:/var/www/infinite-karaoke/public/'
 
       # handle everything on the server from the makefile
-      'ssh root@104.131.72.219 "cd /var/www/infinite-karaoke && make:deploy"'
+      'ssh root@104.131.72.219 "cd /var/www/infinite-karaoke && make deploy"'
     ].join('&&')
 
 
