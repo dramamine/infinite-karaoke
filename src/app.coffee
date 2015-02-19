@@ -45,7 +45,7 @@ app.configure ->
 
 
   corsOptions = {
-    origin: 'https://blinding-fire-1730.firebaseapp.com/'
+    origin: '*' #'https://blinding-fire-1730.firebaseapp.com/'
   }
 
   # put everything you 'use' in here!

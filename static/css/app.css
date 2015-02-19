@@ -5,9 +5,13 @@ body {
 }
 
 .lyricbox {
-  width: 600px;
-  height: 30px;
+  width: 644px;
+  height: 34px;
   position: relative;
+
+  border: 2px solid;
+  border-radius: 3px;
+
 
 }
 
@@ -17,7 +21,8 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-  margin-left: 0px;
+  margin-left: 15px;
+  margin-right: 15px;
   margin-top: 0px;
 }
 
@@ -28,6 +33,10 @@ body {
 
   z-index: 1;
   position: absolute;
+
+  margin-left: 2px;
+  margin-right: 2px;
+
   top: 0px;
   left: 0px;
 }
@@ -37,6 +46,10 @@ body {
   height: 30px;
   z-index: 1;
   position: absolute;
+
+  margin-left: 2px;
+  margin-right: 2px;
+
   top: 0px;
   left: 0px;
 }

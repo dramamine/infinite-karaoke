@@ -36,15 +36,16 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     $scope.$on 'addTrack', (evt, data) ->
       $log.info 'addTrack message received :)'
 
-      unless data and typeof data.trackid == 'string'
+      # 'data' should only be the trackid.
+      unless typeof data == 'string'
         $log.error 'loadTrack called with bad params'
-        $log.error typeof data.trackid
         $log.error data
-        $log.error data.trackid
         $log.error evt
         return false
 
-      $scope.queueTrack data.trackid
+      $scope.queueTrack data
+
+      return null
 
 
 
@@ -60,7 +61,8 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
         $scope.code = result.youtube_id
         $scope.video = result
-        console.log 'set scope.video...'
+
+        $scope.$emit 'playVideo'
 
         # autoplay
         $scope.$on 'youtube.player.ready', () ->
@@ -70,6 +72,10 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
           console.log "Cancelling timer."
           $timeout.cancel(timer)
           $timeout.cancel(validation)
+
+          $scope.tracker.style =
+            '-webkit-animation-play-state': 'paused'
+            'animation-play-state': 'paused'
 
         $scope.$on 'youtube.player.playing', () ->
           console.log "Video's playing."
@@ -165,6 +171,8 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
           '-ms-transition': 'width ' + seconds + 's ' + TYPE
           'transition': 'width ' + seconds + 's ' + TYPE
         }
+
+
 
       # Returns the current time of the youtube player.
       #

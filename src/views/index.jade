@@ -4,16 +4,68 @@ block content
 
 
 
-  div.container(ng-controller="StateCtrl")
+  div(ng-controller="StateCtrl")
+    h6 app state: {{state}}
 
-    div(ng-controller="ChromecastCtrl")
-      button(ng-click="initializeCastApi()") Start CC Api
-      button(ng-click="sendTestMessage()") SEND A TEST MESSAGE TO CC
-      button(ng-click="addTestTrack()") Test Track
-      i.fa.fa-circle.cc-indicator(ng-class="status")
+    karaoke(trackid='userAddedTrackId' ng-show='visibility.karaoke')
+    .row
+      .col-md-6
+        include feedback
+      .col-md-6
+        include offset
+
+    div(ng-controller="TrackSearchCtrl"
+      ng-init="trackid= #{JSON.stringify(trackid)}")
+      //- .col-md-12(ng-hide='hasSearched')
 
 
-    div(ng-hide="hasSearched")
+
+      .container
+        .row
+          .col-xs-12
+            h1 Infinite Karaoke
+
+            input.form-control(type="text" ng-model="searchTerms" ng-change="searchTermsUpdated()" placeholder="Search anything (artist, track, genre)..."
+              ng-model-options="{ updateOn: 'default', debounce: {'default': 500} }")
+
+        hr.clearfix
+
+        .row
+          .col-xs-6.col-sm-3(ng-repeat="track in tracks")
+
+            .well.well-sm.media.search-result(ng-click="pickTrack(track._id)")
+              .media-left
+                img.search-result-thumbnail(ng-src="{{track.thumbnail}}")
+              .media-body
+                h4.media-heading {{track.artist}}
+                h5 {{track.title}}
+                h6 {{track._id}}
+                p
+                  i.fa.fa-star(style="{{track.lyricQualityCSS}}")
+                  i.fa.fa-star(style="{{track.vidQualityCSS}}")
+                  i.fa.fa-star(style="{{track.popularCSS}}")
+
+
+
+            .row(ng-if="$index==3")
+
+          .col-md-3(ng-if="placeholder")
+            img(src="img/results-placeholder-sm.jpg")
+            p Search the web for <em>{{searchTerms}}</em>...
+
+        .row
+          .col-md-8(ng-controller="ChromecastCtrl")
+            button(ng-click="initializeCastApi()") Start CC Api
+            button(ng-click="sendTestMessage()") SEND A TEST MESSAGE TO CC
+            button(ng-click="addTestTrack()") Test Track
+            i.fa.fa-circle.cc-indicator(ng-class="status")
+          .col-md-4
+            button.btn.btn-primary.pull-right(ng-click="moreResults()") See more results...
+
+
+
+
+    .container(ng-hide="hasSearched")
       .jumbotron.clearfix
         img.pull-right(src="img/totally-not-a-stolen-stock-photo.jpg" style="height:230px;")
         h1.text-center Infinite Karaoke
@@ -48,46 +100,8 @@ block content
             | Tracks that have been verified by the community have
             | <i class="fa fa-star"></i>s by them!
 
-    div(ng-controller="TrackSearchCtrl"
-      ng-init="trackid= #{JSON.stringify(trackid)}")
-      .col-md-12(ng-hide='hasSearched')
-        h3.text-center In Space, No-one Can Hear You Sing
-        .input-group
-
-          input(type="text" ng-model="searchTerms" ng-change="searchTermsUpdated()" placeholder="Type to Infinity"
-            ng-model-options="{ updateOn: 'default', debounce: {'default': 500} }")
-
-        .row
-          .col-md-3(ng-repeat="track in tracks")
-            div.search-result(ng-click="pickTrack(track._id)")
-              img.search-result-thumbnail(ng-src="{{track.thumbnail}}")
-              div
-                i(class="fa fa-star" style="{{track.lyricQualityCSS}}")
-                i(class="fa fa-star" style="{{track.vidQualityCSS}}")
-                i(class="fa fa-star" style="{{track.popularCSS}}")
-
-                p
-                  strong {{track.artist}}
-                  br
-                  p {{track.title}}
 
 
-            .row(ng-if="$index==3")
-
-          .col-md-3(ng-if="placeholder")
-            img(src="img/results-placeholder-sm.jpg")
-            p Search the web for <em>{{searchTerms}}</em>...
-
-        .row
-          .col-md-12
-            button(ng-click="moreResults()") See more results...
-
-      karaoke(trackid='userAddedTrackId')
-        .row
-          .col-md-6
-            include feedback
-          .col-md-6
-            include offset
 
 
     div(ng-show="DEBUG")
