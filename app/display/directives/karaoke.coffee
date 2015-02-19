@@ -7,5 +7,5 @@ angular.module('karaoke.display').directive 'karaoke', ->
     }
     controller: 'KaraokeCtrl'
     # require: '^TrackSearchCtrl'
-    templateUrl: '../partials/karaoke.html'
+    templateUrl: 'karaoke.jade'
   }

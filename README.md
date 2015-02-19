@@ -96,7 +96,7 @@ test/
     http://gruntjs.com/configuring-tasks
 
 (2) Move to SASS
-(2) Stop using HTML partials
++ (2) Stop using HTML partials
 (2) Move the views folder somewhere more appropriate
 
 

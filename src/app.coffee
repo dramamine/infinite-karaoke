@@ -71,7 +71,10 @@ app.configure ->
 # app.listen 666
 # console.log 'Listening on port 666'
 
-
+app.get '/youtuber.jade', (req, res) ->
+  res.render 'youtuber'
+app.get '/karaoke.jade', (req, res) ->
+  res.render 'karaoke'
 
 # get some frackin routes
 require('./routes') app

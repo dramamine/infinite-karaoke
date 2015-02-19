@@ -1,0 +1,9 @@
+.container
+    .row
+        .col-sm-2.col-md-3
+        .col-sm-8.col-md-6
+          youtube-video#onlyvid(video-id='code')
+          .lyricbox
+            h3.lyric {{currentLyric}}
+            div(ng-class='tracker.class', ng-style='tracker.style')
+        .col-sm-2.col-md-3

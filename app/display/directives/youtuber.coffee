@@ -5,7 +5,7 @@ angular.module('karaoke.display').directive 'youtuber', ($sce) ->
     scope:
       code:'='
     replace: true
-    templateUrl: '../partials/youtube.html'
+    templateUrl: 'youtuber.jade'
     link: (scope) ->
       scope.$watch 'code', (code) ->
         if code
