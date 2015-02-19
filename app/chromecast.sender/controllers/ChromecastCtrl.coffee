@@ -13,6 +13,9 @@ angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
 
 
     addTrack = (trackid) ->
+      # I'm debugging!
+      return
+
       $log.info 'sending out addTrack with ', trackid
       if !$scope.disabled
         cast.sendMessage
