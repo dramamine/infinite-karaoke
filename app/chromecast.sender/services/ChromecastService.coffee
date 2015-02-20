@@ -15,7 +15,8 @@ angular.module('karaoke.chromecast.sender').service 'cast', [
         return
 
       sessionRequest = new chrome.cast.SessionRequest(CAST_APP_ID)
-      apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener)
+      apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener,
+        receiverListener)
       chrome.cast.initialize apiConfig, onInitSuccess, onError
 
       # Broadcast event for initializing API
@@ -57,18 +58,21 @@ angular.module('karaoke.chromecast.sender').service 'cast', [
         $rootScope.$broadcast 'RECEIVER_DEAD'
       return
     castSession = null
-    setTimeout initializeCastApi, 1000  if not chrome.cast or not chrome.cast.isAvailable
+    setTimeout initializeCastApi, 1000  if not chrome.cast or
+      not chrome.cast.isAvailable
 
     obj =
 
       sendMessage: (message) ->
         $log.info 'attempting to send this message', message
         if castSession?
-          castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+          castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message),
+            onSuccess, onError
         else
           chrome.cast.requestSession (e) ->
             castSession = e
-            castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message), onSuccess, onError
+            castSession.sendMessage MESSAGE_NAMESPACE, JSON.stringify(message),
+              onSuccess, onError
         return
 
     return obj

@@ -49,7 +49,8 @@ angular.module("karaoke.chromecast.receiver").controller "ReceiverCtrl", [
     $scope.fetchGames = (device) ->
       $log.info "Attempting to fire REST Call for:", device
       $scope.consoleMessage = "Retrieving Games for " + device
-      $log.info "Hitting URL: https://angular-cast.firebaseio.com/games/" + device + ".json"
+      $log.info "Hitting URL: https://angular-cast.firebaseio.com/games/" +
+        device + ".json"
       $http(
         method: "GET"
         url: "https://angular-cast.firebaseio.com/games/" + device + ".json"

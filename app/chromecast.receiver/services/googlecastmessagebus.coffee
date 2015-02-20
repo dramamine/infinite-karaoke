@@ -26,7 +26,8 @@ angular.module("karaoke.chromecast.receiver").factory "GoogleCastMessageBus", [
       return
 
 
-    # If there castReceiverManager.getSenders().length == 0, can close the window to shut down
+    # If there castReceiverManager.getSenders().length == 0, can close the
+    # window to shut down
 
     # Create the CastMessageBug to handle messages for the custom namespace
     castMessageBus = castReceiverManager.getCastMessageBus(MESSAGE_NAMESPACE)
