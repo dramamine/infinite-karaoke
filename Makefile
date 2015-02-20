@@ -1,6 +1,8 @@
 all:
 	npm install && npm prune
 	bower install && bower prune
+	gem install sass
+	gem install compass
 
 
 deploy:

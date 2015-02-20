@@ -10,13 +10,18 @@ module.exports = (grunt) ->
 
       targets:
         src: [
-          'app/**/partials/*.html'
           'app/**/*.coffee'
           'src/**/*.coffee'
           'src/**/*.jade'
           # 'test/**/*.coffee'
           # 'chromecast-receiver/src/**/*.coffee'
           # 'chromecast-receiver/src/**/*.jade'
+        ]
+        templates: [
+          'src/**/*.jade'
+        ]
+        styles: [
+          'app/views/stylesheets/*.sass'
         ]
         # be sure to exclude any receiver-only components
         main: [
@@ -40,34 +45,40 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'build', [
-    # build receiver files
-    # 'build-cast'
-
+    'sass:dist'
     'coffeelint'
     'clean:default'
     'copy:default'
     'coffee:compile'
-    # 'ngconstant:development'
   ]
 
-  grunt.registerTask 'build:fast', [
+  grunt.registerTask 'build:dev', [
+    'sass:dev'
     'coffeelint'
-    # 'build-cast'
+    'clean:default'
     'copy:default'
     'coffee:compile'
   ]
 
+  grunt.registerTask 'build:cast', [
+    'clean:cast'
+    'copy:cast'
+    'coffee:cast'
+    'jade:cast'
+    'shell:deploycast'
+  ]
+
   grunt.registerTask 'develop', [
     'env:dev'
-    'build'
-    'express:watch'
+    'build:dev'
+    'express'
     'watch'
   ]
   grunt.registerTask 'test-develop', [
     'env:test'
     'shell:testharness'
     'build'
-    'express:watch'
+    'express'
     'watch'
   ]
 
@@ -80,14 +91,6 @@ module.exports = (grunt) ->
     # 'shell:testharness'
     # 'shell:dbclean'
     'mochaTest'
-  ]
-
-  grunt.registerTask 'build:cast', [
-    'clean:cast'
-    'copy:cast'
-    'coffee:cast'
-    'jade:cast'
-    'shell:deploycast'
   ]
 
 
