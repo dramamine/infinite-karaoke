@@ -35,6 +35,9 @@ module.exports = (grunt) ->
           'app/data/**/*.coffee'
           'app/display/**/*.coffee'
         ]
+        receiveronly: [
+          'app/chromecast.receiver/**/*.coffee'
+        ]
         coffeeonly: [
           'app/**/*.coffee'
           'src/**/*.coffee'

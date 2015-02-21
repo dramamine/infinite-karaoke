@@ -9,7 +9,7 @@ module.exports =
   #     spawn: false
 
   receiver:
-    files: '<%= targets.receiver %>'
+    files: '<%= targets.receiveronly %>'
     tasks: [
       'build:cast'
       'express'
