@@ -1,6 +1,6 @@
 angular.module('karaoke.search').controller 'TrackSearchCtrl', [
-  '$rootScope', '$scope', 'DataService', '$q', '$log',
-  ($rootScope, $scope, DataService, $q, $log) ->
+  '$rootScope', '$scope', 'DataService', '$q', '$log', '$timeout',
+  ($rootScope, $scope, DataService, $q, $log, $timeout) ->
     $scope.myData = {}
     $scope.tracks = []
     $scope.selectedTrack
@@ -12,11 +12,17 @@ angular.module('karaoke.search').controller 'TrackSearchCtrl', [
     $scope.$watch 'trackid', (trackid) ->
       # sometimes this gets 'undefined' from ng-init
       return unless trackid
-      pickTrack(trackid)
+
+      # TODO this is a super lazy solution; should check 'state' or something
+      # to see if KaraokeCtrl is ready to catch addTrack msg
+      $timeout( () ->
+        $scope.pickTrack(trackid)
+      , 1000 )
+      return null
 
     # Function called when user picks a track.
     $scope.pickTrack = (trackid)->
-
+      console.log 'pickTrack called. broadcasting addTrack'
       $rootScope.$broadcast 'addTrack', trackid
 
     $scope.searchTermsUpdated = ->
