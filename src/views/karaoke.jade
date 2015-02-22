@@ -3,7 +3,8 @@
         .col-sm-2.col-md-3
         .col-sm-8.col-md-6
           youtube-video#onlyvid(video-id='code')
-          .lyricbox
-            h3.lyric {{currentLyric}}
-            div(ng-class='tracker.class', ng-style='tracker.style')
+          .lyricbox(ng-class="toplyric.cssclass")
+            h3.lyric {{toplyric.text}}
+          .lyricbox(ng-class="bottomlyric.cssclass")
+            h3.lyric {{bottomlyric.text}}
         .col-sm-2.col-md-3

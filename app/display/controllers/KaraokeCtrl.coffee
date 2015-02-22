@@ -6,7 +6,26 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     # used for the CSS 'progress bar'. basically, we swap the class to
     # 'inactive' for this many milliseconds, before swapping to 'active' with
     # the transition.
-    CSS_TRANSITION_MS = 20
+    # ...
+    # Also using this for new CSS animations
+    CSS_TRANSITION_MS = 1000
+
+    # if video loads before lyrics, we have to wait for them. (in ms)
+    LYRIC_WAITING_CYCLE = 250
+
+    # how often the validator runs
+    VALIDATION_CYCLE = 5000
+
+
+    # how many lines are visible at once
+    LINES_TO_SHOW = 2
+
+    # data structure for showing lyrics.
+    # lyrics objects have these properties
+    #   text: the lyric text
+    #   action: an action that gets passed to the directive
+    $scope.toplyric = {}
+    $scope.bottomlyric = {}
 
     currentTime = 0
     lyrics = []
@@ -79,8 +98,8 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
         $scope.$on 'youtube.player.playing', () ->
           console.log "Video's playing."
-          initLyric()
-          validation = $timeout( validator, 1000 )
+          waitForLyrics()
+          validation = $timeout( validator, VALIDATION_CYCLE )
 
 
       lyricApiCall = $resource('/lyric/' + newId)
@@ -91,7 +110,12 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         self.lyrics = result.content
 
 
-
+      waitForLyrics = ->
+        if self.lyrics
+          initLyric()
+        else
+          $log.info 'lyrics not loaded yet, waiting...'
+          $timeout( waitForLyrics, LYRIC_WAITING_CYCLE )
       # initializes the lyric control
       initLyric = ->
         # usually called via $on, needs outside reference
@@ -106,18 +130,53 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
           # find the lyric which comes right after the current time
           if lyric.time > currentTime
             self.lyricIndex = idx - 1
-            # console.log "Setting current index to " + self.lyricIndex
+
             $scope.currentLyric = lyrics[self.lyricIndex].line
 
-            wait = (lyric.time - currentTime)
+            wait = (lyric.time - currentTime - CSS_TRANSITION_MS)
+            console.log 'waiting ' + wait + ' for next update'
+            if wait < 0
+              $log.error 'wait was ' + wait + ' (must be >0)'
+              wait = 0
+
             timer = $timeout( updateLyric, wait )
             updateProgressBar(wait)
 
-            # console.log "Waiting " + wait + " to change lyric."
+            $scope.toplyric =
+              text: lyrics[self.lyricIndex].line
+              action: 'pulsing'
+
+
+            $scope.bottomlyric =
+              text: lyrics[self.lyricIndex+1].line
+              action: 'entering'
+
+
+            # for i in [0..LINES_TO_SHOW-1] by 1
+            #   if lyrics[self.lyricIndex+i]
+            #     $scope.visibleLyrics[i] =
+            #       text: lyrics[self.lyricIndex+i].line
+            #       class: 'current'
+            #   else
+            #     $scope.visibleLyrics[i] = null
 
             return null
 
         return null
+
+      startOutAnimation = ->
+
+        $scope.toplyric.cssclass = "exiting"
+        $scope.bottomlyric.cssclass = "flipping"
+
+        $timeout( endOutAnimation, CSS_TRANSITION_MS )
+
+      endOutAnimation = ->
+        updateLyric
+
+        $scope.toplyric.cssclass = "pulsing"
+        $scope.bottomlyric.cssclass = "entering"
+
 
       # update to the next lyric
       updateLyric = ->
@@ -133,11 +192,25 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
         if lyrics[self.lyricIndex+1] != null
           # time to wait before showing the next lyric
-          wait = lyrics[self.lyricIndex + 1].time - lyrics[self.lyricIndex].time
-          timer = $timeout( updateLyric, wait )
+          wait = lyrics[self.lyricIndex+1].time - getCurrentTime() - CSS_TRANSITION_MS
+
+          if wait < 0
+            $log.error 'wait was ' + wait + ' (must be >0)'
+            wait = 0
+
+          console.log 'waiting ' + wait + ' for next update'
+          timer = $timeout( startOutAnimation, wait )
           # console.log "Waiting " + wait + " to update again."
 
           updateProgressBar(wait)
+
+          $scope.toplyric =
+            text: lyrics[self.lyricIndex].line
+
+
+          $scope.bottomlyric =
+            text: lyrics[self.lyricIndex+1].line
+
 
         return null
 
@@ -196,6 +269,8 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
       # to deal with people fast-forwarding or rewinding. buffering and
       # whatnot gets handled already in listeners from queueTrack
       validator = (onetime = false) ->
+        console.log 'validator running...'
+
         currentTime = getCurrentTime()
         if currentTime > self.lyrics[self.lyricIndex].time and
           self.lyrics[self.lyricIndex+1] != null and
@@ -204,10 +279,14 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
             # everything's great!
         else
           # time is off!
+          console.log 'validator says timing is off'
+          console.log 'current time is ' + currentTime
+          console.log 'last lyric timing was ' + self.lyrics[self.lyricIndex].time
+          console.log 'next lyric timing was ' + self.lyrics[self.lyricIndex+1].time
           $timeout.cancel(timer)
           initLyric()
 
-        validation = $timeout( validator, 1000 )
+        validation = $timeout( validator, VALIDATION_CYCLE )
 
 
       # Call this if we're choosing a new video but don't want to change the
