@@ -8,7 +8,9 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     # the transition.
     # ...
     # Also using this for new CSS animations
-    CSS_TRANSITION_MS = 1000
+
+    CSS_TRANSITION_MS = 0
+
 
     # if video loads before lyrics, we have to wait for them. (in ms)
     LYRIC_WAITING_CYCLE = 250
@@ -20,15 +22,11 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
     # how many lines are visible at once
     LINES_TO_SHOW = 2
 
-    # data structure for showing lyrics.
-    # lyrics objects have these properties
-    #   text: the lyric text
-    #   action: an action that gets passed to the directive
-    $scope.toplyric = {}
-    $scope.bottomlyric = {}
+
 
     currentTime = 0
-    lyrics = []
+    $scope.lyrics = []
+
     lyricIndex = 0
     timer = null
     video = null
@@ -107,11 +105,11 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         console.log 'lyric received.'
         console.log result
 
-        self.lyrics = result.content
+        $scope.lyrics = result.content
 
 
       waitForLyrics = ->
-        if self.lyrics
+        if $scope.lyrics
           initLyric()
         else
           $log.info 'lyrics not loaded yet, waiting...'
@@ -119,7 +117,7 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
       # initializes the lyric control
       initLyric = ->
         # usually called via $on, needs outside reference
-        lyrics = self.lyrics
+        lyrics = $scope.lyrics
         # lyricIndex = self.lyricIndex
 
         console.log "Init lyric called."
@@ -142,14 +140,17 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
             timer = $timeout( updateLyric, wait )
             updateProgressBar(wait)
 
-            $scope.toplyric =
-              text: lyrics[self.lyricIndex].line
-              action: 'pulsing'
+
+            $scope.lyrics[self.lyricIndex].anim = "entering"
+            $scope.lyrics[self.lyricIndex+1].anim = "entering"
+            # $scope.toplyric =
+            #   text: lyrics[self.lyricIndex].line
+            #   action: 'pulsing'
 
 
-            $scope.bottomlyric =
-              text: lyrics[self.lyricIndex+1].line
-              action: 'entering'
+            # $scope.bottomlyric =
+            #   text: lyrics[self.lyricIndex+1].line
+            #   action: 'entering'
 
 
             # for i in [0..LINES_TO_SHOW-1] by 1
@@ -164,24 +165,11 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
         return null
 
-      startOutAnimation = ->
-
-        $scope.toplyric.cssclass = "exiting"
-        $scope.bottomlyric.cssclass = "flipping"
-
-        $timeout( endOutAnimation, CSS_TRANSITION_MS )
-
-      endOutAnimation = ->
-        updateLyric
-
-        $scope.toplyric.cssclass = "pulsing"
-        $scope.bottomlyric.cssclass = "entering"
-
 
       # update to the next lyric
       updateLyric = ->
         # usually called via $timeout, needs outside reference
-        lyrics = self.lyrics
+        lyrics = $scope.lyrics
         self.lyricIndex++
 
         if lyrics[self.lyricIndex] != null
@@ -199,17 +187,16 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
             wait = 0
 
           console.log 'waiting ' + wait + ' for next update'
-          timer = $timeout( startOutAnimation, wait )
+          timer = $timeout( updateLyric, wait )
+
           # console.log "Waiting " + wait + " to update again."
 
           updateProgressBar(wait)
 
-          $scope.toplyric =
-            text: lyrics[self.lyricIndex].line
+          $scope.lyrics[self.lyricIndex-1].anim = "exiting"
 
+          $scope.lyrics[self.lyricIndex+1].anim = "entering"
 
-          $scope.bottomlyric =
-            text: lyrics[self.lyricIndex+1].line
 
 
         return null
@@ -272,17 +259,18 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         console.log 'validator running...'
 
         currentTime = getCurrentTime()
-        if currentTime > self.lyrics[self.lyricIndex].time and
-          self.lyrics[self.lyricIndex+1] != null and
-          currentTime < self.lyrics[self.lyricIndex+1].time
+        if currentTime > $scope.lyrics[self.lyricIndex].time and
+          $scope.lyrics[self.lyricIndex+1] != null and
+          currentTime < $scope.lyrics[self.lyricIndex+1].time
 
             # everything's great!
         else
           # time is off!
           console.log 'validator says timing is off'
           console.log 'current time is ' + currentTime
-          console.log 'last lyric timing was ' + self.lyrics[self.lyricIndex].time
-          console.log 'next lyric timing was ' + self.lyrics[self.lyricIndex+1].time
+          console.log 'last lyric timing was ' + $scope.lyrics[self.lyricIndex].time
+          console.log 'next lyric timing was ' + $scope.lyrics[self.lyricIndex+1].time
+
           $timeout.cancel(timer)
           initLyric()
 
