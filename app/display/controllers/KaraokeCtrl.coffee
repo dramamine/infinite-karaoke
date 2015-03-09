@@ -141,25 +141,7 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
             updateProgressBar(wait)
 
 
-            $scope.lyrics[self.lyricIndex].action = "entering"
-            $scope.lyrics[self.lyricIndex+1].action = "entering"
-            # $scope.toplyric =
-            #   text: lyrics[self.lyricIndex].line
-            #   action: 'pulsing'
-
-
-            # $scope.bottomlyric =
-            #   text: lyrics[self.lyricIndex+1].line
-            #   action: 'entering'
-
-
-            # for i in [0..LINES_TO_SHOW-1] by 1
-            #   if lyrics[self.lyricIndex+i]
-            #     $scope.visibleLyrics[i] =
-            #       text: lyrics[self.lyricIndex+i].line
-            #       class: 'current'
-            #   else
-            #     $scope.visibleLyrics[i] = null
+            lyricAnimations()
 
             return null
 
@@ -193,9 +175,8 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
           updateProgressBar(wait)
 
-          $scope.lyrics[self.lyricIndex-1].action = "exiting"
+          lyricAnimations()
 
-          $scope.lyrics[self.lyricIndex+1].action = "entering"
 
         return null
 
@@ -203,6 +184,14 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         console.log 'animCAllback with index ' + idx
         return null
 
+      # call this function on updating lyricIndex
+      lyricAnimations = ->
+        if $scope.lyrics[self.lyricIndex-1]
+          $scope.lyrics[self.lyricIndex-1].action = "exittop"
+        if $scope.lyrics[self.lyricIndex]
+          $scope.lyrics[self.lyricIndex].action = "entertop"
+        if $scope.lyrics[self.lyricIndex+1]
+          $scope.lyrics[self.lyricIndex+1].action = "enterbottom"
 
 
       # updates the progress bar
