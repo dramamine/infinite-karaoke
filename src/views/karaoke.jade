@@ -3,8 +3,9 @@
         .col-sm-2.col-md-3
         .col-sm-8.col-md-6
           youtube-video#onlyvid(video-id='code')
-          .lyricbox(ng-repeat="lyric in lyrics track by $index" ng-class="lyric.anim")
-            h3.lyric {{lyric.line}}
+          .lyricbox(ng-repeat="lyric in lyrics track by $index")
+            h3(lyric action="lyric.action" finished="animCallback($index)") {{lyric.line}}
+
 
 
         .col-sm-2.col-md-3
