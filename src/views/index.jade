@@ -8,17 +8,16 @@ block content
     h6 app state: {{state}}
 
     karaoke(trackid='userAddedTrackId' ng-show='visibility.karaoke')
-    .row
-      .col-md-6
-        include feedback
-      .col-md-6
-        include offset
+    .container
+      .row
+        .col-md-6
+          include feedback
+        .col-md-6
+          include offset
 
     div(ng-controller="TrackSearchCtrl"
       ng-init="trackid= #{JSON.stringify(trackid)}")
       //- .col-md-12(ng-hide='hasSearched')
-
-
 
       .container
         .row

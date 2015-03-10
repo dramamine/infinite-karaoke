@@ -14,54 +14,14 @@ html(lang="en" ng-app="karaoke")
     script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-animate.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-sanitize.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-resource.js")
-    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular-animate.js")
 
     script(src="../lib/angular-bootstrap/ui-bootstrap-tpls.min.js")
     script(src="../lib/angular-underscore/angular-underscore.js")
     script(src="../lib/angular-youtube-mb/src/angular-youtube-embed.js")
-    script(src="../lib/jquery/dist/jquery.js")
 
     script(src="//localhost:35729/livereload.js")
 
     script(src="../js/app.js")
-
-    div(ng-controller="SimpleCtrl")
-      h3(lyric action="lyricOne.action" finished="imdone(1)" style="position: absolute;") {{lyricOne.line}}
-      h3(lyric action="lyricTwo.action" finished="imdone(2)" style="position: absolute;") {{lyricTwo.line}}
-      button(ng-click="updateOne('exittop')") one exits top
-      button(ng-click="updateOne('entertop')") one enters top
-      button(ng-click="updateTwo('enterbottom')") two enters bottom
-      button(ng-click="updateTwo('entertop')") two enters top
-
-      ul
-        li(ng-repeat="person in people" class="person") {{person.lyric}}
-
-      button(ng-click="addSome()") Add Some People
-
-
-
-
-
-
-    //- h3 SAMPLE HERE
-    //- .lyricbox.tester
-    //-   h3.lyric HELLO WORLD
-
-    //- button.enterbutton Enter
-    //- button.exitbutton Exit
-
-
-    //- script(type="text/javascript").
-
-    //-   $(".enterbutton").click(function(){
-    //-     $('.tester').removeClass('entering exiting');
-    //-     $('.tester').addClass('entering');
-    //-   });
-    //-   $(".exitbutton").click(function(){
-    //-     $('.tester').removeClass('entering exiting');
-    //-     $('.tester').addClass('exiting');
-    //-   });
-
 
   body
     block content
