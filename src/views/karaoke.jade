@@ -1,9 +1,12 @@
 .container
-    .row
-        .col-sm-2.col-md-3
-        .col-sm-8.col-md-6
-          youtube-video#onlyvid(video-id='code')
-          .lyricbox
-            h3.lyric {{currentLyric}}
-            div(ng-class='tracker.class', ng-style='tracker.style')
-        .col-sm-2.col-md-3
+  .row
+    .col-sm-1.col-md-2
+    .col-sm-10.col-md-8
+      youtube-video#onlyvid(video-id='code')
+
+      .lyricbox
+        div(ng-repeat="lyric in lyrics")
+          lyric(action="lyric.action")
+            h3 {{lyric.line}}
+
+    .col-sm-10.col-md-2
