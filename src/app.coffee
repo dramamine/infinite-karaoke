@@ -29,8 +29,8 @@ app.configure 'test', ->
 app.configure 'production', ->
   console.log 'using production deployment'
   app.use express.errorHandler()
-  app.set 'domain', 'metal-heart.org'
-  app.set 'port', 80
+  app.set 'domain', 'karaoke.metal-heart.org'
+  app.set 'port', 2266
   app.set 'database', 'prod'
 
 
