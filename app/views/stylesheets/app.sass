@@ -1,0 +1,372 @@
+/* app css stylesheet */
+
+body
+  padding-top: 20px
+
+
+$lyric-gap: 15px
+
+$lyricbox-height: 34px
+
+$blue: #00A287
+$orange: #FF6700
+$green: #00C618
+$red: #FF0D00
+
+.lyricbox
+  height: 3*$lyricbox-height
+
+lyric
+  position: absolute
+
+
+.myenter
+  display: block
+  -webkit-animation-name: enter
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-timing-function: ease-out
+
+
+.myleave
+  display: block
+  -webkit-animation-name: exit
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-timing-function: ease-out
+
+
+.hideme
+  display: none
+  visibility: none
+
+
+.enterbottom
+  -webkit-animation-name: enterbottom
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-timing-function: ease-out
+  -webkit-animation-fill-mode: forwards
+
+@-webkit-keyframes enterbottom
+  0%
+    -webkit-transform: translate(0px, 2*$lyricbox-height)
+    opacity: 0
+  100%
+    -webkit-transform: translate(0px, $lyricbox-height)
+    opacity: 1
+
+.entertop
+  -webkit-animation-name: entertop
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-timing-function: ease
+  -webkit-animation-fill-mode: forwards
+
+@-webkit-keyframes entertop
+  0%
+    -webkit-transform: translate(0px, $lyricbox-height)
+  100%
+    -webkit-transform: translate(0px,0px)
+
+.exittop
+  -webkit-animation-name: exittop
+  -webkit-animation-duration: 0.5s
+  -webkit-animation-timing-function: ease-out
+  -webkit-animation-fill-mode: forwards
+
+@-webkit-keyframes exittop
+  0%
+    -webkit-transform: translate(0px,Opx)
+    opacity: 1
+  99.9%
+    -webkit-transform: translate(0px,-$lyricbox-height)
+    opacity: 0
+  100%
+    -webkit-transform: translate(-999px,-999px)
+    opacity: 0
+
+
+
+
+
+
+
+// .ng-enter
+//   display: block
+//   // -webkit-animation-duration: 0.5s
+//   // -webkit-animation-timing-function: ease-out
+//   // -webkit-transform: translate(0px, $lyricbox-height)
+//   opacity: 0
+
+// .ng-enter.ng-enter-active
+//   // -webkit-transform: translate(0px,0px)
+//   opacity: 1
+
+// .ng-leave
+//   display: block
+//   opacity: 1
+
+// .ng-leave.ng-leave-active
+//   -webkit-transform: translate(0px,-$lyricbox-height)
+//   opacity: 0
+
+
+.person.ng-enter
+  -webkit-animation: 0.5s enter
+  animation: 0.5s enter
+.person.ng-leave
+  -webkit-animation: 0.5s silentexit
+  animation: 0.5s silentexit
+
+.person.ng-move
+  -webkit-animation: 0.5s tutsFadeIn
+  animation: 0.5s tutsFadeIn
+
+
+
+
+// .person.ng-move
+//   -webkit-animation: 0.5s mover
+//   animation: 0.5s mover
+
+// @-webkit-keyframes mover
+//   0%
+//     opacity: 1
+//   50%
+//     opacity: 0
+//   100%
+//     opacity: 1
+
+// .person.ng-move
+//   position: relative
+//   top: 26px
+
+
+// .person.ng-move.ng-move-active
+//   -webkit-transition: all 0.5s ease
+//   top: 0
+
+
+// .person.ng-move
+//   position: relative
+//   top: -26px
+
+
+// .person.ng-move.ng-move-active
+//   -webkit-transition: all 0.5s ease
+//   position: relative
+//   top: 0
+
+
+// .person.ng-enter
+//   position: relative
+//   opacity: 0.0
+//   height: 0
+//   left: 100px
+
+
+// .person.ng-enter.ng-enter-active
+//   -webkit-transition: all 0.5s ease
+//   transition: all 0.5s ease
+//   opacity: 1.0
+//   left: 0
+//   height: 26px
+
+
+
+// .person.ng-leave
+//   position: relative
+//   opacity: 1.0
+//   left: 0
+//   height: 26px
+//   z-index: -100
+
+
+// .person.ng-leave.ng-leave-active
+//   -webkit-transition: all 0.5s ease
+//   opacity: 0.0
+//   left: 100px
+//   height: 0
+//   top: -13px
+
+
+
+
+
+@-webkit-keyframes exit
+  99%
+    -webkit-transform: translate(0px,-$lyricbox-height)
+    opacity: 0
+  100%
+    visibility: hidden
+    height: 0
+
+@-webkit-keyframes silentexit
+  100%
+    -webkit-transform: translate(0px,-$lyricbox-height)
+    opacity: 0
+
+
+
+
+
+@-webkit-keyframes enter
+  0%
+    -webkit-transform: translate(0px, $lyricbox-height)
+    opacity: 0
+  100%
+    -webkit-transform: translate(0px,0px)
+    opacity: 1
+
+
+@-webkit-keyframes tutsFadeOut
+  0%
+    opacity: 1
+  100%
+    opacity: 0
+
+@-webkit-keyframes tutsFadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+
+@-webkit-keyframes tutsFadeOut
+  0%
+    opacity: 1
+  100%
+    opacity: 0
+
+
+
+
+.sampler
+  width: 644px
+  height: $lyricbox-height
+
+  position: relative
+
+  border: 2px solid
+  border-radius: 3px
+
+.sampler #item
+  max-height: 0px
+  overflow: hidden
+  transition: max-height 0.15s ease-out
+
+.sampler:hover #item
+  max-height: 500px
+  transition: max-height 0.25s ease-in
+
+
+
+.sampleanim
+  -webkit-animation-duration: 1s
+  -webkit-animation-delay: 0s
+  -webkit-animation-iteration-count: infinite
+
+.lyric
+  float: left
+  z-index: 2
+  position: absolute
+  top: 0px
+  left: 0px
+  margin-left: $lyric-gap
+  margin-right: $lyric-gap
+  margin-top: 0px
+
+
+.lyricbox-active
+  width: 600px
+  height: 30px
+  background: #6FF
+
+  z-index: 1
+  position: absolute
+
+  margin-left: 2px
+  margin-right: 2px
+
+  top: 0px
+  left: 0px
+
+
+.lyricbox-inactive
+  width: 10px
+  height: 30px
+  z-index: 1
+  position: absolute
+
+  margin-left: 2px
+  margin-right: 2px
+
+  top: 0px
+  left: 0px
+
+
+.vid-thumbnail
+  margin-top: 10px
+  margin-bottom: 10px
+
+
+p.vid-description
+  font-size: small
+
+
+.vid-option
+  background: #EEE
+
+
+
+.spacer
+  margin-bottom: 10px
+
+
+img .thumbnail
+  float: left
+  margin-left: 10px
+  margin-bottom: 10px
+
+
+img.search-result-thumbnail
+  display: inline
+  float: left
+  margin-left: 10px
+  margin-bottom: 10px
+  margin-right: 10px
+
+
+.search-result
+  background: #7BE8C0
+  height: 100px
+  margin-bottom: 10px
+
+
+// .cc-indicator
+//   display: none
+
+// .cc-indicator.available
+//   display: block
+//   color: green
+
+// .cc-indicator.initializing
+//   display: block
+//   color: yellow
+
+// .cc-indicator.dead
+//   display: block
+//   color: red
+
+.cc-button-initialized, .cc-button-available
+  disabled: false
+  background-color: $green
+  color: white
+
+
+.cc-button-dead, .cc-button-initializing
+  disabled: true
+  background-color: grey
+  color: white
+
+.cc-button-sending, .cc-button-communicating, .cc-button-session-active
+  disabled: true
+  background-color: $orange
+  color: white

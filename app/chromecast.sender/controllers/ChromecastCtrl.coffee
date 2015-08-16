@@ -3,13 +3,18 @@ angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
 ['$scope', '$log', '$window', 'cast', '$rootScope', '$timeout',
   ($scope, $log, $window, cast, $rootScope, $timeout) ->
 
-    $scope.status = null
 
-    $scope.state = 'Initializing Cast Api'
+    # $scope.status = null
+
+    # $scope.state = 'Initializing Cast Api'
+    $scope.buttonText = 'Looking for Chromecast...'
+    $scope.buttonClass = 'btn cc-button-initializing'
     hi =
       hi: 'hi'
       trackid: 'xyz'
       action: 'play'
+
+
 
 
     addTrack = (trackid) ->
@@ -29,23 +34,29 @@ angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
 
     $scope.$on 'addTrack', addTrack
 
-    ##Listen to the different states
-    $rootScope.$on "INITIALIZING_CAST_API", ->
-      $log.info "Caught Event! initialize"
-      $scope.state = "Initializing Cast Api"
-      $scope.disabled = true
-      $scope.status = 'initializing'
-      $scope.$apply()
+    $rootScope.$on cast.STATUS_UPDATE, (evt, update) ->
+      $log.info 'cast status update received', update
+      if $scope.status == update
+        return
+      $scope.status = update
+
+      switch update
+        when 'initializing' then $scope.buttonText = 'Initializing Chromecast...'
+        when 'initialized' then $scope.buttonText = 'Play on Chromecast'
+        when 'available' then $scope.buttonText = 'Play on Chromecast'
+        when 'dead' then $scope.buttonText = 'Refresh page to connect to Chromecast'
+        when 'sending' then $scope.buttonText = 'Connecting to Chromecast...'
+        when 'session-active' then $scope.buttonText = 'Playing on Chromecast!'
+
+      $scope.buttonClass = 'btn cc-button-' + update
+
+      $timeout ->
+        $scope.$apply()
+
       return
 
-    $rootScope.$on "RECEIVER_AVAILABLE", ->
-      $log.info "Caught Event! available"
-      $scope.state = "Send to Chrome Cast"
-      $scope.status = 'available'
-      $scope.disabled = false
 
     $scope.sendTestMessage = ->
-
       cast.sendMessage "wtf is going on"
       return
 
@@ -58,14 +69,14 @@ angular.module('karaoke.chromecast.sender').controller 'ChromecastCtrl',
       $log.info 'adding track (cc ctrl)', evt, data
       cast.sendMessage data
 
-    $rootScope.$on "RECEIVER_DEAD", ->
-      $log.info "Caught Event! dead"
-      $scope.state = "Receiver Died, Refresh Page"
-      $scope.status = 'dead'
-      $scope.disabled = true
-      $scope.$apply()
-      return
 
+    $scope.chromecastClick = ->
+      switch $scope.status
+        when 'available'
+          cast.sendMessage "handshake"
+        # when 'dead'
+        #   $log.info 'trying to rinitlaize'
+        #   cast.initializeCastApi()
 
     # # Send the data to the chrome cast
     # $scope.sendToCast = ->

@@ -54,10 +54,12 @@ block content
 
         .row
           .col-md-8(ng-controller="ChromecastCtrl")
-            button(ng-click="initializeCastApi()") Start CC Api
-            button(ng-click="sendTestMessage()") SEND A TEST MESSAGE TO CC
-            button(ng-click="addTestTrack()") Test Track
-            i.fa.fa-circle.cc-indicator(ng-class="status")
+
+            button(ng-click="chromecastClick()" ng-class="buttonClass"){{buttonText}}
+
+            div(ng-show="DEBUG")
+              span {{status}}
+
           .col-md-4
             button.btn.btn-primary.pull-right(ng-click="moreResults()") See more results...
 
