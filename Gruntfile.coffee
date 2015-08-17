@@ -48,17 +48,17 @@ module.exports = (grunt) ->
 
 
   grunt.registerTask 'build', [
+    'clean:default'
     'sass:dist'
     'coffeelint'
-    'clean:default'
     'copy:default'
     'coffee:compile'
   ]
 
   grunt.registerTask 'build:dev', [
+    'clean:default'
     'sass:dev'
     'coffeelint'
-    'clean:default'
     'copy:default'
     'coffee:compile'
   ]
