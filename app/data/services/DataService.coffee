@@ -121,6 +121,21 @@ angular.module('karaoke.data').service 'DataService',
         deferred.reject data
       )
 
+    createVideo: (trackid, youtube_id) ->
+      deferred = $q.defer()
+
+      url = 'video/create/'
+      $http.post(url, {
+        trackid: trackid,
+        youtube_id: youtube_id
+        }).success( (data, status, headers, config) ->
+        deferred.resolve data
+      ).error( (data, status, headers, config) ->
+        $log.error 'error when trying to create video.'
+        $log.error data
+        deferred.reject data
+      )
+
 
 
     searchFor: (terms, page = 0) ->

@@ -1,6 +1,7 @@
 Video = require '../models/video'
 Lyric = require '../models/lyric'
 Track = require '../models/track'
+Comment = require '../models/comment'
 _ = require 'underscore-node'
 q = require 'q'
 
@@ -20,6 +21,34 @@ Helper =
       deferred.resolve track
 
 
+    return deferred.promise
+
+  recalculateBest: (trackid) ->
+    deferred = q.defer()
+
+    Video.find {track: trackid}, (err, videos) ->
+
+      # ack, should probably update everyone's score by looking at feedback
+      # for consistency
+      # this is REALLY IMPORTANT
+      # but I'm not gonna do it now lol yolo
+      console.log 'all matching videos:', videos
+      newBestVid = _.max videos, (video) ->
+        return video.score
+      console.log 'my best vid looks like this:', newBestVid
+
+      Video.find {track: trackid, best: true}, (err, videos) ->
+        for video in videos
+          if video != newBestVid
+            video.best = false
+            console.log('removing best from someone')
+            video.save()
+          else
+            console.log 'found the same best video.'
+
+      newBestVid.best = true
+      newBestVid.save()
+      deferred.resolve newBestVid
     return deferred.promise
 
   # adding some 'keywords' so that search works better!

@@ -69,6 +69,10 @@ angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
       $scope.category = null
       $scope.otherVideos = []
 
+    $scope.createVideo = () ->
+      $log.info 'createVideo', $scope.new_youtube_id
+
+      DataService.createVideo($scope.$parent.trackid, $scope.new_youtube_id);
 
     return null
 ]

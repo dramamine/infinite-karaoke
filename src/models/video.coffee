@@ -13,4 +13,8 @@ VideoSchema = mongoose.Schema
 
   best: Boolean
 
+  views: Number
+  upvotes: Number
+  downvotes: Number
+
 module.exports = mongoose.model 'Video', VideoSchema
