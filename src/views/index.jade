@@ -39,7 +39,7 @@ block content
               .media-body
                 h4.media-heading {{track.artist}}
                 h5 {{track.title}}
-                h6 {{track._id}}
+                h6(ng-show="DEBUG") {{track._id}}
                 p
                   i.fa.fa-star(style="{{track.lyricQualityCSS}}")
                   i.fa.fa-star(style="{{track.vidQualityCSS}}")

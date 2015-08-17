@@ -8,6 +8,9 @@ angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
     $scope.otherVideos = []
     $scope.FEEDBACK_OPTIONS = DataService.FEEDBACK_OPTIONS
 
+    # used when the user wants to plug in their own youtube ID
+    $scope.new_youtube_id = ''
+
     # Sets the rating. Rating is used for logic in the rest of the view.
     #
     # @param rating Int Either 1 for good or -1 for bad.
@@ -69,9 +72,9 @@ angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
       $scope.category = null
       $scope.otherVideos = []
 
-    $scope.createVideo = () ->
+    $scope.createVideo = (valid) ->
+      return unless valid
       $log.info 'createVideo', $scope.new_youtube_id
-
       DataService.createVideo($scope.$parent.trackid, $scope.new_youtube_id);
 
     return null

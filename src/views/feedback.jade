@@ -28,5 +28,7 @@ div(ng-controller='FeedbackCtrl' ng-show='visibility.feedback')
       .spacer
     div
       label Custom Youtube ID:
-      input(type='text', ng-model='new_youtube_id')
-      button(ng-click='createVideo()')
+      form(name="ytid" ng-submit="createVideo(ytid.$valid)")
+        input(type='text', name="youtube_id", ng-model='new_youtube_id', ng-pattern="/^[a-zA-Z0-9_-]{11}$/")
+        input(type='submit' value='Load')
+        span.help-inline(ng-show="ytid.youtube_id.$invalid") Invalid Video ID!
