@@ -14,22 +14,25 @@ angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
     # @return null
     $scope.setRating = (rating) ->
       $scope.rating = rating
+
       if rating == 1
 
         # this is a promise, but we don't want to do anything with it atm
         DataService.submitFeedback(
-          $scope.video._id,
+          $scope.$parent.video._id,
           rating,
           0,
           DataService.TYPE_VIDEO
         )
 
       if rating == -1
-        DataService.getVideos($scope.trackid).then (result) ->
+        DataService.getVideos($scope.$parent.trackid).then (result) ->
           $scope.otherVideos = result.filter (vid) ->
-            return vid._id != $scope.video._id
+            return vid._id != $scope.$parent.video._id
+          console.log $scope.otherVideos
         , (err) ->
           $log.error 'error from setRating fn'
+
 
     # Sets the category of the comment. Categories are details on why the user
     # thought the video was bad.
@@ -42,11 +45,20 @@ angular.module('karaoke.tweaks').controller 'FeedbackCtrl',
 
       # this is a promise, but we don't want to do anything with it atm
       DataService.submitFeedback(
-        $scope.video._id,
+        $scope.$parent.video._id,
         $scope.rating,
         category,
         DataService.TYPE_VIDEO
       )
+
+      if category == 4
+        DataService.demoteVideo($scope.$parent.video._id)
+
+    $scope.promoteVideo = (video) ->
+      DataService.promoteVideo(video._id).then (result) ->
+        $log.info 'feedback accepted!'
+      , (err) ->
+        $log.error 'feedback rejected!'
 
     # Resets the feedback controller to initial state.
     #

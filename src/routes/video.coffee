@@ -7,6 +7,8 @@ class VideoApi
   constructor: (@app) ->
 
     @app.get '/video/:_id', @getBestVideo
+    @app.get '/video/promote/:_id', @promoteVideo
+    @app.get '/video/demote/:_id', @demoteVideo
     @app.get '/videos/:_id', @getVideos
     @app.post '/video', @createVideo
 
@@ -56,8 +58,37 @@ class VideoApi
         res.send 400, err
       res.json videos
 
+  promoteVideo: (req, res) ->
+    {_id} = req.params
+
+
+    Video.findById _id, (err, video) ->
+
+      # the one that was best? not anymore.
+      Video.findOne {track: video.track, best: true}, (err, besties) ->
+        if err
+          console.log 'got an error trying to find the current best video for ', video.track
+          return
+        besties.best = false
+        return besties.save()
+
+      # promote our guy
+      video.score = video.score+10
+      video.best = true
+      video.save()
+      res.json video
+
+  demoteVideo: (req, res) ->
+    {_id} = req.params
+    Video.findById _id, (err, video) ->
+      video.score = video.score-10
+      video.best = false
+      video.save()
+      res.send 200, 'Success'
+
   createVideo: (req, res) ->
-    res.send 400, "Not implemented yet"
+    res.send 400, 'Not implemented yet'
+
 
 
 module.exports = (app) -> new VideoApi app

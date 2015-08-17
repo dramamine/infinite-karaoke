@@ -98,6 +98,31 @@ angular.module('karaoke.data').service 'DataService',
 
       return deferred.promise
 
+    promoteVideo: (videoid) ->
+      deferred = $q.defer()
+
+      url = 'video/promote/' + videoid
+      $http.get(url).success( (data, status, headers, config) ->
+        deferred.resolve data
+      ).error( (data, status, headers, config) ->
+        $log.error 'error when trying promote video.'
+        $log.error data
+        deferred.reject data
+      )
+    demoteVideo: (videoid) ->
+      deferred = $q.defer()
+
+      url = 'video/demote/' + videoid
+      $http.get(url).success( (data, status, headers, config) ->
+        deferred.resolve data
+      ).error( (data, status, headers, config) ->
+        $log.error 'error when trying to demote video.'
+        $log.error data
+        deferred.reject data
+      )
+
+
+
     searchFor: (terms, page = 0) ->
       deferred = $q.defer()
 

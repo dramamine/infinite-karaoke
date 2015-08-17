@@ -16,7 +16,7 @@ div(ng-controller='FeedbackCtrl' ng-show='visibility.feedback')
   #new-video(ng-show='category')
     p Pick another video:
     div(ng-repeat='video in otherVideos')
-      .row.vid-option(ng-click='selectVideo(video); reset()')
+      .row.vid-option(ng-click='promoteVideo(video); selectVideo(video); reset()')
         .col-md-12
           img.thumbnail(ng-src='{{video.thumbnail}}')
           p.vid-description
@@ -26,3 +26,6 @@ div(ng-controller='FeedbackCtrl' ng-show='visibility.feedback')
             strong Description:
             | {{video.description}}
       .spacer
+    div
+      label Custom Youtube ID:
+      input(type='text', ng-model='new_youtube_id')

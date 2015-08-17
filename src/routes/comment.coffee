@@ -17,7 +17,7 @@ class CommentApi
     return Video.findById _id, (err, video) ->
       if !video
         console.log 'Just couldnt find that video.'
-        res.send 406, err
+        return res.send 406, err
 
       newcomment = new Comment
 

@@ -5,7 +5,8 @@ block content
 
 
   div(ng-controller="StateCtrl")
-    h6 app state: {{state}}
+
+    h6(ng-show="DEBUG") app state: {{state}}
 
     karaoke(trackid='userAddedTrackId' ng-show='visibility.karaoke')
     .container

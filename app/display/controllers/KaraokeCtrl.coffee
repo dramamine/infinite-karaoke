@@ -71,7 +71,7 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         $scope.code = result.youtube_id
         $scope.video = result
 
-        $scope.$emit 'playVideo'
+        $scope.$emit 'playVideo', result
 
         # autoplay
         $scope.$on 'youtube.player.ready', () ->
@@ -109,8 +109,9 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
         lyrics = $scope.lyrics
         # lyricIndex = self.lyricIndex
 
-        console.log "Init lyric called."
+        $log.info "Init lyric called."
 
+        clearAnimations()
         currentTime = getCurrentTime()
 
         for lyric, idx in lyrics
@@ -136,7 +137,6 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
 
       # update to the next lyric
       updateLyric = ->
-        return null
 
         # usually called via $timeout, needs outside reference
         lyrics = $scope.lyrics
@@ -222,7 +222,6 @@ angular.module('karaoke.display').controller 'KaraokeCtrl', [
           console.log 'next lyric timing was ' + $scope.lyrics[self.lyricIndex+1].time
 
           $timeout.cancel(timer)
-          clearAnimations()
           initLyric()
 
         validation = $timeout( validator, VALIDATION_CYCLE )
