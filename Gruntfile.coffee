@@ -113,6 +113,6 @@ module.exports = (grunt) ->
   grunt.registerTask 'prod:restart', [
     'env:prod'
     'forever-stop'
-    'build:prod'
+    'build'
     'forever-start'
   ]

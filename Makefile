@@ -12,4 +12,4 @@ deploy:
 	npm install --production && npm prune --production
 	bower install --production --allow-root && bower prune --allow-root --production
 
-	grunt prod:restart
+	grunt prod:restart --force
